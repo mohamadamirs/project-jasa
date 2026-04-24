@@ -10,14 +10,34 @@
     font-size: 16px;
   }
   
-  /* Fluid Typography for better readability on tiny screens */
-  h1 { @apply font-extrabold tracking-tight leading-[1.1] text-[clamp(1.75rem,8vw,4.5rem)]; }
-  h2 { @apply font-bold tracking-tight text-[clamp(1.5rem,6vw,3rem)]; }
-  h3 { @apply font-bold text-[clamp(1.25rem,4vw,1.875rem)]; }
-  p { @apply leading-relaxed; }
+  /* Fluid Typography - Strict Implementation */
+  h1 { @apply font-black tracking-tight leading-[1.1] text-[clamp(2rem,8vw,3.5rem)] text-balance; }
+  h2 { @apply font-extrabold tracking-tight text-[clamp(1.75rem,6vw,3rem)] leading-[1.2] text-balance; }
+  h3 { @apply font-bold text-[clamp(1.35rem,4vw,2rem)] leading-snug; }
+  h4 { @apply font-semibold text-[clamp(1.1rem,2vw,1.35rem)]; }
+  p { @apply leading-relaxed text-[clamp(0.9375rem,1vw+0.25rem,1.0625rem)]; }
+  small, .text-caption { @apply font-bold uppercase tracking-[0.15em] text-[clamp(0.75rem,0.8vw,0.875rem)]; }
 }
 
 @layer components {
+  /* Standardized Container & Section */
+  .section-spacing {
+    @apply py-[clamp(4rem,10vh,8rem)] px-[clamp(1rem,5vw,2.5rem)];
+  }
+
+  .container-custom {
+    @apply max-w-7xl mx-auto;
+  }
+
+  /* Card & Rounding Standards */
+  .card-standard {
+    @apply rounded-[2rem] bg-white border border-slate-100 shadow-sm transition-all duration-300;
+  }
+  
+  .btn-standard {
+    @apply rounded-xl font-bold transition-all active:scale-95 min-h-[44px] flex items-center justify-center;
+  }
+
   .reveal {
     @apply opacity-0 translate-y-4 transition-all duration-700 ease-out;
   }

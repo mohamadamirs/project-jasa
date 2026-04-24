@@ -13,45 +13,51 @@ const portfolios = await getCollection('portfolios');
 
 <MainLayout {title} {description}>
   <!-- Header Portofolio -->
-  <section class="bg-white pt-20 pb-16 border-b border-slate-100">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-      <h1 class="text-4xl md:text-6xl font-black text-slate-900 mb-6 tracking-tighter">
+  <section class="bg-white pt-[clamp(5rem,15vh,10rem)] pb-[clamp(3rem,8vh,6rem)] border-b border-slate-100">
+    <div class="container-custom px-[clamp(1rem,5vw,2.5rem)] text-center">
+      <h1 class="mb-6">
         Karya <span class="text-blue-600">Terbaik</span> Kami
       </h1>
-      <p class="text-lg text-slate-500 max-w-2xl mx-auto leading-relaxed">
+      <p class="max-w-2xl mx-auto leading-relaxed">
         Kami telah membantu puluhan bisnis untuk bertransformasi digital melalui solusi kustom yang tepat sasaran dan berteknologi tinggi.
       </p>
     </div>
   </section>
 
   <!-- Gallery Grid -->
-  <section class="py-20 bg-sky-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  <section class="section-spacing bg-sky-50">
+    <div class="container-custom">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {portfolios.map((project) => (
-          <a href={`/portofolio/${project.id}`} class="group bg-white rounded-[2.5rem] overflow-hidden border border-blue-100 hover:shadow-2xl hover:shadow-blue-200 transition-all duration-500 flex flex-col">
+          <a href={`/portofolio/${project.id}`} class="group card-standard overflow-hidden border-blue-100 hover:shadow-2xl hover:shadow-blue-200 transition-all duration-500 flex flex-col">
             <!-- Project Image Placeholder with Icon -->
             <div class="aspect-video bg-blue-50 flex items-center justify-center relative overflow-hidden">
               {project.data.images && project.data.images.length > 0 ? (
-                <img src={project.data.images[0]} alt={project.data.title} class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                <Image 
+                  src={project.data.images[0]} 
+                  alt={project.data.title} 
+                  width={600} 
+                  height={338} 
+                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
+                />
               ) : (
                 <span data-lucide="play" class="w-16 h-16 text-blue-200 group-hover:scale-110 group-hover:rotate-6 transition-transform duration-500"></span>
               )}
               <div class="absolute top-4 left-4">
-                <span class="px-3 py-1 bg-white/80 backdrop-blur-sm text-blue-600 text-[10px] font-bold uppercase tracking-widest rounded-full border border-blue-100">
+                <span class="px-3 py-1 bg-white/80 backdrop-blur-sm text-blue-600 text-caption rounded-full border border-blue-100">
                   {project.data.category}
                 </span>
               </div>
             </div>
             
             <div class="p-8 flex-grow">
-              <h3 class="text-2xl font-bold text-slate-900 mb-3 group-hover:text-blue-600 transition-colors">{project.data.title}</h3>
+              <h3 class="mb-3 group-hover:text-blue-600 transition-colors">{project.data.title}</h3>
               <p class="text-slate-500 text-sm leading-relaxed mb-6">
                 {project.data.description}
               </p>
               <div class="flex flex-wrap gap-2 mt-auto">
                 {project.data.tech.map((t) => (
-                  <span class="px-3 py-1 bg-slate-100 text-slate-500 text-[10px] font-bold rounded-lg uppercase">
+                  <span class="px-3 py-1 bg-slate-100 text-slate-500 text-caption rounded-lg">
                     {t}
                   </span>
                 ))}
@@ -64,11 +70,11 @@ const portfolios = await getCollection('portfolios');
   </section>
 
   <!-- Final CTA -->
-  <section class="py-24 bg-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+  <section class="section-spacing bg-white">
+    <div class="container-custom text-center">
       <div class="max-w-3xl mx-auto">
-        <h2 class="text-3xl md:text-5xl font-bold text-slate-900 mb-8 tracking-tight">Ingin Proyek Anda Ada di Sini?</h2>
-        <p class="text-slate-500 mb-12 text-lg leading-relaxed">
+        <h2 class="mb-8">Ingin Proyek Anda Ada di Sini?</h2>
+        <p class="mb-12 leading-relaxed">
           Mari diskusikan visi Anda. Tim ahli kami siap mewujudkannya menjadi solusi teknologi yang solid dan berprofit tinggi.
         </p>
         <WhatsAppCTA label="Mulai Konsultasi Proyek" />

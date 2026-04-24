@@ -3,7 +3,6 @@ import { getCollection } from 'astro:content';
 import { Image } from 'astro:assets';
 import MainLayout from '../layouts/MainLayout.astro';
 import WhatsAppCTA from '../components/WhatsAppCTA.astro';
-import Pricing from '../components/Pricing.astro';
 import PricingTable from '../components/PricingTable.astro';
 import SectionHeader from '../components/SectionHeader.astro';
 import SocialProof from '../components/SocialProof.astro';
@@ -25,7 +24,7 @@ const description = "Solusi digital terpercaya untuk UMKM and Bisnis. Kami melay
 
 <MainLayout {title} {description}>
   <!-- 1. Hero Branding Section (Premium & Clean) -->
-  <section class="relative pt-20 pb-24 md:pt-32 md:pb-44 overflow-hidden bg-white">
+  <section class="relative pt-[clamp(5rem,15vh,10rem)] pb-[clamp(4rem,10vh,8rem)] overflow-hidden bg-white px-[clamp(1rem,5vw,2.5rem)]">
     <!-- Sophisticated Backdrop -->
     <div class="absolute inset-0 z-0">
       <div class="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_-20%,rgba(37,99,235,0.1),rgba(255,255,255,0))]"></div>
@@ -36,15 +35,15 @@ const description = "Solusi digital terpercaya untuk UMKM and Bisnis. Kami melay
       <div class="absolute bottom-[-5%] left-[-5%] w-[clamp(20rem,40vw,40rem)] aspect-square bg-sky-50 rounded-full blur-[100px] opacity-50 animate-float-delayed"></div>
     </div>
 
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <div class="container-custom relative z-10">
       <div class="text-center max-w-5xl mx-auto">
-        <div class="inline-flex items-center px-4 py-2 rounded-full text-[10px] md:text-sm font-bold bg-blue-50/80 backdrop-blur-sm text-blue-700 border border-blue-100 mb-8 md:mb-12 animate-reveal shadow-sm hover:border-blue-300 transition-colors cursor-default group/badge">
-          <span class="flex h-2 w-2 rounded-full bg-blue-600 mr-3 animate-pulse group-hover/badge:scale-125 transition-transform"></span>
+        <div class="inline-flex items-center px-4 py-2 rounded-full text-caption bg-blue-50/80 backdrop-blur-sm text-blue-700 border border-blue-100 mb-8 md:mb-12 animate-reveal shadow-sm hover:border-blue-300 transition-colors cursor-default group/badge">
+          <span class="flex h-3 w-3 rounded-full bg-blue-600 mr-3 animate-pulse group-hover/badge:scale-125 transition-transform"></span>
           {seededSpin("Partner Digital {Terpercaya|Andalan|Premium} #1 di Wilayah Brebes & Tegal", "global")}
         </div>
         
         <div class="relative group/hero">
-          <h1 class="font-extrabold text-slate-900 tracking-tight mb-8 md:mb-10 leading-[1.05] animate-reveal-delayed cursor-default text-balance">
+          <h1 class="mb-8 md:mb-10 animate-reveal-delayed cursor-default">
             Bangun <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-indigo-600 hover:to-blue-700 transition-all duration-500">Ekosistem Digital</span> <br class="hidden md:block" /> Premium untuk Bisnis Anda
           </h1>
           <!-- Decorative element that reacts to group hover -->
@@ -52,15 +51,15 @@ const description = "Solusi digital terpercaya untuk UMKM and Bisnis. Kami melay
           <div class="absolute -bottom-6 -right-6 w-12 h-12 border-b-2 border-r-2 border-blue-100 rounded-br-2xl opacity-0 group-hover/hero:opacity-100 group-hover/hero:translate-x-2 group-hover/hero:translate-y-2 transition-all duration-500 pointer-events-none"></div>
         </div>
 
-        <p class="text-base md:text-xl text-slate-600 mb-10 md:mb-14 leading-relaxed max-w-3xl mx-auto px-2 md:px-0 opacity-0 animate-reveal-delayed-2">
+        <p class="mb-10 md:mb-14 max-w-3xl mx-auto opacity-0 animate-reveal-delayed-2">
           Kami membantu UMKM naik kelas dengan website performa tinggi yang dirancang khusus untuk mendominasi pasar lokal dan global.
         </p>
         
-        <div class="flex flex-col sm:flex-row justify-center items-center gap-4 px-4 sm:px-0 opacity-0 animate-reveal-delayed-3">
-          <WhatsAppCTA label="Mulai Konsultasi Gratis" class="shadow-2xl shadow-blue-500/20 w-full sm:w-auto scale-105 hover-lift shine-effect" />
+        <div class="flex flex-col sm:flex-row justify-center items-center gap-4 opacity-0 animate-reveal-delayed-3">
+          <WhatsAppCTA label="Mulai Konsultasi Gratis" class="w-full sm:w-auto scale-105 hover-lift shine-effect shadow-2xl shadow-blue-500/20" />
           <a href="#layanan" class="w-full sm:w-auto px-8 md:px-10 py-4 md:py-5 bg-slate-50 text-slate-700 font-bold rounded-2xl border border-slate-200 hover:bg-white hover:border-blue-300 hover:shadow-lg transition-all text-base md:text-lg flex items-center justify-center active:scale-95 group hover-lift overflow-hidden relative">
             <span class="relative z-10 flex items-center">
-              Lihat Layanan <span data-lucide="chevron-down" class="ml-2 w-5 h-5 group-hover:translate-y-1 transition-transform"></span>
+              Lihat Layanan <span data-lucide="chevron-down" class="ml-2 w-6 h-6 group-hover:translate-y-1 transition-transform"></span>
             </span>
           </a>
         </div>
@@ -77,14 +76,14 @@ const description = "Solusi digital terpercaya untuk UMKM and Bisnis. Kami melay
   <SocialProof />
 
   <!-- 3. Layanan Unggulan Section -->
-  <section id="layanan" class="py-12 md:py-24 bg-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  <section id="layanan" class="section-spacing bg-white">
+    <div class="container-custom">
       <SectionHeader 
         title="Solusi Digital <span class='text-blue-600'>Menyeluruh</span>" 
         subtitle="Dari website hingga sistem cerdas, kami membantu akselerasi pertumbuhan bisnis Anda." 
       />
 
-      <div class="flex flex-row lg:grid lg:grid-cols-3 gap-4 md:gap-8 overflow-x-auto pb-8 snap-x snap-mandatory no-scrollbar lg:overflow-visible lg:pb-0">
+      <div class="flex flex-row lg:grid lg:grid-cols-3 gap-8 overflow-x-auto pb-8 snap-x snap-mandatory no-scrollbar lg:overflow-visible lg:pb-0">
         {[
           {
             title: "Website Kustom",
@@ -105,16 +104,16 @@ const description = "Solusi digital terpercaya untuk UMKM and Bisnis. Kami melay
             features: ["Cloud Based Storage", "Multi-user Access Control", "Automated Reporting"]
           }
         ].map((item) => (
-          <div class="min-w-[280px] sm:min-w-[340px] lg:min-w-0 bg-white p-6 md:p-10 rounded-3xl shadow-sm border border-slate-100 hover:shadow-2xl hover:shadow-blue-100 transition-all hover-lift shine-effect group flex flex-col h-auto lg:h-full snap-center">
+          <div class="min-w-[280px] sm:min-w-[340px] lg:min-w-0 p-8 md:p-10 card-standard hover:shadow-2xl hover:shadow-blue-100 shine-effect group flex flex-col h-auto lg:h-full snap-center">
             <div class="w-12 h-12 md:w-16 md:h-16 bg-blue-50 rounded-2xl flex items-center justify-center mb-6 md:mb-8 group-hover:bg-blue-600 transition-colors">
               <span data-lucide={item.icon} class="w-6 h-6 md:w-8 md:h-8 text-blue-600 group-hover:text-white transition-colors"></span>
             </div>
             <div class="flex-grow">
-              <h3 class="text-lg md:text-2xl font-bold text-slate-900 mb-3 md:mb-4">{item.title}</h3>
-              <p class="text-slate-600 leading-relaxed text-[13px] md:text-base mb-6 md:mb-8">{item.desc}</p>
+              <h3 class="mb-3 md:mb-4">{item.title}</h3>
+              <p class="text-slate-600 mb-6 md:mb-8">{item.desc}</p>
               <ul class="space-y-2 md:space-y-3 mb-4">
                 {item.features.map(feature => (
-                  <li class="flex items-center text-[11px] md:text-sm text-slate-500 font-medium">
+                  <li class="flex items-center text-caption text-slate-500 normal-case tracking-normal">
                     <span data-lucide="check" class="w-3.5 h-3.5 md:w-4 md:h-4 text-blue-600 mr-2"></span>
                     {feature}
                   </li>
@@ -128,9 +127,9 @@ const description = "Solusi digital terpercaya untuk UMKM and Bisnis. Kami melay
   </section>
 
   <!-- 4. Portofolio / Studi Kasus Section -->
-  <section id="portofolio" class="py-12 md:py-24 bg-sky-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+  <section id="portofolio" class="section-spacing bg-sky-50">
+    <div class="container-custom">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-20 items-center">
         <div class="text-center lg:text-left">
           <SectionHeader 
             title="Bukan Sekadar Kode, Tapi <span class='text-blue-600'>Hasil Nyata</span>" 
@@ -141,15 +140,15 @@ const description = "Solusi digital terpercaya untuk UMKM and Bisnis. Kami melay
           <div class="grid grid-cols-2 gap-4 max-w-sm mx-auto lg:mx-0">
             <div class="bg-white p-5 md:p-6 rounded-2xl border border-blue-100">
               <p class="text-2xl md:text-3xl font-black text-blue-600 mb-1">50+</p>
-              <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Website Live</p>
+              <p class="text-caption text-slate-400">Website Live</p>
             </div>
             <div class="bg-white p-5 md:p-6 rounded-2xl border border-blue-100">
               <p class="text-2xl md:text-3xl font-black text-blue-600 mb-1">99%</p>
-              <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Klien Puas</p>
+              <p class="text-caption text-slate-400">Klien Puas</p>
             </div>
           </div>
         </div>
-        <div class="bg-white p-3 md:p-4 rounded-[2rem] shadow-xl border border-slate-100 group">
+        <div class="p-3 md:p-4 card-standard shadow-xl group">
           <a href={latestProject ? `/portofolio/${latestProject.id}` : "/portofolio"}>
             <div class="bg-slate-50 aspect-video rounded-2xl overflow-hidden flex items-center justify-center border border-slate-200 relative">
               {latestProject?.data.images?.[0] ? (
@@ -165,8 +164,8 @@ const description = "Solusi digital terpercaya untuk UMKM and Bisnis. Kami melay
               )}
             </div>
             <div class="p-5 md:p-6 text-left">
-              <p class="text-xs md:text-sm font-bold text-blue-600 mb-1">{latestProject?.data.category || 'Showcase Proyek'}</p>
-              <h4 class="text-lg md:text-xl font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
+              <p class="text-caption text-blue-600 mb-1">{latestProject?.data.category || 'Showcase Proyek'}</p>
+              <h4 class="group-hover:text-blue-600 transition-colors">
                 {latestProject?.data.title || 'Lihat Portofolio Kami'}
               </h4>
             </div>
@@ -180,9 +179,7 @@ const description = "Solusi digital terpercaya untuk UMKM and Bisnis. Kami melay
 
   <Workflow />
 
-  <Pricing />
-
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-24">
+  <div class="section-spacing container-custom">
     <PricingTable />
   </div>
 
@@ -195,13 +192,13 @@ const description = "Solusi digital terpercaya untuk UMKM and Bisnis. Kami melay
   />
 
   <!-- 7. Final CTA Section -->
-  <section class="py-12 pb-20 md:pb-24 bg-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="bg-gradient-to-br from-blue-600 to-blue-800 rounded-[2rem] md:rounded-3xl p-8 md:p-24 relative overflow-hidden text-center shadow-2xl shadow-blue-200">
-        <h2 class="font-bold text-white mb-6 md:mb-8 relative z-10 leading-tight">Siap Membuat Bisnis Anda Online?</h2>
-        <p class="text-blue-100 mb-10 md:mb-12 max-w-xl mx-auto relative z-10 text-sm md:text-lg">Konsultasi gratis, tanpa komitmen. Mari diskusikan bagaimana kami bisa membantu bisnis Anda tumbuh lebih besar di ekosistem digital.</p>
+  <section class="section-spacing bg-white">
+    <div class="container-custom">
+      <div class="bg-gradient-to-br from-blue-600 to-blue-800 rounded-[2rem] p-8 md:p-24 relative overflow-hidden text-center shadow-2xl shadow-blue-200">
+        <h2 class="text-white mb-6 md:mb-8 relative z-10">Siap Membuat Bisnis Anda Online?</h2>
+        <p class="text-blue-100 mb-10 md:mb-12 max-w-xl mx-auto relative z-10">Konsultasi gratis, tanpa komitmen. Mari diskusikan bagaimana kami bisa membantu bisnis Anda tumbuh lebih besar di ekosistem digital.</p>
         <div class="relative z-10 flex justify-center">
-          <WhatsAppCTA label="Chat WhatsApp Sekarang" variant="white" class="shadow-xl shadow-blue-900/40 w-full sm:w-auto" />
+          <WhatsAppCTA label="Chat WhatsApp Sekarang" variant="white" class="w-full sm:w-auto" />
         </div>
 
         <!-- Abstract Decorations -->
