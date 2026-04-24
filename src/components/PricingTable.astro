@@ -157,14 +157,19 @@ const plans = [
     /* Cover Flow Initial States for smooth JS transition */
     .pricing-card {
       transform: scale(0.85);
-      opacity: 0.3;
-      filter: blur(2px);
+      opacity: 0.4;
+    }
+    .pricing-card > div {
+      filter: blur(3px);
+      transition: filter 0.7s cubic-bezier(0.2,0.8,0.2,1);
     }
     .pricing-card.is-active {
       transform: scale(1);
       opacity: 1;
-      filter: blur(0px);
       box-shadow: 0 25px 50px -12px rgba(37, 99, 235, 0.25);
+    }
+    .pricing-card.is-active > div {
+      filter: blur(0px);
     }
     .pricing-card.is-active .hint-text {
       opacity: 1;
