@@ -1,12 +1,19 @@
 ---
 const comparisons = [
-  { label: "Cocok Untuk", starter: "Bisnis Perorangan", business: "Perusahaan / UKM", icon: "user" },
-  { label: "Email Bisnis", starter: "❌ Tidak Ada", business: "✅ Profesional", icon: "mail" },
-  { label: "Optimasi Google", starter: "Dasar", business: "Prioritas Maps", icon: "search" },
-  { label: "Jumlah Halaman", starter: "1 Halaman", business: "Hingga 5 Hal", icon: "layers" },
-  { label: "Biaya Hosting", starter: "Rp 0", business: "Rp 0", icon: "database" },
-  { label: "Kecepatan", starter: "Sangat Cepat", business: "Ultra Cepat", icon: "zap" }
+  { label: "Cocok Untuk", starter: "Bisnis Perorangan", business: "Perusahaan / UKM", custom: "Skala Enterprise", icon: "user" },
+  { label: "Email Bisnis", starter: "minus", business: "check", custom: "check", icon: "mail" },
+  { label: "Optimasi Google", starter: "Dasar", business: "Prioritas Maps", custom: "Dominasi Nasional", icon: "search" },
+  { label: "Jumlah Halaman", starter: "1 Halaman", business: "Hingga 5 Hal", custom: "Tidak Terbatas", icon: "layers" },
+  { label: "Sistem Kustom", starter: "minus", business: "minus", custom: "check", icon: "code" },
+  { label: "Biaya Hosting", starter: "Rp 0", business: "Rp 0", custom: "Rp 0", icon: "database" },
+  { label: "Kecepatan", starter: "Sangat Cepat", business: "Ultra Cepat", custom: "Ultra Cepat", icon: "zap" }
 ];
+
+const renderIcon = (val: string) => {
+  if (val === 'check') return `<span data-lucide="check" class="w-5 h-5 text-emerald-500 mx-auto"></span>`;
+  if (val === 'minus') return `<span data-lucide="minus" class="w-5 h-5 text-slate-300 mx-auto"></span>`;
+  return val;
+};
 ---
 
 <div class="mt-24 relative px-4">
@@ -15,73 +22,78 @@ const comparisons = [
     <p class="text-slate-500 text-sm">Transparansi penuh untuk membantu Anda mengambil keputusan terbaik.</p>
   </div>
 
-  <div class="max-w-4xl mx-auto bg-white rounded-[2rem] shadow-2xl shadow-blue-100/50 border border-blue-50 overflow-hidden">
-    <!-- Desktop Header Grid -->
-    <div class="hidden md:grid grid-cols-3 bg-slate-900 text-white border-b border-slate-800">
-      <div class="p-6 text-xs font-black uppercase tracking-widest text-slate-400 items-center flex">Fitur Utama</div>
-      <div class="p-6 text-xs font-black uppercase tracking-widest text-center border-l border-slate-800 flex flex-col gap-1 items-center justify-center">
-        <span class="text-[10px] text-blue-400">Paket</span>
-        <span class="text-sm">Starter</span>
-      </div>
-      <div class="p-6 text-xs font-black uppercase tracking-widest text-center border-l border-slate-800 bg-blue-600 flex flex-col gap-1 items-center justify-center">
-        <span class="text-[10px] text-blue-100">Paket</span>
-        <span class="text-sm">Business</span>
-      </div>
-    </div>
-
-    <!-- Mobile Comparison (Stacked / Scrollable) -->
-    <div class="md:hidden flex overflow-x-auto snap-x snap-mandatory no-scrollbar bg-slate-900 text-white">
-      <div class="min-w-full snap-center p-8 text-center bg-slate-900 border-r border-slate-800">
-        <span class="text-[10px] text-blue-400 font-black uppercase tracking-widest">Paket</span>
-        <h4 class="text-2xl font-black">Starter</h4>
-        <p class="text-xs text-slate-400 mt-2">← Geser untuk Paket Business →</p>
-      </div>
-      <div class="min-w-full snap-center p-8 text-center bg-blue-600">
-        <span class="text-[10px] text-blue-100 font-black uppercase tracking-widest">Paket</span>
-        <h4 class="text-2xl font-black">Business</h4>
-        <p class="text-xs text-blue-200 mt-2">← Geser untuk Paket Starter</p>
-      </div>
-    </div>
-
-    <!-- Table Body -->
-    <div class="bg-white border-x border-b border-slate-200 rounded-b-[2rem] shadow-2xl overflow-hidden">
-      {comparisons.map((row, i) => (
-        <div class:list={[
-          "grid grid-cols-2 md:grid-cols-3 border-t border-slate-100 transition-all hover:bg-blue-50/20 group",
-          i === 0 ? "md:border-t-0" : ""
-        ]}>
-          <!-- Feature Label (Desktop) -->
-          <div class="hidden md:flex p-6 items-center gap-4 bg-slate-50/30">
-            <div class="w-10 h-10 rounded-xl bg-white shadow-sm text-blue-600 flex items-center justify-center group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 border border-slate-100">
-              <span data-lucide={row.icon} class="w-5 h-5"></span>
-            </div>
-            <span class="font-bold text-slate-800 text-sm">{row.label}</span>
+  <div class="max-w-5xl mx-auto bg-white rounded-[2rem] shadow-2xl shadow-blue-100/50 border border-blue-50 overflow-hidden">
+    
+    <!-- Table Wrapper with Horizontal Scroll on Mobile -->
+    <div class="overflow-x-auto no-scrollbar">
+      <!-- Force min-width to ensure 4 columns are readable on mobile, snap scrolling -->
+      <div class="min-w-[600px] md:min-w-full snap-x snap-mandatory">
+        
+        <!-- Header Grid (4 Columns) -->
+        <div class="grid grid-cols-4 bg-slate-900 text-white border-b border-slate-800">
+          <!-- Sticky Feature Label Column -->
+          <div class="p-4 md:p-6 text-xs font-black uppercase tracking-widest text-slate-400 items-center flex sticky left-0 z-20 bg-slate-900 border-r border-slate-800">
+            Fitur Utama
           </div>
-
-          <!-- Feature Label (Mobile Overlay / Integrated) -->
-          <div class="md:hidden col-span-2 p-4 bg-slate-50/80 border-b border-slate-100 flex items-center justify-center gap-2">
-            <span data-lucide={row.icon} class="w-3.5 h-3.5 text-blue-600"></span>
-            <span class="font-black text-[10px] uppercase tracking-widest text-slate-500">{row.label}</span>
+          
+          <div class="p-4 md:p-6 text-xs font-black uppercase tracking-widest text-center border-r border-slate-800 flex flex-col gap-1 items-center justify-center snap-start">
+            <span class="text-[10px] text-slate-400">Paket</span>
+            <span class="text-sm">Starter</span>
           </div>
-
-          <!-- Starter Value -->
-          <div class="p-6 md:p-8 text-center border-l md:border-l border-slate-100 flex flex-col items-center justify-center gap-2 not-italic">
-            <span class="text-slate-600 text-[13px] md:text-base font-medium">{row.starter}</span>
+          
+          <!-- Highlighted Business Column Header -->
+          <div class="p-4 md:p-6 text-xs font-black uppercase tracking-widest text-center border-r border-blue-700 bg-blue-600 flex flex-col gap-1 items-center justify-center snap-start">
+            <span class="text-[10px] text-blue-200">Recomended</span>
+            <span class="text-sm">Business</span>
           </div>
-
-          <!-- Business Value -->
-          <div class="p-6 md:p-8 text-center border-l border-slate-100 bg-blue-50/10 flex flex-col items-center justify-center gap-2 relative not-italic">
-            <span class="text-blue-900 text-[13px] md:text-base font-bold">{row.business}</span>
+          
+          <div class="p-4 md:p-6 text-xs font-black uppercase tracking-widest text-center flex flex-col gap-1 items-center justify-center snap-start">
+            <span class="text-[10px] text-slate-400">Paket</span>
+            <span class="text-sm text-slate-200">Custom</span>
           </div>
         </div>
-      ))}
+
+        <!-- Table Body -->
+        <div class="bg-white border-b border-slate-200 rounded-b-[2rem] overflow-hidden">
+          {comparisons.map((row, i) => (
+            <div class:list={[
+              "grid grid-cols-4 border-t border-slate-100 transition-all hover:bg-slate-50/50 group",
+              i === 0 ? "border-t-0" : ""
+            ]}>
+              <!-- Sticky Feature Label Column -->
+              <div class="p-4 md:p-6 flex items-center gap-3 md:gap-4 bg-white/95 backdrop-blur-sm sticky left-0 z-20 border-r border-slate-100 shadow-[2px_0_10px_rgba(0,0,0,0.02)]">
+                <div class="w-8 h-8 md:w-10 md:h-10 rounded-xl bg-slate-50 text-slate-500 flex items-center justify-center group-hover:text-blue-600 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 border border-slate-100 shrink-0">
+                  <span data-lucide={row.icon} class="w-4 h-4 md:w-5 md:h-5"></span>
+                </div>
+                <span class="font-bold text-slate-800 text-xs md:text-sm">{row.label}</span>
+              </div>
+
+              <!-- Starter Value -->
+              <div class="p-4 md:p-6 text-center border-r border-slate-100 flex flex-col items-center justify-center gap-2 not-italic snap-start bg-white">
+                <span class="text-slate-600 text-[12px] md:text-[14px] font-medium" set:html={renderIcon(row.starter)}></span>
+              </div>
+
+              <!-- Business Value (Highlighted) -->
+              <div class="p-4 md:p-6 text-center border-r border-slate-100 bg-blue-50/30 flex flex-col items-center justify-center gap-2 relative not-italic snap-start">
+                <span class="text-blue-900 text-[12px] md:text-[14px] font-bold" set:html={renderIcon(row.business)}></span>
+              </div>
+              
+              <!-- Custom Value -->
+              <div class="p-4 md:p-6 text-center flex flex-col items-center justify-center gap-2 not-italic snap-start bg-white">
+                <span class="text-slate-800 text-[12px] md:text-[14px] font-bold" set:html={renderIcon(row.custom)}></span>
+              </div>
+            </div>
+          ))}
+        </div>
+        
+      </div>
     </div>
   </div>
 
   <!-- Footnote -->
-  <div class="max-w-4xl mx-auto mt-8 flex items-center justify-center gap-2 text-slate-400 not-italic text-[10px] md:text-xs">
-    <span data-lucide="help-circle" class="w-3 h-3"></span>
-    <span>Investasi ini dirancang untuk ROI bisnis jangka panjang di ekosistem digital.</span>
+  <div class="max-w-4xl mx-auto mt-8 flex items-center justify-center gap-2 text-slate-400 not-italic text-[10px] md:text-xs text-center px-4">
+    <span data-lucide="help-circle" class="w-3 h-3 shrink-0"></span>
+    <span class="text-balance">Investasi ini dirancang untuk ROI bisnis jangka panjang di ekosistem digital. Geser tabel untuk melihat perbandingan lengkap.</span>
   </div>
 
   <!-- Decorative -->
