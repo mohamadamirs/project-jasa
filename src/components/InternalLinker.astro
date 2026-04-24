@@ -28,14 +28,14 @@ const relatedAreas = allAreas
       </a>
     </div>
 
-    <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+    <div class="grid grid-cols-2 md:grid-cols-5 gap-2 md:gap-4">
       {relatedAreas.map(area => (
         <a 
           href={`/${area.id}/`} 
-          class="p-4 bg-slate-50 rounded-2xl border border-transparent hover:border-blue-200 hover:bg-white transition-all text-center group active:scale-95"
+          class="p-3 md:p-4 bg-slate-50 rounded-2xl border border-transparent hover:border-blue-200 hover:bg-white transition-all text-center group active:scale-95 min-h-[80px] flex flex-col justify-center"
         >
-          <span class="block text-slate-700 font-bold text-sm group-hover:text-blue-600 transition-colors">{area.data.cityName}</span>
-          <span class="text-[10px] text-slate-400 uppercase tracking-widest mt-1 block">Jasa Website</span>
+          <span class="block text-slate-700 font-bold text-sm group-hover:text-blue-600 transition-colors text-balance">{area.data.cityName}</span>
+          <span class="text-[9px] md:text-[10px] text-slate-400 uppercase tracking-widest mt-1 block">Jasa Website</span>
         </a>
       ))}
     </div>
