@@ -29,11 +29,11 @@ const {
       <SectionHeader {title} {subtitle} align="center" />
     </div>
 
-    <div class="grid grid-cols-2 md:grid-cols-5 gap-3 md:gap-4">
+    <div class="grid grid-cols-2 md:grid-cols-5 gap-2 md:gap-4">
       {areas.map((area) => (
-        <a href={`/${area.id}/`} class="group p-5 md:p-8 bg-white rounded-3xl border border-slate-100 hover:bg-blue-600 transition-all duration-500 ease-out text-center hover:shadow-xl hover:shadow-blue-200 hover-lift active:scale-95 flex flex-col items-center justify-center min-h-[120px] md:min-h-[160px]">
-          <span class="block w-full text-slate-900 font-bold group-hover:text-white transition-colors duration-300 text-sm md:text-lg leading-tight">{area.data.cityName}</span>
-          <span class="text-[10px] md:text-xs uppercase tracking-[0.2em] text-slate-400 group-hover:text-blue-100 transition-colors duration-300 flex items-center justify-center mt-4 font-black">
+        <a href={`/${area.id}/`} class="group p-3 md:p-8 bg-white rounded-3xl border border-slate-100 hover:bg-blue-600 transition-all duration-500 ease-out text-center hover:shadow-xl hover:shadow-blue-200 hover-lift active:scale-95 flex flex-col items-center justify-center min-h-[110px] md:min-h-[160px]">
+          <span class="block w-full text-slate-900 font-bold group-hover:text-white transition-colors duration-300 text-sm md:text-lg leading-tight text-balance">{area.data.cityName}</span>
+          <span class="text-[10px] md:text-xs uppercase tracking-[0.2em] text-slate-400 group-hover:text-blue-100 transition-colors duration-300 flex items-center justify-center mt-3 font-black">
             Detail
           </span>
         </a>
