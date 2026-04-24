@@ -21,23 +21,39 @@ const {
   subtitle = "Klik wilayah Anda untuk melihat penawaran khusus dan konsultasi personal.",
   class: className 
 } = Astro.props;
+
+// Duplikasi list untuk efek endless marquee yang mulus di mobile
+const doubledAreas = [...areas, ...areas];
+const totalItems = doubledAreas.length;
+const duration = 40; 
 ---
 
 <section class:list={["py-12 md:py-24 bg-white", className]}>
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 overflow-hidden">
     <div class="text-center max-w-2xl mx-auto mb-12">
       <SectionHeader {title} {subtitle} align="center" />
     </div>
 
-    <div class="grid grid-cols-2 md:grid-cols-5 gap-2 md:gap-4">
-      {areas.map((area) => (
-        <a href={`/${area.id}/`} class="group p-3 md:p-8 bg-white rounded-3xl border border-slate-100 hover:bg-blue-600 transition-all duration-500 ease-out text-center hover:shadow-xl hover:shadow-blue-200 hover-lift active:scale-95 flex flex-col items-center justify-center min-h-[110px] md:min-h-[160px]">
-          <span class="block w-full text-slate-900 font-bold group-hover:text-white transition-colors duration-300 text-sm md:text-lg leading-tight text-balance">{area.data.cityName}</span>
-          <span class="text-[10px] md:text-xs uppercase tracking-[0.2em] text-slate-400 group-hover:text-blue-100 transition-colors duration-300 flex items-center justify-center mt-3 font-black">
-            Detail
-          </span>
-        </a>
-      ))}
+    <div class="area-marquee-container">
+      <div class="area-marquee-track">
+        {doubledAreas.map((area, index) => (
+          <div 
+            class:list={[
+              "area-marquee-item",
+              index >= areas.length ? "hidden md:hidden lg:hidden" : "flex", /* Sembunyikan duplikat di desktop */
+              index >= areas.length ? "min-[320px]:flex" : "" /* Munculkan kembali hanya untuk track marquee mobile */
+            ]}
+            style={`--delay: ${(index * (duration / (totalItems / 2)) * -1).toFixed(2)}s;`}
+          >
+            <a href={`/${area.id}/`} class="group p-3 md:p-8 bg-white rounded-3xl border border-slate-100 hover:bg-blue-600 transition-all duration-500 ease-out text-center hover:shadow-xl hover:shadow-blue-200 hover-lift active:scale-95 flex flex-col items-center justify-center min-h-[110px] md:min-h-[160px] w-full h-full">
+              <span class="block w-full text-slate-900 font-bold group-hover:text-white transition-colors duration-300 text-sm md:text-lg leading-tight text-balance">{area.data.cityName}</span>
+              <span class="text-[10px] md:text-xs uppercase tracking-[0.2em] text-slate-400 group-hover:text-blue-100 transition-colors duration-300 flex items-center justify-center mt-3 font-black">
+                Detail
+              </span>
+            </a>
+          </div>
+        ))}
+      </div>
     </div>
   </div>
 </section>
