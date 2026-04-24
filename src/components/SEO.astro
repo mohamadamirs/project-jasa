@@ -1,0 +1,97 @@
+---
+import { SITE_NAME, DEFAULT_COORDINATES } from '../consts';
+
+interface Props {
+  title: string;
+  description: string;
+  cityName?: string;
+  localContext?: string;
+  localLandmark?: string;
+  businessTrends?: string;
+  lat?: string | number;
+  lng?: string | number;
+}
+
+const { title, description, cityName, localContext, localLandmark, businessTrends, lat, lng } = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://kutabaru.id');
+
+// JSON-LD Schema untuk Local SEO
+const jsonLd: any = [
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": SITE_NAME,
+    "description": localContext || description,
+    "url": canonicalURL,
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": cityName || "Brebes",
+      "addressRegion": "Jawa Tengah",
+      "addressCountry": "ID"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": lat || DEFAULT_COORDINATES.lat,
+      "longitude": lng || DEFAULT_COORDINATES.lng
+    },
+    "areaServed": {
+      "@type": "AdministrativeArea",
+      "name": cityName || "Brebes"
+    },
+    "knowsAbout": ["Web Development", "IoT", "SEO", businessTrends].filter(Boolean),
+    "priceRange": "Rp 999.000 - Rp 25.000.000"
+  }
+];
+
+if (cityName) {
+  jsonLd.push({
+    "@context": "https://schema.org",
+    "@type": "Review",
+    "itemReviewed": {
+      "@type": "LocalBusiness",
+      "name": `${SITE_NAME} ${cityName}`
+    },
+    "reviewRating": {
+      "@type": "Rating",
+      "ratingValue": "5",
+      "bestRating": "5"
+    },
+    "author": {
+      "@type": "Person",
+      "name": "Klien Lokal"
+    }
+  });
+}
+---
+
+<!-- Global Metadata -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<link rel="icon" type="image/svg+xml" href="/logo.svg" />
+<meta name="generator" content={Astro.generator} />
+
+<!-- Canonical URL -->
+<link rel="canonical" href={canonicalURL} />
+
+<!-- Primary Meta Tags -->
+<title>{title}</title>
+<meta name="title" content={title} />
+<meta name="description" content={description} />
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website" />
+<meta property="og:url" content={canonicalURL} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content="/og-image.jpg" />
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:url" content={canonicalURL} />
+<meta property="twitter:title" content={title} />
+<meta property="twitter:description" content={description} />
+<meta property="twitter:image" content="/og-image.jpg" />
+
+<!-- JSON-LD Schema -->
+<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />

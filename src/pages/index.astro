@@ -1,0 +1,189 @@
+---
+import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
+import MainLayout from '../layouts/MainLayout.astro';
+import WhatsAppCTA from '../components/WhatsAppCTA.astro';
+import Pricing from '../components/Pricing.astro';
+import PricingTable from '../components/PricingTable.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import SocialProof from '../components/SocialProof.astro';
+import FAQ from '../components/FAQ.astro';
+import AreaGrid from '../components/AreaGrid.astro';
+import Workflow from '../components/Workflow.astro';
+import PerformanceBadge from '../components/PerformanceBadge.astro';
+import { seededSpin } from '../utils/spintax';
+
+// Ambil semua data wilayah untuk ditampilkan di daftar layanan
+const areas = await getCollection('areas');
+// Ambil portofolio terbaru untuk showcase
+const allPortfolios = await getCollection('portfolios');
+const latestProject = allPortfolios[0];
+
+const title = "Kutabaru Web Agency - Jasa Pembuatan Website Profesional & SEO";
+const description = "Solusi digital terpercaya untuk UMKM and Bisnis. Kami melayani jasa pembuatan website cepat, responsif, dan optimal untuk SEO di wilayah Brebes, Tegal, dan sekitarnya.";
+---
+
+<MainLayout {title} {description}>
+  <!-- 1. Hero Branding Section (Premium & Clean) -->
+  <section class="relative pt-20 pb-24 md:pt-32 md:pb-40 overflow-hidden bg-white">
+    <!-- Sophisticated Backdrop -->
+    <div class="absolute inset-0 z-0">
+      <div class="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_-20%,rgba(37,99,235,0.08),rgba(255,255,255,0))]"></div>
+      <!-- Subtle Pattern -->
+      <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-[0.02]"></div>
+      <!-- Controlled Decorative Blobs -->
+      <div class="absolute top-[-10%] right-[-10%] w-[clamp(20rem,40vw,40rem)] aspect-square bg-blue-50 rounded-full blur-[100px] opacity-60 animate-float"></div>
+      <div class="absolute bottom-[-10%] left-[-10%] w-[clamp(15rem,30vw,30rem)] aspect-square bg-sky-50 rounded-full blur-[80px] opacity-50 animate-float-delayed"></div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="text-center max-w-5xl mx-auto">
+        <div class="inline-flex items-center px-4 py-2 rounded-full text-xs md:text-sm font-bold bg-blue-50/50 backdrop-blur-sm text-blue-700 border border-blue-100 mb-8 md:mb-10 animate-reveal">
+          <span class="flex h-2 w-2 rounded-full bg-blue-600 mr-3 animate-pulse"></span>
+          {seededSpin("#1 Digital Partner {Terbaik|Terpercaya|Andalan} di Brebes & Tegal", "global")}
+        </div>
+        <h1 class="font-extrabold text-slate-900 tracking-tight mb-8 md:mb-10 leading-[1.1] animate-reveal-delayed">
+          Ubah Bisnis Lokal Anda Menjadi <br class="hidden md:block" /><span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-800">Mesin Profit Digital</span>
+        </h1>
+        <p class="text-base md:text-xl text-slate-600 mb-10 md:mb-14 leading-relaxed max-w-3xl mx-auto px-2 md:px-0 opacity-0 animate-reveal-delayed-2">
+          Kami tidak hanya membangun website. Kami menciptakan aset digital premium yang mendatangkan pelanggan setia menggunakan teknologi Astro 6 terbaru.
+        </p>
+        <div class="flex flex-col sm:flex-row justify-center items-center gap-4 px-4 sm:px-0 opacity-0 animate-reveal-delayed-3">
+          <WhatsAppCTA label="Mulai Konsultasi Gratis" class="shadow-xl shadow-blue-500/10 w-full sm:w-auto" />
+          <a href="#layanan" class="w-full sm:w-auto px-8 md:px-10 py-4 md:py-5 bg-white text-slate-700 font-bold rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-lg transition-all text-base md:text-lg flex items-center justify-center active:scale-95 group">
+            Lihat Layanan <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right ml-2 group-hover:translate-x-1 transition-transform"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </a>
+        </div>
+        <div class="mt-16 md:mt-20 flex justify-center opacity-0 animate-reveal-delayed-3">
+          <PerformanceBadge />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <SocialProof />
+
+  <!-- 3. Layanan Unggulan Section -->
+  <section id="layanan" class="py-12 md:py-24 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <SectionHeader 
+        title="Layanan Unggulan Kami" 
+        subtitle="Solusi digital menyeluruh untuk kebutuhan skala bisnis apapun." 
+      />
+
+      <div class="flex flex-wrap md:grid md:grid-cols-3 gap-6 md:gap-8 justify-center">
+        {[
+          {
+            title: "Website Kustom",
+            desc: "Arsitektur modern untuk bisnis skala menengah.",
+            icon: "code-2"
+          },
+          {
+            title: "IoT Solutions",
+            desc: "Integrasi cerdas untuk efisiensi operasional.",
+            icon: "cpu"
+          },
+          {
+            title: "SEO Lokal",
+            desc: "Dominasi pencarian lokal Google otomatis.",
+            icon: "map-pin"
+          }
+        ].map((item) => (
+          <div class="w-full sm:w-[calc(50%-12px)] md:w-full bg-white p-6 md:p-8 rounded-3xl shadow-sm border border-slate-100 hover:shadow-xl transition-all hover-lift group grid grid-rows-[auto_1fr] gap-4">
+            <div class="w-12 h-12 md:w-14 md:h-14 bg-blue-50 rounded-2xl flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition-all">
+              <span data-lucide={item.icon} class="w-7 h-7 text-blue-600 group-hover:text-white"></span>
+            </div>
+            <div>
+              <h3 class="text-lg md:text-xl font-bold text-slate-900 mb-2">{item.title}</h3>
+              <p class="text-slate-600 leading-relaxed text-xs md:text-sm">{item.desc}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Portofolio / Studi Kasus Section -->
+  <section id="portofolio" class="py-12 md:py-24 bg-sky-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div class="text-center lg:text-left">
+          <SectionHeader 
+            title="Bukan Sekadar Kode, Tapi <span class='text-blue-600'>Hasil Nyata</span>" 
+            subtitle="Lihat bagaimana kami membantu bisnis lokal bertransformasi dari offline ke ekosistem digital yang menghasilkan profit."
+            align="left"
+            class="mb-8"
+          />
+          <div class="grid grid-cols-2 gap-4 max-w-sm mx-auto lg:mx-0">
+            <div class="bg-white p-5 md:p-6 rounded-2xl border border-blue-100">
+              <p class="text-2xl md:text-3xl font-black text-blue-600 mb-1">50+</p>
+              <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Website Live</p>
+            </div>
+            <div class="bg-white p-5 md:p-6 rounded-2xl border border-blue-100">
+              <p class="text-2xl md:text-3xl font-black text-blue-600 mb-1">99%</p>
+              <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Klien Puas</p>
+            </div>
+          </div>
+        </div>
+        <div class="bg-white p-3 md:p-4 rounded-[2rem] shadow-xl border border-slate-100 group">
+          <a href={latestProject ? `/portofolio/${latestProject.id}` : "/portofolio"}>
+            <div class="bg-slate-50 aspect-video rounded-2xl overflow-hidden flex items-center justify-center border border-slate-200 relative">
+              {latestProject?.data.images?.[0] ? (
+                <Image 
+                  src={latestProject.data.images[0]} 
+                  alt={latestProject.data.title} 
+                  width={800}
+                  height={450}
+                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
+                />
+              ) : (
+                <span data-lucide="play-circle" class="w-16 h-16 text-slate-300"></span>
+              )}
+            </div>
+            <div class="p-5 md:p-6 text-left">
+              <p class="text-xs md:text-sm font-bold text-blue-600 mb-1">{latestProject?.data.category || 'Showcase Proyek'}</p>
+              <h4 class="text-lg md:text-xl font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
+                {latestProject?.data.title || 'Lihat Portofolio Kami'}
+              </h4>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <AreaGrid {areas} />
+
+  <Workflow />
+
+  <Pricing />
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-24">
+    <PricingTable />
+  </div>
+
+  <FAQ 
+    items={[
+      { q: "Apa perbedaan domain .my.id dan .com?", a: "Domain .my.id sangat ekonomis dan cocok untuk identitas personal/bisnis mikro. Domain .com atau .id memberikan kesan yang lebih profesional dan kredibilitas tinggi bagi bisnis skala menengah." },
+      { q: "Apa yang dimaksud dengan Tanpa Biaya Hosting?", a: "Website kami dibangun dengan arsitektur statis yang di-host secara gratis di CDN global. Anda selamanya tidak perlu membayar tagihan bulanan atau tahunan untuk sewa hosting." },
+      { q: "Berapa lama pengerjaan satu website?", a: "Untuk paket Starter, rata-rata selesai dalam 2-3 hari kerja setelah data lengkap kami terima." }
+    ]} 
+  />
+
+  <!-- 7. Final CTA Section -->
+  <section class="py-12 pb-20 md:pb-24 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-gradient-to-br from-blue-600 to-blue-800 rounded-[2rem] md:rounded-3xl p-8 md:p-24 relative overflow-hidden text-center shadow-2xl shadow-blue-200">
+        <h2 class="font-bold text-white mb-6 md:mb-8 relative z-10 leading-tight">Siap Membuat Bisnis Anda Online?</h2>
+        <p class="text-blue-100 mb-10 md:mb-12 max-w-xl mx-auto relative z-10 text-sm md:text-lg">Konsultasi gratis, tanpa komitmen. Mari diskusikan bagaimana kami bisa membantu bisnis Anda tumbuh lebih besar di ekosistem digital.</p>
+        <div class="relative z-10 flex justify-center">
+          <WhatsAppCTA label="Chat WhatsApp Sekarang" variant="white" class="shadow-xl shadow-blue-900/40 w-full sm:w-auto" />
+        </div>
+
+        <!-- Abstract Decorations -->
+        <div class="absolute top-0 right-0 -translate-y-1/2 translate-x-1/4 w-[clamp(12rem,25vw,18rem)] aspect-square bg-white rounded-full blur-[60px] md:blur-[80px] opacity-10 animate-float"></div>
+        <div class="absolute bottom-0 left-0 translate-y-1/2 -translate-x-1/4 w-[clamp(14rem,30vw,20rem)] aspect-square bg-blue-400 rounded-full blur-[70px] md:blur-[90px] opacity-20 animate-float-delayed"></div>
+      </div>
+    </div>
+  </section>
+</MainLayout>

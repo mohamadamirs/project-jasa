@@ -1,0 +1,98 @@
+---
+import { getCollection, render } from 'astro:content';
+import MainLayout from '../layouts/MainLayout.astro';
+import WhatsAppCTA from '../components/WhatsAppCTA.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import FAQ from '../components/FAQ.astro';
+import LocalInsight from '../components/LocalInsight.astro';
+import Workflow from '../components/Workflow.astro';
+import InternalLinker from '../components/InternalLinker.astro';
+import PerformanceBadge from '../components/PerformanceBadge.astro';
+import { seededSpin } from '../utils/spintax';
+
+export async function getStaticPaths() {
+  const areaEntries = await getCollection('areas');
+  return areaEntries.map(entry => ({
+    params: { area: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { cityName, title, description, localContext, nearbyAreas, whatsappMessage, localLandmark, businessTrends, clientCountLocal, lat, lng } = entry.data;
+---
+
+<MainLayout {title} {description} {cityName} {localContext} {localLandmark} {businessTrends} {lat} {lng}>
+  <!-- 1. Local Hero Section (Revamped) -->
+  <section class="relative pt-16 pb-20 md:py-24 lg:py-32 overflow-hidden bg-white">
+    <div class="absolute inset-0 z-0">
+      <div class="absolute top-0 right-0 w-full h-full bg-[radial-gradient(circle_at_80%_20%,rgba(37,99,235,0.05),rgba(255,255,255,0))]"></div>
+      <div class="absolute top-[-10%] right-[-10%] w-[40%] aspect-square bg-blue-50 rounded-full blur-[100px] opacity-40 animate-float"></div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="max-w-3xl text-center md:text-left">
+        <div class="inline-flex items-center px-4 py-1.5 rounded-full text-xs md:text-sm font-bold bg-blue-50/80 backdrop-blur-sm text-blue-700 border border-blue-100 mb-8 animate-reveal not-italic">
+          <span data-lucide="map-pin" class="w-4 h-4 mr-2"></span> Layanan {seededSpin("{Terbaik|Terpercaya|Profesional}", cityName)} Wilayah {cityName}
+        </div>
+        <h1 class="font-extrabold text-slate-900 tracking-tight mb-8 leading-tight animate-reveal-delayed">
+          Jasa Pembuatan Website {seededSpin("{Modern|Kustom|Berkualitas}", cityName)} di <span class="text-blue-600">{cityName}</span>
+        </h1>
+        <p class="text-base md:text-xl text-slate-600 mb-10 leading-relaxed px-2 md:px-0 opacity-0 animate-reveal-delayed-2">
+          {description} Kami hadir membantu bisnis di {cityName} memiliki identitas digital premium yang cepat, aman, dan teroptimasi penuh untuk dominasi pasar lokal.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 px-4 sm:px-0 opacity-0 animate-reveal-delayed-3">
+          <WhatsAppCTA message={whatsappMessage} label="Konsultasi Gratis Sekarang" class="shadow-xl shadow-blue-200" />
+          <a href="#insight" class="inline-flex justify-center items-center px-8 py-4 border border-slate-200 text-base font-bold rounded-xl text-slate-700 bg-white/50 backdrop-blur-sm hover:bg-white hover:border-blue-300 transition-all active:scale-95">
+            Analisa Peluang Lokal
+          </a>
+        </div>
+        <div class="mt-10 flex justify-center md:justify-start opacity-0 animate-reveal-delayed-3">
+          <PerformanceBadge />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. USP Lokal Section -->
+  <section class="py-12 md:py-24 bg-sky-50 border-y border-blue-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <SectionHeader 
+        title={`Mengapa Memilih Kutabaru di ${cityName}?`}
+        subtitle="Kami memahami karakteristik pasar lokal dan memberikan solusi yang relevan untuk pertumbuhan bisnis Anda."
+      />
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+        {[
+          { t: "Kecepatan Akses", d: "Website ringan yang dimuat kurang dari 2 detik untuk kenyamanan pelanggan lokal.", i: "zap" },
+          { t: "Optimasi Google Maps", d: "Integrasi penuh agar lokasi bisnis Anda di " + cityName + " mudah ditemukan.", i: "map" },
+          { t: "Support Personal", d: "Layanan purna jual yang ramah dan siap membantu kapanpun Anda butuhkan.", i: "message-square" }
+        ].map(usp => (
+          <div class="bg-white p-6 md:p-8 rounded-3xl border border-blue-100 text-left hover-lift transition-all hover:shadow-xl group not-italic">
+            <span data-lucide={usp.i} class="w-10 h-10 text-blue-600 mb-4 block group-hover:scale-110 transition-transform"></span>
+            <h4 class="font-bold text-lg md:text-xl text-slate-900 mb-2">{usp.t}</h4>
+            <p class="text-slate-600 text-sm leading-relaxed">{usp.d}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. Local Insight Section -->
+  <div id="insight">
+    <LocalInsight {cityName} {localContext} {localLandmark} {businessTrends} {clientCountLocal} />
+  </div>
+
+  <Workflow />
+
+  <FAQ 
+    title={`Pertanyaan Wilayah <span class="text-blue-600">${cityName}</span>`}
+    items={[
+      { q: "Apakah Anda bisa datang langsung ke lokasi saya di " + cityName + "?", a: "Tentu, untuk wilayah " + cityName + " kami bisa menjadwalkan pertemuan tatap muka atau melalui Zoom sesuai kenyamanan Anda." },
+      { q: "Apa perbedaan paket Starter 250rb dan Business 1.8jt?", a: "Paket Starter menggunakan domain .my.id dan cocok untuk profil dasar. Paket Business menggunakan domain profesional (.com/.id), email bisnis, dan mendapatkan prioritas SEO Lokal di Google Maps." },
+      { q: "Berapa biaya perpanjangan tahun berikutnya?", a: "Sangat terjangkau! Karena biaya hosting Rp 0, Anda hanya cukup membayar biaya perpanjangan domain saja mulai Rp 15rb (my.id) atau Rp 150rb (com/id) per tahun." }
+    ]} 
+    class="bg-white"
+  />
+
+  <InternalLinker currentAreaId={entry.id} {cityName} />
+</MainLayout>

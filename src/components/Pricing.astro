@@ -1,0 +1,112 @@
+---
+import WhatsAppCTA from './WhatsAppCTA.astro';
+
+const plans = [
+  {
+    name: "Starter (Ekonomis)",
+    price: "250rb",
+    desc: "Kehadiran digital esensial yang sangat hemat untuk bisnis perorangan.",
+    features: [
+      "1 Halaman Landing Page",
+      "Setup Domain Bisnis (.my.id)",
+      "Konfigurasi Server Statis",
+      "Tanpa Biaya Hosting (Zero Fees)",
+      "Optimasi SEO Lokal Dasar",
+      "Tombol Chat WhatsApp"
+    ],
+    waMessage: "Halo Kutabaru, saya tertarik dengan paket Starter 250rb.",
+    variant: "outline"
+  },
+  {
+    name: "Business (Recommended)",
+    price: "1.8jt",
+    desc: "Website lengkap dengan kredibilitas tinggi untuk pertumbuhan bisnis.",
+    features: [
+      "Hingga 5 Halaman Utama",
+      "Setup Domain Profesional (.com/.id)",
+      "Email Bisnis Profesional",
+      "SEO Lokal Prioritas Maps",
+      "Tanpa Biaya Hosting (Zero Fees)",
+      "Audit Performa Google (Skor 100)"
+    ],
+    waMessage: "Halo Kutabaru, saya tertarik dengan paket Business 1.8jt.",
+    variant: "primary",
+    popular: true
+  },
+  {
+    name: "Custom (Enterprise)",
+    price: "Hubungi Kami",
+    desc: "Solusi web kustom, sistem informasi, dan IoT untuk skala besar.",
+    features: [
+      "Arsitektur Web Kustom",
+      "Tanpa Biaya Hosting (Zero Fees)",
+      "Sistem Portofolio / Katalog",
+      "Integrasi IoT & Dashboard",
+      "Database Management",
+      "Maintenance Prioritas"
+    ],
+    waMessage: "Halo Kutabaru, saya tertarik dengan paket Custom/IoT Development.",
+    variant: "secondary"
+  }
+];
+---
+
+<section id="harga" class="py-12 md:py-24 bg-white relative overflow-hidden">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <div class="text-center mb-16">
+      <h2 class="text-3xl md:text-5xl font-bold text-slate-900 mb-4">Investasi <span class="text-blue-600">Terbaik</span> Untuk Bisnis Anda</h2>
+      <p class="text-slate-500 max-w-2xl mx-auto">Pilih paket yang sesuai dengan skala dan kebutuhan digitalisasi bisnis Anda saat ini.</p>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 items-stretch">
+      {plans.map((plan) => (
+        <div class:list={[
+          "relative flex flex-col p-6 md:p-8 rounded-3xl border transition-all duration-500 hover-lift",
+          plan.popular ? "bg-white border-blue-600 shadow-2xl shadow-blue-100 ring-1 ring-blue-600 sm:scale-[1.02] z-10" : "bg-white border-slate-100"
+        ]}>
+          {plan.popular && (
+            <div class="absolute top-0 right-8 -translate-y-1/2">
+              <span class="inline-flex items-center px-4 py-1 rounded-full text-xs font-bold bg-blue-600 text-white uppercase tracking-widest shadow-lg">
+                Paling Populer
+              </span>
+            </div>
+          )}
+          
+          <div class="mb-8">
+            <div class="flex justify-between items-start mb-2">
+              <h3 class="text-xl font-bold text-slate-900">{plan.name}</h3>
+              <span class="px-2 py-0.5 bg-emerald-100 text-emerald-700 text-[8px] font-bold uppercase rounded-md tracking-tighter">Zero Hosting Fees</span>
+            </div>
+            <div class="flex items-baseline gap-1">
+              <span class="text-4xl font-black text-slate-900 tracking-tight">{plan.price}</span>
+              {plan.price !== "Hubungi Kami" && <span class="text-slate-400 text-sm font-bold">/awal</span>}
+            </div>
+            <p class="mt-4 text-slate-500 text-sm leading-relaxed">{plan.desc}</p>
+          </div>
+
+          <ul class="space-y-4 mb-10 flex-grow">
+            {plan.features.map((feature) => (
+              <li class="flex items-start text-sm text-slate-600 not-italic">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-blue-600 mr-3 flex-shrink-0"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="m9 12 2 2 4-4"/></svg>
+                {feature}
+              </li>
+            ))}
+          </ul>
+
+          <WhatsAppCTA 
+            label={plan.price === "Hubungi Kami" ? "Minta Penawaran" : "Pilih Paket"} 
+            variant={plan.variant as any} 
+            message={plan.waMessage}
+            class="w-full"
+          />
+        </div>
+      ))}
+    </div>
+
+    <div class="mt-16 text-center">
+      <p class="text-slate-400 text-sm italic">
+        *Semua harga transparan. Arsitektur statis kami memungkinkan biaya hosting Rp 0 selamanya untuk bisnis Anda.
+      </p>
+    </div>
+  </div>
+</section>

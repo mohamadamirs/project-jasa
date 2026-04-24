@@ -1,0 +1,43 @@
+---
+import { getCollection } from 'astro:content';
+
+interface Props {
+  currentAreaId: string;
+  cityName: string;
+}
+
+const { currentAreaId, cityName } = Astro.props;
+
+// Ambil semua wilayah dan filter yang bukan diri sendiri
+const allAreas = await getCollection('areas');
+const relatedAreas = allAreas
+  .filter(area => area.id !== currentAreaId)
+  .sort(() => 0.5 - Math.random()) // Acak urutan
+  .slice(0, 5); // Ambil 5 saja
+---
+
+<section class="py-12 md:py-16 bg-white border-t border-slate-100">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex flex-col md:flex-row justify-between items-center mb-10 gap-4 text-center md:text-left">
+      <div>
+        <h3 class="text-xl md:text-2xl font-bold text-slate-900">Wilayah Layanan Lainnya</h3>
+        <p class="text-slate-500 text-sm mt-1">Kami juga melayani area sekitar {cityName} dengan standar kualitas yang sama.</p>
+      </div>
+      <a href="/" class="text-blue-600 font-bold text-sm hover:underline flex items-center active:scale-95">
+        Lihat Semua Wilayah <span data-lucide="arrow-right" class="ml-1 w-4 h-4"></span>
+      </a>
+    </div>
+
+    <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+      {relatedAreas.map(area => (
+        <a 
+          href={`/${area.id}/`} 
+          class="p-4 bg-slate-50 rounded-2xl border border-transparent hover:border-blue-200 hover:bg-white transition-all text-center group active:scale-95"
+        >
+          <span class="block text-slate-700 font-bold text-sm group-hover:text-blue-600 transition-colors">{area.data.cityName}</span>
+          <span class="text-[10px] text-slate-400 uppercase tracking-widest mt-1 block">Jasa Website</span>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
