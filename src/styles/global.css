@@ -14,6 +14,7 @@
   h1 { @apply font-extrabold tracking-tight leading-[1.1] text-[clamp(1.75rem,8vw,4.5rem)]; }
   h2 { @apply font-bold tracking-tight text-[clamp(1.5rem,6vw,3rem)]; }
   h3 { @apply font-bold text-[clamp(1.25rem,4vw,1.875rem)]; }
+  p { @apply leading-relaxed; }
 }
 
 @layer components {
