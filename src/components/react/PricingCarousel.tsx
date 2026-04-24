@@ -186,7 +186,7 @@ export default function PricingCarousel() {
               ? (isCenterMobile ? 'scale-100' : 'scale-[0.85]') 
               : (plan.recommended ? 'scale-105' : 'scale-100');
               
-            const opacityClass = isMobile ? (isCenterMobile ? 'opacity-100' : 'opacity-40') : 'opacity-100';
+            const opacityClass = isMobile ? (isCenterMobile ? 'opacity-100' : 'opacity-70') : 'opacity-100';
             const shadowClass = (isMobile && isCenterMobile) || (!isMobile && plan.recommended) ? 'shadow-[0_25px_50px_-12px_rgba(37,99,235,0.25)]' : 'shadow-xl';
             const zIndexClass = (isMobile && isCenterMobile) || (!isMobile && plan.recommended) ? 'z-10' : 'z-0';
 
@@ -212,7 +212,7 @@ export default function PricingCarousel() {
                   </div>
                 )}
 
-                <div className={`transition-all duration-700 ease-[cubic-bezier(0.2,0.8,0.2,1)] ${isMobile && !isCenterMobile ? 'blur-[3px]' : 'filter-none'}`}>
+                <div className="transition-all duration-700 ease-[cubic-bezier(0.2,0.8,0.2,1)] filter-none">
                   <div className={`text-center pb-6 border-b ${plan.theme === "light" ? "border-slate-200" : plan.theme === "blue" ? "border-blue-400/50" : "border-slate-700/50"}`}>
                     <span className={`text-[10px] font-black uppercase tracking-widest block mb-2 ${plan.theme === "light" ? "text-blue-600" : plan.theme === "blue" ? "text-blue-100" : "text-slate-400"}`}>
                       {plan.subtitle}
