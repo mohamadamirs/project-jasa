@@ -196,9 +196,9 @@ export default function PricingCarousel() {
                 ref={el => cardsRef.current[i] = el}
                 data-index={i}
                 className={`pricing-card shrink-0 w-[80vw] sm:w-[340px] md:w-full snap-center rounded-[2.5rem] p-6 md:p-8 transition-all duration-700 ease-[cubic-bezier(0.2,0.8,0.2,1)] relative origin-center
-                  ${plan.theme === "light" ? "bg-white border border-slate-200 text-slate-800" : 
-                    plan.theme === "blue" ? "bg-gradient-to-b from-blue-600 to-indigo-800 border border-blue-500 text-white" : 
-                    "bg-gradient-to-b from-slate-900 to-slate-950 border border-slate-800 text-slate-100"}
+                  ${plan.theme === "light" ? "bg-white/80 backdrop-blur-2xl border-2 border-sky-200 text-slate-900" : 
+                    plan.theme === "blue" ? "bg-blue-600/90 backdrop-blur-2xl border-2 border-blue-400 text-white" : 
+                    "bg-slate-900/95 backdrop-blur-2xl border-2 border-slate-700 text-white"}
                   ${scaleClass} ${opacityClass} ${zIndexClass}
                 `}
                 style={{ boxShadow: shadowClass }}
@@ -213,12 +213,12 @@ export default function PricingCarousel() {
                 )}
 
                 <div className={`transition-all duration-700 ease-[cubic-bezier(0.2,0.8,0.2,1)] ${isMobile && !isCenterMobile ? 'blur-[3px]' : 'filter-none'}`}>
-                  <div className={`text-center pb-6 border-b ${plan.theme === "light" ? "border-slate-100" : plan.theme === "blue" ? "border-blue-500/50" : "border-slate-800"}`}>
-                    <span className={`text-[10px] font-black uppercase tracking-widest block mb-2 ${plan.theme === "light" ? "text-slate-400" : plan.theme === "blue" ? "text-blue-300" : "text-slate-500"}`}>
+                  <div className={`text-center pb-6 border-b ${plan.theme === "light" ? "border-slate-200" : plan.theme === "blue" ? "border-blue-400/50" : "border-slate-700/50"}`}>
+                    <span className={`text-[10px] font-black uppercase tracking-widest block mb-2 ${plan.theme === "light" ? "text-blue-600" : plan.theme === "blue" ? "text-blue-100" : "text-slate-400"}`}>
                       {plan.subtitle}
                     </span>
                     <h4 className="text-3xl md:text-4xl font-black mb-3 tracking-tight">{plan.name}</h4>
-                    <div className={`inline-block px-4 py-2 rounded-xl text-lg font-bold shadow-inner ${plan.theme === "light" ? "bg-slate-50 text-slate-900" : plan.theme === "blue" ? "bg-blue-800/50 text-white backdrop-blur-sm" : "bg-white/5 text-white backdrop-blur-sm"}`}>
+                    <div className={`inline-block px-4 py-2 rounded-xl text-lg font-bold shadow-sm ${plan.theme === "light" ? "bg-slate-100 text-slate-900 border border-slate-200" : plan.theme === "blue" ? "bg-white/20 text-white backdrop-blur-md border border-white/30" : "bg-white/5 text-white backdrop-blur-md border border-white/10"}`}>
                       {plan.price}
                     </div>
                   </div>
@@ -231,20 +231,20 @@ export default function PricingCarousel() {
                           <li key={j} className="flex items-center gap-4">
                             <div className={`w-10 h-10 rounded-2xl flex items-center justify-center shrink-0 transition-colors shadow-sm
                               ${feature.active 
-                                ? (plan.theme === "light" ? "bg-blue-50 text-blue-600" : plan.theme === "blue" ? "bg-white/20 text-white backdrop-blur-sm" : "bg-blue-600/20 text-blue-400")
-                                : (plan.theme === "light" ? "bg-slate-50 text-slate-300 shadow-none" : plan.theme === "blue" ? "bg-blue-800/30 text-blue-400/50 shadow-none" : "bg-slate-800/50 text-slate-600 shadow-none")}
+                                ? (plan.theme === "light" ? "bg-sky-200/50 text-sky-700" : plan.theme === "blue" ? "bg-white/20 text-white backdrop-blur-sm" : "bg-blue-500/30 text-blue-300")
+                                : (plan.theme === "light" ? "bg-sky-50 text-sky-200 shadow-none" : plan.theme === "blue" ? "bg-blue-800/30 text-blue-400/50 shadow-none" : "bg-slate-800/50 text-slate-600 shadow-none")}
                             `}>
                               {Icon && <Icon className="w-5 h-5" />}
                             </div>
                             <div>
                               <span className={`block text-[10px] md:text-xs uppercase tracking-wider font-bold mb-0.5
-                                ${plan.theme === "light" ? "text-slate-400" : plan.theme === "blue" ? "text-blue-300" : "text-slate-500"}
+                                ${plan.theme === "light" ? "text-slate-500" : plan.theme === "blue" ? "text-blue-100/80" : "text-slate-400"}
                               `}>
                                 {feature.label}
                               </span>
-                              <span className={`block text-sm md:text-base font-semibold
-                                ${plan.theme === "light" ? "text-slate-700" : "text-white"}
-                                ${!feature.active ? "opacity-50" : ""}
+                              <span className={`block text-sm md:text-base font-bold
+                                ${plan.theme === "light" ? "text-slate-900" : "text-white"}
+                                ${!feature.active ? "opacity-30" : ""}
                               `}>
                                 {feature.value}
                               </span>
@@ -257,7 +257,7 @@ export default function PricingCarousel() {
 
                   {isMobile && (
                     <div className={`mt-8 text-center transition-opacity duration-300 hint-text ${isCenterMobile ? 'opacity-100' : 'opacity-0'}`}>
-                      <span className={`text-[10px] font-bold uppercase tracking-widest ${plan.theme === "light" ? "text-blue-600" : "text-blue-200"}`}>
+                      <span className={`text-[10px] font-bold uppercase tracking-widest ${plan.theme === "light" ? "text-sky-600" : "text-blue-200"}`}>
                         Paket Terpilih
                       </span>
                     </div>
