@@ -3,7 +3,6 @@ import { getCollection } from 'astro:content';
 import { Image } from 'astro:assets';
 import MainLayout from '../layouts/MainLayout.astro';
 import WhatsAppCTA from '../components/WhatsAppCTA.astro';
-import Pricing from '../components/Pricing.astro';
 import PricingTable from '../components/PricingTable.astro';
 import SectionHeader from '../components/SectionHeader.astro';
 import SocialProof from '../components/SocialProof.astro';
@@ -179,8 +178,6 @@ const description = "Solusi digital terpercaya untuk UMKM and Bisnis. Kami melay
   <AreaGrid {areas} />
 
   <Workflow />
-
-  <Pricing />
 
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-24">
     <PricingTable />
