@@ -76,6 +76,31 @@ export default function PricingCarousel() {
   // State for Mobile Interaction
   const [activeIndex, setActiveIndex] = useState<number | null>(1);
   const [isMobile, setIsMobile] = useState(true);
+  
+  // Drag to scroll states (Mobile only simulation)
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if (!isMobile) return;
+    setIsDragging(true);
+    if (sliderRef.current) {
+      setStartX(e.pageX - sliderRef.current.offsetLeft);
+      setScrollLeft(sliderRef.current.scrollLeft);
+    }
+  };
+
+  const handleMouseLeave = () => setIsDragging(false);
+  const handleMouseUp = () => setIsDragging(false);
+  
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging || !sliderRef.current || !isMobile) return;
+    e.preventDefault();
+    const x = e.pageX - sliderRef.current.offsetLeft;
+    const walk = (x - startX) * 2;
+    sliderRef.current.scrollLeft = scrollLeft - walk;
+  };
 
   useEffect(() => {
     const checkMobile = () => {
@@ -144,7 +169,11 @@ export default function PricingCarousel() {
         <div 
           id="pricing-slider" 
           ref={sliderRef}
-          className="flex md:grid md:grid-cols-3 overflow-x-auto md:overflow-visible snap-x md:snap-none snap-mandatory no-scrollbar pb-12 md:pb-8 pt-4 px-[10vw] sm:px-[20vw] md:px-0 gap-4 md:gap-8 items-center"
+          onMouseDown={handleMouseDown}
+          onMouseLeave={handleMouseLeave}
+          onMouseUp={handleMouseUp}
+          onMouseMove={handleMouseMove}
+          className={`flex md:grid md:grid-cols-3 overflow-x-auto md:overflow-visible snap-x md:snap-none snap-mandatory no-scrollbar pb-12 md:pb-8 pt-4 px-[10vw] sm:px-[20vw] md:px-0 gap-4 md:gap-8 items-center ${isMobile ? (isDragging ? 'active:cursor-grabbing cursor-grab' : 'cursor-grab') : ''}`}
         >
           {plans.map((plan, i) => {
             const isCenterMobile = isMobile && activeIndex === i;
