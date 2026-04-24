@@ -58,9 +58,24 @@
     animation-play-state: paused;
   }
 
-  /* Glassmorphism utility */
-  .glass {
-    @apply bg-white/70 backdrop-blur-md border border-white/20;
+  /* Hover Lift utility */
+  .hover-lift {
+    @apply transition-transform duration-300;
+  }
+  .hover-lift:hover {
+    @apply -translate-y-1;
+  }
+
+  /* Shine Effect for premium cards */
+  .shine-effect {
+    @apply relative overflow-hidden;
+  }
+  .shine-effect::after {
+    content: "";
+    @apply absolute -inset-full top-0 block w-full h-full bg-linear-to-r from-transparent via-white/20 to-transparent -skew-x-25 transition-all duration-1000 ease-out;
+  }
+  .shine-effect:hover::after {
+    @apply left-full;
   }
 
   /* Custom Container for ultra-small screens */
