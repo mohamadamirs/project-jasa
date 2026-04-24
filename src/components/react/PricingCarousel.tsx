@@ -194,7 +194,7 @@ export default function PricingCarousel() {
                 key={i}
                 ref={el => cardsRef.current[i] = el}
                 data-index={i}
-                className={`pricing-card shrink-0 w-[75vw] sm:w-[340px] md:w-full snap-center rounded-[2.5rem] p-6 md:p-8 transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] relative origin-center
+                className={`pricing-card shrink-0 w-[75vw] sm:w-[340px] md:w-full snap-center rounded-[2rem] p-6 md:p-8 transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] relative origin-center
                   ${plan.theme === "light" ? "bg-white border-2 border-slate-200 text-slate-900" : 
                     plan.theme === "blue" ? "bg-blue-600 border-2 border-blue-400 text-white" : 
                     "bg-slate-900 border-2 border-slate-700 text-white"}
@@ -218,7 +218,7 @@ export default function PricingCarousel() {
                     <span className={`text-[10px] font-black uppercase tracking-widest block mb-2 ${plan.theme === "light" ? "text-blue-600" : plan.theme === "blue" ? "text-blue-100" : "text-slate-400"}`}>
                       {plan.subtitle}
                     </span>
-                    <h4 className="text-2xl md:text-4xl font-black mb-3 tracking-tight">{plan.name}</h4>
+                    <h3 className="mb-3 tracking-tight">{plan.name}</h3>
                     <div className={`inline-block px-4 py-2 rounded-xl text-lg font-bold shadow-sm ${plan.theme === "light" ? "bg-slate-100 text-slate-900 border border-slate-200" : plan.theme === "blue" ? "bg-white/20 text-white border border-white/30" : "bg-white/5 text-white border border-white/10"}`}>
                       {plan.price}
                     </div>

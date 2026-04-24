@@ -1,126 +1,15 @@
 ---
-import { Image } from 'astro:assets';
-import type { ImageMetadata } from 'astro';
+import ImageSliderReact from './react/ImageSlider';
 
 interface Props {
-  images: ImageMetadata[];
+  images: any[];
 }
 
 const { images = [] } = Astro.props;
+
+// Kita konversi metadata gambar Astro ke string src untuk dikirim ke React
+// Di Astro 5+, metadata gambar memiliki properti .src
+const imageSources = images.map(img => typeof img === 'string' ? img : img.src);
 ---
 
-{images.length > 0 && (
-  <div class="relative group w-full max-w-4xl mx-auto overflow-hidden rounded-[2rem] border border-blue-100 shadow-xl shadow-blue-100/50 bg-white">
-    <!-- Kontainer Gambar dengan Scroll Snap -->
-    <div 
-      id="slider-container"
-      class="flex overflow-x-auto snap-x snap-mandatory scroll-smooth hide-scrollbar aspect-video items-center bg-slate-900"
-    >
-      {images.map((img, index) => (
-        <div class="flex-none w-full h-full snap-center relative flex items-center justify-center overflow-hidden">
-          <!-- Adaptive Blurred Backdrop -->
-          <div class="absolute inset-0 z-0 opacity-30 scale-110 blur-2xl pointer-events-none">
-            <Image 
-              src={img} 
-              alt="" 
-              width={200}
-              class="w-full h-full object-cover"
-              aria-hidden="true"
-            />
-          </div>
-
-          <!-- Main Image (Uncropped) -->
-          <Image 
-            src={img} 
-            alt={`Tampilan proyek ${index + 1}`} 
-            width={1200}
-            height={675}
-            class="relative z-10 max-w-full max-h-full object-contain shadow-2xl" 
-            loading={index === 0 ? "eager" : "lazy"}
-            decoding={index === 0 ? "async" : "auto"}
-          />
-        </div>
-      ))}
-    </div>
-
-    <!-- Tombol Navigasi (Hanya muncul jika gambar > 1) -->
-    {images.length > 1 && (
-      <>
-        <button 
-          id="prev-btn"
-          aria-label="Previous Slide"
-          class="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/90 backdrop-blur shadow-lg rounded-full flex items-center justify-center text-blue-600 hover:bg-blue-600 hover:text-white hover:scale-105 transition-all opacity-0 group-hover:opacity-100 z-20"
-        >
-          <span data-lucide="chevron-left" class="w-6 h-6"></span>
-        </button>
-        <button 
-          id="next-btn"
-          aria-label="Next Slide"
-          class="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/90 backdrop-blur shadow-lg rounded-full flex items-center justify-center text-blue-600 hover:bg-blue-600 hover:text-white hover:scale-105 transition-all opacity-0 group-hover:opacity-100 z-20"
-        >
-          <span data-lucide="chevron-right" class="w-6 h-6"></span>
-        </button>
-      </>
-    )}
-
-    <!-- Indikator Posisi -->
-    <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-20">
-      {images.map((_, i) => (
-        <div class="w-2 h-2 rounded-full bg-blue-200/50 dot-indicator transition-all" data-index={i}></div>
-      ))}
-    </div>
-  </div>
-)}
-
-<style>
-  .hide-scrollbar::-webkit-scrollbar {
-    display: none;
-  }
-  .hide-scrollbar {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-  #slider-container {
-    aspect-ratio: 16 / 9;
-  }
-</style>
-
-<script data-astro-rerun>
-  function setupSlider() {
-    const container = document.getElementById('slider-container');
-    const prevBtn = document.getElementById('prev-btn');
-    const nextBtn = document.getElementById('next-btn');
-    const dots = document.querySelectorAll('.dot-indicator');
-
-    if (container) {
-      const updateDots = () => {
-        const index = Math.round(container.scrollLeft / container.clientWidth);
-        dots.forEach((dot, i) => {
-          if (i === index) {
-            dot.classList.add('bg-blue-600', 'w-6');
-            dot.classList.remove('bg-blue-200/50', 'w-2');
-          } else {
-            dot.classList.add('bg-blue-200/50', 'w-2');
-            dot.classList.remove('bg-blue-600', 'w-6');
-          }
-        });
-      };
-
-      nextBtn?.addEventListener('click', () => {
-        container.scrollBy({ left: container.clientWidth, behavior: 'smooth' });
-      });
-
-      prevBtn?.addEventListener('click', () => {
-        container.scrollBy({ left: -container.clientWidth, behavior: 'smooth' });
-      });
-
-      container.addEventListener('scroll', updateDots);
-      updateDots();
-    }
-  }
-
-  // Re-run setup on every page load
-  document.addEventListener('astro:page-load', () => {
-    setupSlider();
-  }, { once: true });
-</script>
+<ImageSliderReact images={imageSources} client:visible />

@@ -24,26 +24,26 @@ const { cityName, title, description, localContext, nearbyAreas, whatsappMessage
 
 <MainLayout {title} {description} {cityName} {localContext} {localLandmark} {businessTrends} {lat} {lng}>
   <!-- 1. Local Hero Section (Revamped) -->
-  <section class="relative pt-16 pb-20 md:py-24 lg:py-32 overflow-hidden bg-white">
+  <section class="relative pt-[clamp(5rem,15vh,10rem)] pb-[clamp(4rem,10vh,8rem)] overflow-hidden bg-white px-[clamp(1rem,5vw,2.5rem)]">
     <div class="absolute inset-0 z-0">
       <div class="absolute top-0 right-0 w-full h-full bg-[radial-gradient(circle_at_80%_20%,rgba(37,99,235,0.05),rgba(255,255,255,0))]"></div>
       <div class="absolute top-[-10%] right-[-10%] w-[40%] aspect-square bg-blue-50 rounded-full blur-[100px] opacity-40 animate-float"></div>
     </div>
 
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <div class="container-custom relative z-10">
       <div class="max-w-3xl text-center md:text-left">
-        <div class="inline-flex items-center px-4 py-1.5 rounded-full text-xs md:text-sm font-bold bg-blue-50/80 backdrop-blur-sm text-blue-700 border border-blue-100 mb-8 animate-reveal not-italic">
-          <span data-lucide="map-pin" class="w-4 h-4 mr-2"></span> Layanan {seededSpin("{Terbaik|Terpercaya|Profesional}", cityName)} Wilayah {cityName}
+        <div class="inline-flex items-center px-4 py-1.5 rounded-full text-caption bg-blue-50/80 backdrop-blur-sm text-blue-700 border border-blue-100 mb-8 animate-reveal not-italic">
+          <span data-lucide="map-pin" class="w-5 h-5 mr-2"></span> Layanan {seededSpin("{Terbaik|Terpercaya|Profesional}", cityName)} Wilayah {cityName}
         </div>
-        <h1 class="font-extrabold text-slate-900 tracking-tight mb-8 leading-tight animate-reveal-delayed">
+        <h1 class="mb-8 animate-reveal-delayed">
           Jasa Pembuatan Website {seededSpin("{Modern|Kustom|Berkualitas}", cityName)} di <span class="text-blue-600">{cityName}</span>
         </h1>
-        <p class="text-base md:text-xl text-slate-600 mb-10 leading-relaxed px-2 md:px-0 opacity-0 animate-reveal-delayed-2">
+        <p class="mb-10 opacity-0 animate-reveal-delayed-2">
           {description} Kami hadir membantu bisnis di {cityName} memiliki identitas digital premium yang cepat, aman, dan teroptimasi penuh untuk dominasi pasar lokal.
         </p>
-        <div class="flex flex-col sm:flex-row gap-4 px-4 sm:px-0 opacity-0 animate-reveal-delayed-3">
-          <WhatsAppCTA message={whatsappMessage} label="Konsultasi Gratis Sekarang" class="shadow-xl shadow-blue-200" />
-          <a href="#insight" class="inline-flex justify-center items-center px-8 py-4 border border-slate-200 text-base font-bold rounded-xl text-slate-700 bg-white/50 backdrop-blur-sm hover:bg-white hover:border-blue-300 transition-all active:scale-95">
+        <div class="flex flex-col sm:flex-row gap-4 opacity-0 animate-reveal-delayed-3">
+          <WhatsAppCTA message={whatsappMessage} label="Konsultasi Gratis Sekarang" class="shadow-xl shadow-blue-200 w-full sm:w-auto" />
+          <a href="#insight" class="inline-flex justify-center items-center px-8 py-4 border border-slate-200 text-base font-bold rounded-xl text-slate-700 bg-white/50 backdrop-blur-sm hover:bg-white hover:border-blue-300 transition-all active:scale-95 w-full sm:w-auto">
             Analisa Peluang Lokal
           </a>
         </div>
@@ -55,22 +55,22 @@ const { cityName, title, description, localContext, nearbyAreas, whatsappMessage
   </section>
 
   <!-- 2. USP Lokal Section -->
-  <section class="py-12 md:py-24 bg-sky-50 border-y border-blue-100">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  <section class="section-spacing bg-sky-50 border-y border-blue-100">
+    <div class="container-custom">
       <SectionHeader 
         title={`Mengapa Memilih Kutabaru di ${cityName}?`}
         subtitle="Kami memahami karakteristik pasar lokal dan memberikan solusi yang relevan untuk pertumbuhan bisnis Anda."
       />
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
         {[
           { t: "Kecepatan Akses", d: "Website ringan yang dimuat kurang dari 2 detik untuk kenyamanan pelanggan lokal.", i: "zap" },
           { t: "Optimasi Google Maps", d: "Integrasi penuh agar lokasi bisnis Anda di " + cityName + " mudah ditemukan.", i: "map" },
           { t: "Support Personal", d: "Layanan purna jual yang ramah dan siap membantu kapanpun Anda butuhkan.", i: "message-square" }
         ].map(usp => (
-          <div class="bg-white p-6 md:p-8 rounded-3xl border border-blue-100 text-left hover-lift transition-all hover:shadow-xl group not-italic">
+          <div class="p-8 card-standard text-left hover-lift hover:shadow-xl group not-italic">
             <span data-lucide={usp.i} class="w-10 h-10 text-blue-600 mb-4 block group-hover:scale-110 transition-transform"></span>
-            <h4 class="font-bold text-lg md:text-xl text-slate-900 mb-2">{usp.t}</h4>
-            <p class="text-slate-600 text-sm leading-relaxed">{usp.d}</p>
+            <h4 class="mb-2">{usp.t}</h4>
+            <p class="text-slate-600 text-[15px] leading-relaxed">{usp.d}</p>
           </div>
         ))}
       </div>

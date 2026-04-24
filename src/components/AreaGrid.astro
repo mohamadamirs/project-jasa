@@ -24,9 +24,9 @@ const {
 } = Astro.props;
 ---
 
-<section class:list={["py-12 md:py-24 bg-white overflow-hidden", className]}>
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="text-center max-w-2xl mx-auto mb-12">
+<section class:list={["section-spacing bg-white overflow-hidden", className]}>
+  <div class="container-custom">
+    <div class="text-center max-w-2xl mx-auto">
       <SectionHeader {title} {subtitle} align="center" />
     </div>
 
@@ -38,9 +38,9 @@ const {
     <!-- Desktop View: Static Grid (SEO Friendly & Fast) -->
     <div class="hidden md:grid grid-cols-5 gap-6">
       {areas.map((area) => (
-        <a href={`/${area.id}/`} class="group p-8 bg-white rounded-3xl border border-slate-100 hover:bg-blue-600 transition-all duration-500 ease-out text-center hover:shadow-xl hover:shadow-blue-200 hover-lift active:scale-95 flex flex-col items-center justify-center min-h-[160px]">
-          <span class="block w-full text-slate-900 font-bold group-hover:text-white transition-colors duration-300 text-lg leading-tight">{area.data.cityName}</span>
-          <span class="text-xs uppercase tracking-[0.2em] text-slate-400 group-hover:text-blue-100 transition-colors duration-300 flex items-center justify-center mt-4 font-black">
+        <a href={`/${area.id}/`} class="group p-8 bg-white rounded-[2rem] border border-slate-100 hover:bg-blue-600 transition-all duration-500 ease-out text-center hover:shadow-xl hover:shadow-blue-200 hover-lift active:scale-95 flex flex-col items-center justify-center min-h-[160px]">
+          <h4 class="w-full text-slate-900 group-hover:text-white transition-colors duration-300 leading-tight font-bold">{area.data.cityName}</h4>
+          <span class="text-caption text-slate-400 group-hover:text-blue-100 transition-colors duration-300 flex items-center justify-center mt-4">
             Detail
           </span>
         </a>
