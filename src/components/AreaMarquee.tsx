@@ -16,7 +16,6 @@ const AreaMarquee: React.FC<Props> = ({ areas }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
 
-  // Duplikasi list agar endless
   const doubledAreas = [...areas, ...areas, ...areas];
 
   useEffect(() => {
@@ -43,7 +42,6 @@ const AreaMarquee: React.FC<Props> = ({ areas }) => {
       setFocusedIndex(closestIdx);
     };
 
-    // Gunakan rAF untuk deteksi yang presisi saat animasi jalan
     let animationFrameId: number;
     const loop = () => {
       handleScrollFocus();
@@ -65,26 +63,26 @@ const AreaMarquee: React.FC<Props> = ({ areas }) => {
       />
       
       <div 
-        className="flex gap-4 w-max animate-marquee"
+        className="flex gap-6 w-max"
         ref={trackRef}
         style={{
-          animation: 'scroll-left 30s linear infinite'
+          animation: 'scroll-left 40s linear infinite'
         }}
       >
         {doubledAreas.map((area, idx) => (
           <div
             key={`${area.id}-${idx}`}
-            className={`shrink-0 w-[160px] h-[120px] transition-all duration-500 ease-out flex items-center justify-center
-              ${focusedIndex === idx ? 'scale-125 opacity-100' : 'scale-75 opacity-40'}`}
+            className={`shrink-0 w-[180px] transition-all duration-700 ease-in-out flex items-center justify-center
+              ${focusedIndex === idx ? 'scale-125 opacity-100' : 'scale-90 opacity-30 blur-[0.5px]'}`}
           >
             <a
               href={`/${area.id}/`}
-              className="w-full h-full bg-white rounded-3xl border border-slate-100 flex flex-col items-center justify-center text-center shadow-lg p-4"
+              className="w-full h-full bg-white rounded-3xl border border-slate-100 flex flex-col items-center justify-center text-center shadow-xl p-8 min-h-[140px]"
             >
-              <span className="text-slate-900 font-bold text-sm leading-tight block w-full">
+              <span className="text-slate-900 font-bold text-base md:text-lg leading-tight block w-full">
                 {area.data.cityName}
               </span>
-              <span className="text-[10px] uppercase tracking-[0.2em] text-slate-400 mt-2 font-black">
+              <span className="text-[10px] uppercase tracking-[0.2em] text-slate-400 mt-3 font-black">
                 Detail
               </span>
             </a>
@@ -97,8 +95,10 @@ const AreaMarquee: React.FC<Props> = ({ areas }) => {
           0% { transform: translateX(0); }
           100% { transform: translateX(calc(-100% / 3)); }
         }
-        .animate-marquee:active {
-          animation-play-state: paused;
+        @media (hover: hover) {
+          div:hover > .flex {
+            animation-play-state: paused;
+          }
         }
       `}</style>
     </div>
