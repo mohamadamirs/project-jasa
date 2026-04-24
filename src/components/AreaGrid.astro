@@ -1,5 +1,6 @@
 ---
 import SectionHeader from './SectionHeader.astro';
+import AreaMarquee from './AreaMarquee';
 
 interface Area {
   id: string;
@@ -21,9 +22,6 @@ const {
   subtitle = "Klik wilayah Anda untuk melihat penawaran khusus dan konsultasi personal.",
   class: className 
 } = Astro.props;
-
-// Duplikasi untuk efek endless
-const doubledAreas = [...areas, ...areas, ...areas];
 ---
 
 <section class:list={["py-12 md:py-24 bg-white overflow-hidden", className]}>
@@ -32,23 +30,12 @@ const doubledAreas = [...areas, ...areas, ...areas];
       <SectionHeader {title} {subtitle} align="center" />
     </div>
 
-    <!-- Mobile View: Endless Marquee with Focus Zoom -->
-    <div class="block md:hidden">
-      <div class="marquee-container">
-        <div class="marquee-track">
-          {doubledAreas.map((area) => (
-            <div class="marquee-item">
-              <a href={`/${area.id}/`} class="block p-6 bg-white rounded-3xl border border-slate-100 text-center shadow-md flex-col items-center justify-center min-h-[120px] flex group">
-                <span class="block w-full text-slate-900 font-bold text-base leading-tight">{area.data.cityName}</span>
-                <span class="text-[10px] uppercase tracking-[0.2em] text-slate-400 mt-3 font-black">Detail</span>
-              </a>
-            </div>
-          ))}
-        </div>
-      </div>
+    <!-- Mobile Island: React Marquee with Focus-Zoom -->
+    <div class="md:hidden">
+      <AreaMarquee {areas} client:load />
     </div>
 
-    <!-- Desktop View: Standard Grid -->
+    <!-- Desktop View: Static Grid (SEO Friendly & Fast) -->
     <div class="hidden md:grid grid-cols-5 gap-6">
       {areas.map((area) => (
         <a href={`/${area.id}/`} class="group p-8 bg-white rounded-3xl border border-slate-100 hover:bg-blue-600 transition-all duration-500 ease-out text-center hover:shadow-xl hover:shadow-blue-200 hover-lift active:scale-95 flex flex-col items-center justify-center min-h-[160px]">
@@ -61,125 +48,3 @@ const doubledAreas = [...areas, ...areas, ...areas];
     </div>
   </div>
 </section>
-
-<style>
-  /* Container untuk Marquee */
-  .marquee-container {
-    width: 100%;
-    overflow: hidden;
-    position: relative;
-    padding: 40px 0;
-    mask-image: linear-gradient(to right, transparent, black 20%, black 80%, transparent);
-  }
-
-  .marquee-track {
-    display: flex;
-    flex-wrap: nowrap;
-    gap: 20px;
-    width: max-content;
-    animation: scroll-left 30s linear infinite;
-  }
-
-  .marquee-item {
-    width: 180px;
-    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s;
-    transform: scale(0.8);
-    opacity: 0.4;
-  }
-
-  /* Target yang sedang di tengah (via JS) */
-  .marquee-item.is-focused {
-    transform: scale(1.2);
-    opacity: 1;
-    z-index: 10;
-  }
-
-  @keyframes scroll-left {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(calc(-100% / 3)); }
-  }
-
-  /* Pause saat di sentuh */
-  .marquee-track:active {
-    animation-play-state: paused;
-  }
-</style>
-
-<script>
-  function initMarqueeFocus() {
-    const items = document.querySelectorAll('.marquee-item');
-    const container = document.querySelector('.marquee-container');
-    
-    if (!items.length || !container) return;
-
-    const observerOptions = {
-      root: container,
-      threshold: 0.9 // Item harus hampir sepenuhnya terlihat di area "pancingan"
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entries.length > 0) {
-          // Cari elemen yang paling dekat dengan titik tengah container
-          const containerRect = container.getBoundingClientRect();
-          const containerCenter = containerRect.left + containerRect.width / 2;
-
-          let closestItem = null;
-          let minDistance = Infinity;
-
-          items.forEach(item => {
-            const itemRect = item.getBoundingClientRect();
-            const itemCenter = itemRect.left + itemRect.width / 2;
-            const distance = Math.abs(containerCenter - itemCenter);
-
-            if (distance < minDistance) {
-              minDistance = distance;
-              closestItem = item;
-            }
-          });
-
-          // Hapus semua focus, berikan ke yang paling tengah
-          items.forEach(item => item.classList.remove('is-focused'));
-          if (closestItem) closestItem.classList.add('is-focused');
-        }
-      });
-    }, { root: container, threshold: [0, 0.1, 0.5, 0.9, 1] });
-
-    // Gunakan requestAnimationFrame untuk deteksi posisi yang smooth saat animasi jalan
-    function checkCenter() {
-      const containerRect = container.getBoundingClientRect();
-      const containerCenter = containerRect.left + containerRect.width / 2;
-
-      let closestItem = null;
-      let minDistance = Infinity;
-
-      items.forEach(item => {
-        const itemRect = item.getBoundingClientRect();
-        const itemCenter = itemRect.left + itemRect.width / 2;
-        const distance = Math.abs(containerCenter - itemCenter);
-
-        if (distance < minDistance) {
-          minDistance = distance;
-          closestItem = item;
-        }
-      });
-
-      items.forEach(item => {
-        if (item === closestItem) {
-          item.classList.add('is-focused');
-        } else {
-          item.classList.remove('is-focused');
-        }
-      });
-
-      requestAnimationFrame(checkCenter);
-    }
-
-    if (window.innerWidth < 768) {
-      requestAnimationFrame(checkCenter);
-    }
-  }
-
-  // Jalankan saat load dan setelah transisi halaman
-  document.addEventListener('astro:page-load', initMarqueeFocus);
-</script>
