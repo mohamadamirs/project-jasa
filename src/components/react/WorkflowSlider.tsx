@@ -8,11 +8,19 @@ const steps = [
   { step: "04", t: "Launch", d: "Website online dan siap menerima pelanggan.", i: "rocket" }
 ];
 
-const IconMap: Record<string, React.ReactNode> = {
-  "search": <Search className="w-10 h-10" />,
-  "layout": <Layout className="w-10 h-10" />,
-  "code-2": <Code2 className="w-10 h-10" />,
-  "rocket": <Rocket className="w-10 h-10" />
+// Refactor IconMap to accept color prop for better visibility
+const getIcon = (iconName: string, isActive: boolean) => {
+  const props = { 
+    className: `w-10 h-10 transition-colors duration-500 ${isActive ? 'text-white' : 'text-blue-600'}` 
+  };
+  
+  switch (iconName) {
+    case "search": return <Search {...props} />;
+    case "layout": return <Layout {...props} />;
+    case "code-2": return <Code2 {...props} />;
+    case "rocket": return <Rocket {...props} />;
+    default: return null;
+  }
 };
 
 export const WorkflowSlider = () => {
@@ -21,7 +29,6 @@ export const WorkflowSlider = () => {
   const [isInteracting, setIsInteracting] = useState(false);
   const tripledSteps = [...steps, ...steps, ...steps];
 
-  // Stable Scroll Handler
   const handleScroll = () => {
     const slider = sliderRef.current;
     if (!slider) return;
@@ -33,14 +40,12 @@ export const WorkflowSlider = () => {
     const cardWidth = firstCard.offsetWidth + 24;
     const setWidth = cardWidth * steps.length;
 
-    // Infinite Loop Logic
     if (scrollLeft <= 0) {
       slider.scrollLeft = setWidth;
     } else if (scrollLeft >= scrollWidth - clientWidth - 2) {
       slider.scrollLeft = setWidth - (cardWidth * (steps.length - 1));
     }
 
-    // Elevation Focus Detection
     const center = slider.getBoundingClientRect().left + slider.offsetWidth / 2;
     const cards = slider.querySelectorAll('.workflow-card');
     let closestIdx = 0;
@@ -62,12 +67,10 @@ export const WorkflowSlider = () => {
     const slider = sliderRef.current;
     if (!slider) return;
 
-    // Initial Position Setup
     const firstCard = slider.querySelector('.workflow-card') as HTMLElement;
     if (firstCard) {
       const cardWidth = firstCard.offsetWidth + 24;
       slider.scrollLeft = cardWidth * steps.length;
-      // Force immediate focus detection
       setTimeout(handleScroll, 50);
     }
 
@@ -75,10 +78,8 @@ export const WorkflowSlider = () => {
     return () => slider.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Separate Auto-Scroll Interval
   useEffect(() => {
     if (isInteracting) return;
-
     const autoScroll = setInterval(() => {
       const slider = sliderRef.current;
       if (slider) {
@@ -93,7 +94,6 @@ export const WorkflowSlider = () => {
         }
       }
     }, 4000);
-
     return () => clearInterval(autoScroll);
   }, [isInteracting, activeIndex]);
 
@@ -105,7 +105,6 @@ export const WorkflowSlider = () => {
       onTouchStart={() => setIsInteracting(true)}
       onTouchEnd={() => setIsInteracting(false)}
     >
-      {/* Visual Swipe Hint */}
       <div className="flex items-center justify-center gap-2 mb-6 text-blue-600/40 animate-pulse" aria-hidden="true">
         <ChevronsLeft className="w-4 h-4" />
         <span className="text-[10px] font-bold uppercase tracking-[0.2em]">Geser untuk Lihat Proses</span>
@@ -126,33 +125,31 @@ export const WorkflowSlider = () => {
               aria-hidden={isClone}
               className={`
                 workflow-card shrink-0
-                w-[280px] bg-white border rounded-[clamp(1.25rem,5vw,2rem)] p-8 snap-center
+                w-[280px] border rounded-[clamp(1.25rem,5vw,2rem)] p-8 snap-center
                 transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] relative
                 ${isActive 
-                  ? "border-blue-200 shadow-[0_20px_50px_rgba(37,99,235,0.12)] -translate-y-4 z-10 scale-100 opacity-100" 
-                  : "border-slate-100 shadow-sm translate-y-0 scale-95 opacity-100 lg:opacity-100"
+                  ? "bg-white border-blue-200 shadow-[0_20px_50px_rgba(37,99,235,0.12)] -translate-y-4 z-10 scale-100 opacity-100" 
+                  : "bg-white/80 border-slate-100 shadow-sm translate-y-0 scale-95 opacity-100"
                 }
               `}
             >
-              <div className="relative">
-                {/* Step Number Badge */}
-                <div className={`absolute -top-3 -right-3 w-8 h-8 rounded-full flex items-center justify-center text-[10px] font-black border-4 border-white z-20 transition-colors duration-500 ${isActive ? 'bg-blue-600 text-white' : 'bg-slate-100 text-slate-400'}`}>
+              <div className="relative z-20">
+                <div className={`absolute -top-3 -right-3 w-8 h-8 rounded-full flex items-center justify-center text-[10px] font-black border-4 border-white z-30 transition-colors duration-500 ${isActive ? 'bg-blue-600 text-white' : 'bg-slate-100 text-slate-400'}`}>
                   {item.step}
                 </div>
                 
-                <div className={`w-20 h-20 bg-white border-2 rounded-[2rem] flex items-center justify-center mx-auto mb-6 md:mb-8 shadow-xl transition-all duration-500 ${isActive ? 'bg-blue-600 text-white border-blue-600 rotate-6 shadow-blue-600/20' : 'bg-slate-50 text-blue-600 border-blue-600/5 shadow-blue-600/5'}`}>
-                  {IconMap[item.i]}
+                <div className={`w-20 h-20 border-2 rounded-[2rem] flex items-center justify-center mx-auto mb-6 md:mb-8 shadow-xl transition-all duration-500 z-20 ${isActive ? 'bg-blue-600 border-blue-600 rotate-6 shadow-blue-600/20' : 'bg-slate-50 border-blue-600/5 shadow-blue-600/5'}`}>
+                  {getIcon(item.i, isActive)}
                 </div>
               </div>
               
-              <h3 className={`mb-3 md:mb-4 text-xl font-bold tracking-tight transition-colors ${isActive ? 'text-slate-900' : 'text-slate-500'}`}>
+              <h3 className={`mb-3 md:mb-4 text-xl font-bold tracking-tight transition-colors duration-500 ${isActive ? 'text-slate-900' : 'text-slate-500'}`}>
                 {item.t}
               </h3>
-              <p className={`text-sm leading-relaxed transition-colors ${isActive ? 'text-slate-500' : 'text-slate-400'}`}>
+              <p className={`text-sm leading-relaxed transition-colors duration-500 ${isActive ? 'text-slate-500' : 'text-slate-400'}`}>
                 {item.d}
               </p>
 
-              {/* Large Background Step Counter */}
               <div className={`mt-6 text-[4rem] font-black leading-none select-none transition-all duration-700 ${isActive ? 'text-blue-600/5 translate-y-0' : 'text-blue-600/0 translate-y-4'}`}>
                 {item.step}
               </div>
@@ -161,7 +158,6 @@ export const WorkflowSlider = () => {
         })}
       </div>
 
-      {/* Pagination Dots */}
       <div className="flex justify-center gap-3 -mt-8 mb-8">
         {steps.map((_, i) => (
           <button 

@@ -12,6 +12,7 @@ import Workflow from '../components/Workflow.astro';
 import PerformanceBadge from '../components/PerformanceBadge.astro';
 import { seededSpin } from '../utils/spintax';
 import { ServiceSlider } from '../components/react/ServiceSlider';
+import Badge from '../components/Badge.astro';
 
 // Ambil semua data wilayah untuk ditampilkan di daftar layanan
 const areas = await getCollection('areas');
@@ -38,10 +39,9 @@ const description = "Solusi digital terpercaya untuk UMKM and Bisnis. Kami melay
 
     <div class="container-custom relative z-10">
       <div class="text-center max-w-5xl mx-auto">
-        <div class="inline-flex items-center px-4 py-2 rounded-full text-caption bg-blue-600/10 backdrop-blur-sm text-blue-700 border border-blue-600/10 mb-8 md:mb-12 animate-reveal shadow-sm hover:border-blue-600/40 transition-colors cursor-default group/badge">
-          <span class="flex h-3 w-3 rounded-full bg-blue-600 mr-3 animate-pulse group-hover/badge:scale-125 transition-transform"></span>
+        <Badge icon="zap" class="mb-8 md:mb-12 animate-reveal">
           {seededSpin("Partner Digital {Terpercaya|Andalan|Premium} #1 di Wilayah Brebes & Tegal", "global")}
-        </div>
+        </Badge>
         
         <div class="relative group/hero">
           <h1 class="mb-8 md:mb-10 animate-reveal-delayed cursor-default">
@@ -129,7 +129,7 @@ const description = "Solusi digital terpercaya untuk UMKM and Bisnis. Kami melay
               )}
             </div>
             <div class="p-5 md:p-6 text-left">
-              <p class="text-caption text-blue-600 mb-2">{latestProject?.data.category || 'Showcase Proyek'}</p>
+              <Badge text={latestProject?.data.category || 'Showcase Proyek'} icon="layout" class="mb-4" />
               <h4 class="group-hover:text-blue-600 transition-colors">
                 {latestProject?.data.title || 'Lihat Portofolio Kami'}
               </h4>
