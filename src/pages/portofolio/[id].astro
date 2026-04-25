@@ -22,7 +22,8 @@ const { Content } = await render(entry);
     <!-- Hero Detail -->
     <header class="pt-[clamp(5rem,15vh,10rem)] pb-[clamp(3rem,8vh,6rem)] bg-slate-50/50 border-b border-blue-600/10 px-[clamp(1rem,5vw,2.5rem)]">
       <div class="max-w-4xl mx-auto text-center">
-        <span class="px-4 py-1.5 bg-blue-600 text-white text-caption rounded-full mb-6 inline-block">
+        <span class="badge-caption mb-6 !bg-blue-600 !text-white !border-blue-500">
+          <i data-lucide="folder" class="w-3.5 h-3.5"></i>
           {category}
         </span>
 
@@ -31,7 +32,8 @@ const { Content } = await render(entry);
         </h1>
         <div class="flex flex-wrap justify-center gap-3 mb-12">
           {tech.map(t => (
-            <span class="px-4 py-1.5 bg-white border border-blue-600/10 text-blue-600 text-caption rounded-xl shadow-sm">
+            <span class="badge-caption !bg-white !text-blue-600 !border-blue-600/10 !rounded-xl shadow-sm">
+              <i data-lucide="cpu" class="w-3.5 h-3.5"></i>
               {t}
             </span>
           ))}

@@ -13,8 +13,11 @@ const doubledClients = [...clients, ...clients];
 ---
 
 <section class:list={["section-spacing bg-white border-y border-slate-100 overflow-hidden", className]}>
-  <div class="container-custom">
-    <p class="text-center text-caption text-slate-500 mb-12">Telah Dipercaya Oleh Bisnis Lokal</p>
+  <div class="container-custom flex flex-col items-center">
+    <div class="badge-caption mb-12 !bg-slate-50 !text-slate-500 !border-slate-100">
+      <i data-lucide="users" class="w-3.5 h-3.5"></i>
+      Telah Dipercaya Oleh Bisnis Lokal
+    </div>
     
     <div class="relative">
       <div class="animate-infinite-scroll gap-12 md:gap-24 items-center opacity-60">
