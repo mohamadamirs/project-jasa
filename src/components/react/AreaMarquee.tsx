@@ -77,7 +77,7 @@ const AreaMarquee: React.FC<Props> = ({ areas }) => {
           >
             <a
               href={`/${area.id}/`}
-              className="w-full h-full bg-white rounded-[2rem] border border-slate-100 flex flex-col items-center justify-center text-center shadow-xl p-8 min-h-[140px]"
+              className="w-full h-full card-standard card-padding-fluid flex flex-col items-center justify-center text-center shadow-xl min-h-[140px]"
             >
               <h4 className="text-slate-900 leading-tight block w-full font-bold">
                 {area.data.cityName}
