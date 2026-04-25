@@ -12,77 +12,43 @@ interface Props {
 }
 
 const AreaMarquee: React.FC<Props> = ({ areas }) => {
-  const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
-  const trackRef = useRef<HTMLDivElement>(null);
 
-  const doubledAreas = [...areas, ...areas, ...areas];
+  // Duplikasi area untuk efek loop jika diperlukan, tapi untuk snapping step-by-step
+  // kita cukup gunakan list aslinya dan loop indexnya.
+  const displayAreas = areas;
 
   useEffect(() => {
-    const handleScrollFocus = () => {
-      if (!containerRef.current || !trackRef.current) return;
+    const interval = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % displayAreas.length);
+    }, 3000); // Ganti tiap 3 detik
 
-      const containerRect = containerRef.current.getBoundingClientRect();
-      const containerCenter = containerRect.left + containerRect.width / 2;
-
-      const items = trackRef.current.children;
-      let minDistance = Infinity;
-      let closestIdx = 0;
-
-      for (let i = 0; i < items.length; i++) {
-        const rect = items[i].getBoundingClientRect();
-        const itemCenter = rect.left + rect.width / 2;
-        const distance = Math.abs(containerCenter - itemCenter);
-
-        if (distance < minDistance) {
-          minDistance = distance;
-          closestIdx = i;
-        }
-      }
-      setFocusedIndex(closestIdx);
-    };
-
-    let animationFrameId: number;
-    const loop = () => {
-      handleScrollFocus();
-      animationFrameId = requestAnimationFrame(loop);
-    };
-
-    animationFrameId = requestAnimationFrame(loop);
-    return () => cancelAnimationFrame(animationFrameId);
-  }, [doubledAreas.length]);
+    return () => clearInterval(interval);
+  }, [displayAreas.length]);
 
   return (
-    <div className="relative w-full overflow-hidden py-12" ref={containerRef}>
-      {/* Masking Fade Edges */}
+    <div className="relative w-full overflow-hidden py-12 px-4" ref={containerRef}>
       <div 
-        className="absolute inset-0 z-20 pointer-events-none"
+        className="flex gap-4 transition-transform duration-700 ease-[cubic-bezier(0.34,1.56,0.64,1)]"
         style={{
-          background: 'linear-gradient(to right, white, transparent 20%, transparent 80%, white)'
-        }}
-      />
-      
-      <div 
-        className="flex gap-6 w-max"
-        ref={trackRef}
-        style={{
-          animation: 'scroll-left 40s linear infinite'
+          transform: `translateX(calc(50% - 70px - (${activeIndex} * (140px + 16px))))`
         }}
       >
-        {doubledAreas.map((area, idx) => (
+        {displayAreas.map((area, idx) => (
           <div
-            key={`${area.id}-${idx}`}
-            className={`shrink-0 w-[180px] transition-all duration-700 ease-in-out flex items-center justify-center
-              ${focusedIndex === idx ? 'scale-125 opacity-100' : 'scale-90 opacity-30 blur-[0.5px]'}`}
+            key={area.id}
+            className={`shrink-0 w-[140px] transition-all duration-700 ease-in-out
+              ${activeIndex === idx ? 'scale-110 opacity-100' : 'scale-90 opacity-40 blur-[0.5px]'}`}
           >
             <a
               href={`/${area.id}/`}
-              className="w-full h-full card-standard card-padding-fluid flex flex-col items-center justify-center text-center shadow-xl min-h-[140px]"
+              className={`w-full h-full card-standard p-6 flex flex-col items-center justify-center text-center min-h-[120px] ${activeIndex === idx ? 'border-blue-600/30 shadow-xl shadow-blue-600/10' : ''}`}
             >
-              <h4 className="text-slate-900 leading-tight block w-full font-bold">
+              <h4 className="text-slate-900 leading-tight block w-full font-bold text-sm">
                 {area.data.cityName}
               </h4>
-              <span className="text-caption text-slate-500 mt-3">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-blue-600 mt-2">
                 Detail
               </span>
             </a>
@@ -90,17 +56,15 @@ const AreaMarquee: React.FC<Props> = ({ areas }) => {
         ))}
       </div>
 
-      <style>{`
-        @keyframes scroll-left {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(calc(-100% / 3)); }
-        }
-        @media (hover: hover) {
-          div:hover > .flex {
-            animation-play-state: paused;
-          }
-        }
-      `}</style>
+      {/* Pagination Dots */}
+      <div className="flex justify-center gap-1.5 mt-8">
+        {displayAreas.map((_, i) => (
+          <div 
+            key={i}
+            className={`h-1 rounded-full transition-all duration-500 ${activeIndex === i ? 'w-6 bg-blue-600' : 'w-2 bg-blue-600/20'}`}
+          />
+        ))}
+      </div>
     </div>
   );
 };
