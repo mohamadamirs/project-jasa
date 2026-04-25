@@ -158,7 +158,7 @@ export default function PricingCarousel() {
     <>
       <div className="md:hidden flex items-center justify-center gap-3 mb-8 text-blue-600 animate-pulse">
         <ChevronsLeft className="w-4 h-4 opacity-50" />
-        <span className="text-[10px] md:text-xs font-black uppercase tracking-[0.2em] bg-blue-50 px-3 py-1 rounded-full border border-blue-100 flex items-center gap-2">
+        <span className="text-caption bg-blue-600/10 px-4 py-2 rounded-full border border-blue-600/10 flex items-center gap-2">
           <MoveHorizontal className="w-3 h-3" /> Tarik & Geser
         </span>
         <ChevronsRight className="w-4 h-4 opacity-50" />
@@ -180,11 +180,8 @@ export default function PricingCarousel() {
           {plans.map((plan, i) => {
             const isCenterMobile = isMobile && activeIndex === i;
             
-            // UI Logic:
-            // Mobile: Starter muncul pertama (scale-100). Saat geser ke Business, Starter mengecil (scale-75/85) 
-            // dan Business membesar dari kecil ke besar.
             const scaleClass = isMobile 
-              ? (isCenterMobile ? 'scale-100' : 'scale-[0.85] opacity-50') 
+              ? (isCenterMobile ? 'scale-100' : 'scale-[0.9] opacity-50') 
               : (plan.recommended ? 'scale-105' : 'scale-100');
               
             const zIndexClass = isCenterMobile || (!isMobile && plan.recommended) ? 'z-10' : 'z-0';
@@ -194,56 +191,53 @@ export default function PricingCarousel() {
                 key={i}
                 ref={el => cardsRef.current[i] = el}
                 data-index={i}
-                className={`pricing-card shrink-0 w-[75vw] sm:w-[340px] md:w-full snap-center rounded-[2rem] p-6 md:p-8 transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] relative origin-center
+                className={`pricing-card shrink-0 w-[75vw] sm:w-[340px] md:w-full snap-center rounded-[clamp(1.25rem,5vw,2rem)] p-[clamp(1.25rem,6vw,2.5rem)] transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] relative origin-center
                   ${plan.theme === "light" ? "bg-white border-2 border-slate-200 text-slate-900" : 
-                    plan.theme === "blue" ? "bg-blue-600 border-2 border-blue-400 text-white" : 
+                    plan.theme === "blue" ? "bg-blue-600 border-2 border-blue-600/40 text-white shadow-2xl shadow-blue-600/20" : 
                     "bg-slate-900 border-2 border-slate-700 text-white"}
                   ${scaleClass} ${zIndexClass}
                 `}
-                style={{ 
-                  boxShadow: (isCenterMobile || (!isMobile && plan.recommended)) ? '0 25px 50px -12px rgba(37, 99, 235, 0.25)' : 'none'
-                }}
               >
                 
                 {plan.recommended && (
                   <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-30">
-                    <div className="bg-gradient-to-r from-amber-400 to-orange-500 text-white text-[10px] md:text-xs font-black uppercase tracking-widest px-5 py-1.5 rounded-full shadow-lg whitespace-nowrap border border-amber-300">
+                    <div className="bg-gradient-to-r from-amber-400 to-orange-500 text-white text-caption px-5 py-2 rounded-full shadow-lg whitespace-nowrap border border-amber-300">
                       Paling Diminati
                     </div>
                   </div>
                 )}
 
                 <div className="transition-all duration-500 filter-none">
-                  <div className={`text-center pb-6 border-b ${plan.theme === "light" ? "border-slate-200" : plan.theme === "blue" ? "border-blue-400/50" : "border-slate-700/50"}`}>
-                    <span className={`text-[10px] font-black uppercase tracking-widest block mb-2 ${plan.theme === "light" ? "text-blue-600" : plan.theme === "blue" ? "text-blue-100" : "text-slate-400"}`}>
+                  <div className={`text-center pb-8 border-b ${plan.theme === "light" ? "border-slate-200" : plan.theme === "blue" ? "border-blue-400/30" : "border-slate-700/50"}`}>
+                    <span className={`text-caption block mb-3 ${plan.theme === "light" ? "text-blue-600" : plan.theme === "blue" ? "text-blue-100" : "text-slate-400"}`}>
                       {plan.subtitle}
                     </span>
-                    <h3 className="mb-3 tracking-tight">{plan.name}</h3>
-                    <div className={`inline-block px-4 py-2 rounded-xl text-lg font-bold shadow-sm ${plan.theme === "light" ? "bg-slate-100 text-slate-900 border border-slate-200" : plan.theme === "blue" ? "bg-white/20 text-white border border-white/30" : "bg-white/5 text-white border border-white/10"}`}>
+                    <h3 className="mb-4 tracking-tight">{plan.name}</h3>
+                    <div className={`inline-block px-5 py-3 rounded-xl text-lg md:text-xl font-black shadow-sm ${plan.theme === "light" ? "bg-slate-100 text-slate-900 border border-slate-200" : plan.theme === "blue" ? "bg-white/20 text-white border border-white/30" : "bg-white/5 text-white border border-white/10"}`}>
                       {plan.price}
                     </div>
                   </div>
 
-                  <div className="pt-6">
-                    <ul className="space-y-4">
+                  <div className="pt-8">
+                    <ul className="space-y-5">
                       {plan.features.map((feature, j) => {
                         const Icon = IconMap[feature.icon];
                         return (
                           <li key={j} className="flex items-center gap-4">
-                            <div className={`w-9 h-9 rounded-2xl flex items-center justify-center shrink-0 transition-colors
+                            <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 transition-colors
                               ${feature.active 
-                                ? (plan.theme === "light" ? "bg-blue-50 text-blue-600" : plan.theme === "blue" ? "bg-white/20 text-white" : "bg-blue-500/30 text-blue-300")
-                                : (plan.theme === "light" ? "bg-slate-50 text-slate-300" : plan.theme === "blue" ? "bg-blue-800/30 text-blue-400/50" : "bg-slate-800/50 text-slate-600")}
+                                ? (plan.theme === "light" ? "bg-blue-600/10 text-blue-600" : plan.theme === "blue" ? "bg-white/20 text-white" : "bg-blue-600/30 text-blue-300")
+                                : (plan.theme === "light" ? "bg-slate-50 text-slate-300" : plan.theme === "blue" ? "bg-blue-600/20 text-blue-100/30" : "bg-slate-800/50 text-slate-600")}
                             `}>
-                              {Icon && <Icon className="w-4 h-4" />}
+                              {Icon && <Icon className="w-5 h-5" />}
                             </div>
                             <div>
-                              <span className={`block text-[10px] uppercase tracking-wider font-bold mb-0.5
-                                ${plan.theme === "light" ? "text-slate-500" : plan.theme === "blue" ? "text-blue-100/80" : "text-slate-400"}
+                              <span className={`block text-caption font-bold mb-1
+                                ${plan.theme === "light" ? "text-slate-600" : plan.theme === "blue" ? "text-blue-100/80" : "text-slate-400"}
                               `}>
                                 {feature.label}
                               </span>
-                              <span className={`block text-xs md:text-sm font-bold
+                              <span className={`block font-bold leading-tight
                                 ${plan.theme === "light" ? "text-slate-900" : "text-white"}
                                 ${!feature.active ? "opacity-30" : ""}
                               `}>
@@ -258,7 +252,7 @@ export default function PricingCarousel() {
 
                   {isMobile && (
                     <div className={`mt-8 text-center transition-opacity duration-300 ${isCenterMobile ? 'opacity-100' : 'opacity-0'}`}>
-                      <span className={`text-[10px] font-bold uppercase tracking-widest ${plan.theme === "light" ? "text-blue-600" : "text-blue-100"}`}>
+                      <span className={`text-caption ${plan.theme === "light" ? "text-blue-600" : "text-blue-100"}`}>
                         Pilihan Saat Ini
                       </span>
                     </div>

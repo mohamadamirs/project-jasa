@@ -31,7 +31,11 @@
 
   /* Card & Rounding Standards */
   .card-standard {
-    @apply rounded-[2rem] bg-white border border-slate-100 shadow-sm transition-all duration-300;
+    @apply rounded-[clamp(1.25rem,5vw,2rem)] bg-white border border-slate-100 shadow-sm transition-all duration-300;
+  }
+
+  .card-padding-fluid {
+    @apply p-[clamp(1.25rem,6vw,2.5rem)];
   }
   
   .btn-standard {

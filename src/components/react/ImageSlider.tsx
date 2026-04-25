@@ -45,7 +45,7 @@ export default function ImageSlider({ images = [] }: Props) {
   if (images.length === 0) return null;
 
   return (
-    <div className="relative group w-full max-w-4xl mx-auto overflow-hidden rounded-[2rem] border border-blue-100 shadow-xl shadow-blue-100/50 bg-white">
+    <div className="relative group w-full max-w-4xl mx-auto overflow-hidden rounded-[clamp(1.25rem,5vw,2rem)] border border-blue-600/10 shadow-xl shadow-blue-600/5 bg-white">
       {/* Slider Container */}
       <div 
         ref={containerRef}
@@ -100,7 +100,7 @@ export default function ImageSlider({ images = [] }: Props) {
           <div 
             key={i}
             onClick={() => scrollToIndex(i)}
-            className={`cursor-pointer rounded-full transition-all duration-300 ${activeIndex === i ? 'bg-blue-600 w-6 h-2' : 'bg-blue-200/50 w-2 h-2'}`}
+            className={`cursor-pointer rounded-full transition-all duration-300 ${activeIndex === i ? 'bg-blue-600 w-6 h-2' : 'bg-blue-600/20 w-2 h-2'}`}
           />
         ))}
       </div>
