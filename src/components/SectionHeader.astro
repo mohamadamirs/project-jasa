@@ -15,5 +15,5 @@ const { title, subtitle, align = 'center', class: className } = Astro.props;
   className
 ]}>
   <h2 class:list={["mb-4 px-1", align === 'center' ? "mx-auto" : ""]} set:html={title} />
-  {subtitle && <p class:list={["text-slate-500 max-w-2xl", align === 'center' ? "mx-auto" : ""]}>{subtitle}</p>}
+  {subtitle && <p class:list={["text-slate-600 max-w-2xl", align === 'center' ? "mx-auto" : ""]}>{subtitle}</p>}
 </div>
