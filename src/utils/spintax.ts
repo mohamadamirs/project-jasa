@@ -26,3 +26,16 @@ export function seededSpin(text: string, seed: string): string {
     return choices[index];
   });
 }
+
+/**
+ * Mobile-first spin: prefers shorter words when multiple choices are available.
+ * Assumes the shortest string in the choices is the most mobile-friendly.
+ */
+export function shortSpin(text: string, seed: string): string {
+  return text.replace(/\{([^{}]+)\}/g, (match, options) => {
+    const choices = options.split('|');
+    // Sort by length and take the shortest one
+    const sorted = [...choices].sort((a, b) => a.length - b.length);
+    return sorted[0];
+  });
+}
