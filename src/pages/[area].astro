@@ -55,7 +55,7 @@ const { cityName, title, description, localContext, nearbyAreas, whatsappMessage
   </section>
 
   <!-- 2. USP Lokal Section -->
-  <section class="section-spacing bg-slate-50/50 border-y border-blue-600/10">
+  <section class="section-spacing bg-slate-50/50 border-y border-blue-600/10 optimize-render">
     <div class="container-custom">
       <SectionHeader 
         title={`Mengapa Memilih Kutabaru di ${cityName}?`}
@@ -91,7 +91,7 @@ const { cityName, title, description, localContext, nearbyAreas, whatsappMessage
       { q: "Apa perbedaan paket Starter 250rb dan Business 1.8jt?", a: "Paket Starter menggunakan domain .my.id dan cocok untuk profil dasar. Paket Business menggunakan domain profesional (.com/.id), email bisnis, dan mendapatkan prioritas SEO Lokal di Google Maps." },
       { q: "Berapa biaya perpanjangan tahun berikutnya?", a: "Sangat terjangkau! Karena biaya hosting Rp 0, Anda hanya cukup membayar biaya perpanjangan domain saja mulai Rp 15rb (my.id) atau Rp 150rb (com/id) per tahun." }
     ]} 
-    class="bg-white"
+    class="bg-white optimize-render"
   />
 
   <InternalLinker currentAreaId={entry.id} {cityName} />

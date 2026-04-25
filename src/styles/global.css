@@ -103,6 +103,12 @@
     @apply left-full;
   }
 
+  /* Render Optimization */
+  .optimize-render {
+    content-visibility: auto;
+    contain-intrinsic-size: 1px 500px; /* Placeholder size for faster initial layout */
+  }
+
   /* Custom Container for ultra-small screens */
   .container-custom {
     @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
