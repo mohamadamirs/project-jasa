@@ -29,7 +29,7 @@ const portfolios = await getCollection('portfolios');
     <div class="container-custom">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {portfolios.map((project) => (
-          <a href={`/portofolio/${project.id}`} class="group card-standard overflow-hidden border-blue-600/10 hover:shadow-2xl hover:shadow-blue-600/10 transition-all duration-500 flex flex-col">
+          <a href={`/portofolio/${project.id}`} class="group card-standard overflow-hidden border-blue-600/10 hover:shadow-2xl hover:shadow-blue-600/10 transition-all duration-500 flex flex-col active:scale-[0.98]">
             <!-- Project Image Placeholder with Icon -->
             <div class="aspect-video bg-blue-600/5 flex items-center justify-center relative overflow-hidden">
               {project.data.images && project.data.images.length > 0 ? (
