@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 
 interface Area {
   id: string;
@@ -12,77 +12,36 @@ interface Props {
 }
 
 const AreaMarquee: React.FC<Props> = ({ areas }) => {
-  const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const trackRef = useRef<HTMLDivElement>(null);
-
+  const [isPaused, setIsPaused] = useState(false);
   const doubledAreas = [...areas, ...areas, ...areas];
 
-  useEffect(() => {
-    const handleScrollFocus = () => {
-      if (!containerRef.current || !trackRef.current) return;
-
-      const containerRect = containerRef.current.getBoundingClientRect();
-      const containerCenter = containerRect.left + containerRect.width / 2;
-
-      const items = trackRef.current.children;
-      let minDistance = Infinity;
-      let closestIdx = 0;
-
-      for (let i = 0; i < items.length; i++) {
-        const rect = items[i].getBoundingClientRect();
-        const itemCenter = rect.left + rect.width / 2;
-        const distance = Math.abs(containerCenter - itemCenter);
-
-        if (distance < minDistance) {
-          minDistance = distance;
-          closestIdx = i;
-        }
-      }
-      setFocusedIndex(closestIdx);
-    };
-
-    let animationFrameId: number;
-    const loop = () => {
-      handleScrollFocus();
-      animationFrameId = requestAnimationFrame(loop);
-    };
-
-    animationFrameId = requestAnimationFrame(loop);
-    return () => cancelAnimationFrame(animationFrameId);
-  }, [doubledAreas.length]);
-
   return (
-    <div className="relative w-full overflow-hidden py-12" ref={containerRef}>
-      {/* Masking Fade Edges */}
+    <div className="relative w-full overflow-hidden py-12">
       <div 
         className="absolute inset-0 z-20 pointer-events-none"
-        style={{
-          background: 'linear-gradient(to right, white, transparent 20%, transparent 80%, white)'
-        }}
+        style={{ background: 'linear-gradient(to right, white, transparent 15%, transparent 85%, white)' }}
       />
       
       <div 
-        className="flex gap-6 w-max"
-        ref={trackRef}
-        style={{
-          animation: 'scroll-left 40s linear infinite'
-        }}
+        className={`flex gap-6 w-max animate-scroll-left ${isPaused ? '[animation-play-state:paused]' : ''}`}
+        onTouchStart={() => setIsPaused(true)}
+        onTouchEnd={() => setIsPaused(false)}
+        onMouseEnter={() => setIsPaused(true)}
+        onMouseLeave={() => setIsPaused(false)}
       >
         {doubledAreas.map((area, idx) => (
           <div
             key={`${area.id}-${idx}`}
-            className={`shrink-0 w-[180px] transition-all duration-700 ease-in-out flex items-center justify-center
-              ${focusedIndex === idx ? 'scale-125 opacity-100' : 'scale-90 opacity-30 blur-[0.5px]'}`}
+            className="shrink-0 w-[180px] transition-all duration-500 hover:-translate-y-3 group"
           >
             <a
               href={`/${area.id}/`}
-              className="w-full h-full card-standard card-padding-fluid flex flex-col items-center justify-center text-center shadow-xl min-h-[140px]"
+              className="w-full h-full bg-white border border-slate-100 rounded-[clamp(1.25rem,5vw,2rem)] p-6 flex flex-col items-center justify-center text-center shadow-sm hover:shadow-xl hover:shadow-blue-600/10 hover:border-blue-100 min-h-[140px] transition-all"
             >
-              <h4 className="text-slate-900 leading-tight block w-full font-bold">
+              <h4 className="text-[clamp(1.1rem,2vw,1.35rem)] text-slate-900 leading-tight block w-full font-bold group-hover:text-blue-600">
                 {area.data.cityName}
               </h4>
-              <span className="text-caption text-slate-500 mt-3">
+              <span className="text-[clamp(0.75rem,0.8vw,0.875rem)] font-bold uppercase tracking-[0.15em] text-slate-400 mt-3">
                 Detail
               </span>
             </a>
@@ -93,12 +52,10 @@ const AreaMarquee: React.FC<Props> = ({ areas }) => {
       <style>{`
         @keyframes scroll-left {
           0% { transform: translateX(0); }
-          100% { transform: translateX(calc(-100% / 3)); }
+          100% { transform: translateX(calc(-100% / 3 - 0.5rem)); }
         }
-        @media (hover: hover) {
-          div:hover > .flex {
-            animation-play-state: paused;
-          }
+        .animate-scroll-left {
+          animation: scroll-left 40s linear infinite;
         }
       `}</style>
     </div>
