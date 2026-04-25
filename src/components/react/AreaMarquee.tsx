@@ -14,18 +14,56 @@ interface Props {
 const AreaMarquee: React.FC<Props> = ({ areas }) => {
   const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const trackRef = useRef<HTMLDivElement>(null);
+  const sliderRef = useRef<HTMLDivElement>(null);
+
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
 
   const doubledAreas = [...areas, ...areas, ...areas];
 
   useEffect(() => {
-    const handleScrollFocus = () => {
-      if (!containerRef.current || !trackRef.current) return;
+    if (sliderRef.current) {
+      const slider = sliderRef.current;
+      const timer = setTimeout(() => {
+        const totalWidth = slider.scrollWidth / 3;
+        slider.scrollLeft = totalWidth;
+      }, 100);
+      return () => clearTimeout(timer);
+    }
+  }, []);
 
-      const containerRect = containerRef.current.getBoundingClientRect();
+  useEffect(() => {
+    if (!sliderRef.current || isDragging || !isAutoPlaying) return;
+
+    let animationFrameId: number;
+    const speed = 0.5;
+
+    const scroll = () => {
+      if (sliderRef.current) {
+        sliderRef.current.scrollLeft += speed;
+        
+        const totalWidth = sliderRef.current.scrollWidth / 3;
+        if (sliderRef.current.scrollLeft >= totalWidth * 2) {
+          sliderRef.current.scrollLeft -= totalWidth;
+        }
+      }
+      animationFrameId = requestAnimationFrame(scroll);
+    };
+
+    animationFrameId = requestAnimationFrame(scroll);
+    return () => cancelAnimationFrame(animationFrameId);
+  }, [isDragging, isAutoPlaying]);
+
+  useEffect(() => {
+    const handleScrollFocus = () => {
+      if (!sliderRef.current) return;
+
+      const containerRect = sliderRef.current.getBoundingClientRect();
       const containerCenter = containerRect.left + containerRect.width / 2;
 
-      const items = trackRef.current.children;
+      const items = sliderRef.current.children;
       let minDistance = Infinity;
       let closestIdx = 0;
 
@@ -42,15 +80,34 @@ const AreaMarquee: React.FC<Props> = ({ areas }) => {
       setFocusedIndex(closestIdx);
     };
 
-    let animationFrameId: number;
-    const loop = () => {
-      handleScrollFocus();
-      animationFrameId = requestAnimationFrame(loop);
-    };
+    const slider = sliderRef.current;
+    if (slider) {
+      slider.addEventListener('scroll', handleScrollFocus, { passive: true });
+      return () => slider.removeEventListener('scroll', handleScrollFocus);
+    }
+  }, []);
 
-    animationFrameId = requestAnimationFrame(loop);
-    return () => cancelAnimationFrame(animationFrameId);
-  }, [doubledAreas.length]);
+  const handleMouseDown = (e: React.MouseEvent) => {
+    setIsDragging(true);
+    setIsAutoPlaying(false);
+    if (sliderRef.current) {
+      setStartX(e.pageX - sliderRef.current.offsetLeft);
+      setScrollLeft(sliderRef.current.scrollLeft);
+    }
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging || !sliderRef.current) return;
+    e.preventDefault();
+    const x = e.pageX - sliderRef.current.offsetLeft;
+    const walk = (x - startX) * 2;
+    sliderRef.current.scrollLeft = scrollLeft - walk;
+  };
+
+  const stopDragging = () => {
+    setIsDragging(false);
+    setTimeout(() => setIsAutoPlaying(true), 3000);
+  };
 
   return (
     <div className="relative w-full overflow-hidden py-12" ref={containerRef}>
@@ -63,16 +120,19 @@ const AreaMarquee: React.FC<Props> = ({ areas }) => {
       />
       
       <div 
-        className="flex gap-6 w-max"
-        ref={trackRef}
-        style={{
-          animation: 'scroll-left 40s linear infinite'
-        }}
+        ref={sliderRef}
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseUp={stopDragging}
+        onMouseLeave={stopDragging}
+        onTouchStart={() => setIsAutoPlaying(false)}
+        onTouchEnd={() => setTimeout(() => setIsAutoPlaying(true), 3000)}
+        className={`flex gap-6 overflow-x-auto snap-x snap-mandatory no-scrollbar pb-4 ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
       >
         {doubledAreas.map((area, idx) => (
           <div
             key={`${area.id}-${idx}`}
-            className={`shrink-0 w-[180px] transition-all duration-700 ease-in-out flex items-center justify-center
+            className={`shrink-0 w-[180px] transition-all duration-700 ease-in-out flex items-center justify-center snap-center
               ${focusedIndex === idx ? 'scale-125 opacity-100' : 'scale-90 opacity-30 blur-[0.5px]'}`}
           >
             <a
@@ -91,15 +151,8 @@ const AreaMarquee: React.FC<Props> = ({ areas }) => {
       </div>
 
       <style>{`
-        @keyframes scroll-left {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(calc(-100% / 3)); }
-        }
-        @media (hover: hover) {
-          div:hover > .flex {
-            animation-play-state: paused;
-          }
-        }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
       `}</style>
     </div>
   );

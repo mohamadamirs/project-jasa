@@ -1,39 +1,19 @@
 ---
 import SectionHeader from './SectionHeader.astro';
-
-const steps = [
-  { step: "01", t: "Konsultasi", d: "Diskusi kebutuhan bisnis Anda secara detail.", i: "search" },
-  { step: "02", t: "Desain", d: "Pembuatan konsep visual yang modern.", i: "layout" },
-  { step: "03", t: "Development", d: "Proses pengkodean dan optimasi SEO.", i: "code-2" },
-  { step: "04", t: "Launch", d: "Website online dan siap menerima pelanggan.", i: "rocket" }
-];
+import WorkflowSlider from './react/WorkflowSlider';
 ---
 
 <section id="proses" class="section-spacing bg-slate-50/50 border-y border-blue-600/10 overflow-hidden">
-  <div class="container-custom text-center">
-    <SectionHeader 
-      title={`Alur Kerja <span class="text-blue-600">Mudah</span>`} 
-      subtitle="Proses transparan untuk memastikan hasil terbaik bagi bisnis Anda." 
-    />
+  <div class="container-custom">
+    <div class="text-center">
+      <SectionHeader 
+        title={`Alur Kerja <span class="text-blue-600">Mudah</span>`} 
+        subtitle="Proses transparan untuk memastikan hasil terbaik bagi bisnis Anda." 
+      />
+    </div>
     
-    <div class="flex flex-row md:grid md:grid-cols-4 gap-4 md:gap-8 relative mt-12 overflow-x-auto pb-4 md:pb-0 scroll-smooth snap-x snap-mandatory no-scrollbar">
-      <!-- Connector Line (Desktop Only) -->
-      <div class="hidden md:block absolute top-8 left-0 w-full h-0.5 bg-blue-600/20 -z-0"></div>
-
-      {steps.map(step => (
-        <div class="flex-none w-[140px] md:w-auto relative group z-10 snap-center">
-          <div class="w-12 h-12 md:w-16 md:h-16 bg-blue-600 text-white rounded-2xl flex items-center justify-center mx-auto mb-4 md:mb-6 shadow-lg shadow-blue-600/20 group-hover:rotate-6 transition-transform hover-lift active:scale-95">
-            <span data-lucide={step.i} class="w-6 h-6 md:w-8 md:h-8"></span>
-          </div>
-          <h4 class="mb-2">{step.t}</h4>
-          <p class="text-slate-600 px-2 md:px-0 text-balance">{step.d}</p>
-        </div>
-      ))}
+    <div class="mt-12 md:mt-20">
+      <WorkflowSlider client:visible />
     </div>
   </div>
 </section>
-
-<style>
-  .no-scrollbar::-webkit-scrollbar { display: none; }
-  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-</style>
