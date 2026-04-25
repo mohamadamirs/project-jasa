@@ -10,6 +10,7 @@ import FAQ from '../components/FAQ.astro';
 import AreaGrid from '../components/AreaGrid.astro';
 import Workflow from '../components/Workflow.astro';
 import PerformanceBadge from '../components/PerformanceBadge.astro';
+import ServicesSlider from '../components/react/ServicesSlider';
 import { seededSpin } from '../utils/spintax';
 
 // Ambil semua data wilayah untuk ditampilkan di daftar layanan
@@ -74,17 +75,23 @@ const description = "Solusi digital terpercaya untuk UMKM and Bisnis. Kami melay
   </section>
 
   <SocialProof />
+<section id="layanan" class="section-spacing bg-white optimize-render">
+  <div class="container-custom">
+    <SectionHeader 
+      preTitle="LAYANAN"
+      title="Solusi Digital <span class='text-blue-600'>Menyeluruh</span>" 
+      subtitle="Dari website hingga sistem cerdas, kami membantu akselerasi pertumbuhan bisnis Anda." 
+    />
 
-  <!-- 3. Layanan Unggulan Section -->
-  <section id="layanan" class="section-spacing bg-white optimize-render">
-    <div class="container-custom">
-      <SectionHeader 
-        title="Solusi Digital <span class='text-blue-600'>Menyeluruh</span>" 
-        subtitle="Dari website hingga sistem cerdas, kami membantu akselerasi pertumbuhan bisnis Anda." 
-      />
+    <!-- Mobile View: Horizontal Snapping Slider -->
+    <div class="lg:hidden">
+      <ServicesSlider client:load />
+    </div>
 
-      <div class="flex flex-row lg:grid lg:grid-cols-3 gap-8 overflow-x-auto pb-8 snap-x snap-mandatory no-scrollbar lg:overflow-visible lg:pb-0">
-        {[
+    <!-- Desktop View: Static Grid -->
+    <div class="hidden lg:grid lg:grid-cols-3 gap-8">
+      {[
+...
           {
             title: "Website Kustom",
             desc: "Arsitektur modern dengan performa Zero-JS yang super cepat.",
