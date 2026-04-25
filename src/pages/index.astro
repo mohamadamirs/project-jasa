@@ -10,6 +10,7 @@ import FAQ from '../components/FAQ.astro';
 import AreaGrid from '../components/AreaGrid.astro';
 import Workflow from '../components/Workflow.astro';
 import PerformanceBadge from '../components/PerformanceBadge.astro';
+import ServicesSlider from '../components/react/ServicesSlider';
 import { seededSpin } from '../utils/spintax';
 
 // Ambil semua data wilayah untuk ditampilkan di daftar layanan
@@ -75,15 +76,21 @@ const description = "Solusi digital terpercaya untuk UMKM and Bisnis. Kami melay
 
   <SocialProof />
 
-  <!-- 3. Layanan Unggulan Section -->
   <section id="layanan" class="section-spacing bg-white optimize-render">
     <div class="container-custom">
       <SectionHeader 
+        preTitle="LAYANAN"
         title="Solusi Digital <span class='text-blue-600'>Menyeluruh</span>" 
         subtitle="Dari website hingga sistem cerdas, kami membantu akselerasi pertumbuhan bisnis Anda." 
       />
 
-      <div class="flex flex-row lg:grid lg:grid-cols-3 gap-8 overflow-x-auto pb-8 snap-x snap-mandatory no-scrollbar lg:overflow-visible lg:pb-0">
+      <!-- Mobile View: Services Slider -->
+      <div class="lg:hidden">
+        <ServicesSlider client:load />
+      </div>
+
+      <!-- Desktop View: Static Grid -->
+      <div class="hidden lg:grid lg:grid-cols-3 gap-8">
         {[
           {
             title: "Website Kustom",
@@ -104,7 +111,7 @@ const description = "Solusi digital terpercaya untuk UMKM and Bisnis. Kami melay
             features: ["Cloud Based Storage", "Multi-user Access Control", "Automated Reporting"]
           }
         ].map((item) => (
-          <div class="min-w-[280px] sm:min-w-[340px] lg:min-w-0 card-padding-fluid card-standard hover:shadow-2xl hover:shadow-blue-600/10 shine-effect group flex flex-col h-auto lg:h-full snap-center">
+          <div class="card-padding-fluid card-standard hover:shadow-2xl hover:shadow-blue-600/10 shine-effect group flex flex-col h-full">
             <div class="w-12 h-12 md:w-16 md:h-16 bg-blue-600/10 rounded-xl flex items-center justify-center mb-6 md:mb-8 group-hover:bg-blue-600 transition-colors">
               <span data-lucide={item.icon} class="w-6 h-6 md:w-8 md:h-8 text-blue-600 group-hover:text-white transition-colors"></span>
             </div>
@@ -132,6 +139,7 @@ const description = "Solusi digital terpercaya untuk UMKM and Bisnis. Kami melay
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-20 items-center">
         <div class="text-center lg:text-left">
           <SectionHeader 
+            preTitle="PORTOFOLIO"
             title="Bukan Sekadar Kode, Tapi <span class='text-blue-600'>Hasil Nyata</span>" 
             subtitle="Lihat bagaimana kami membantu bisnis lokal bertransformasi dari offline ke ekosistem digital yang menghasilkan profit."
             align="left"
@@ -178,15 +186,16 @@ const description = "Solusi digital terpercaya untuk UMKM and Bisnis. Kami melay
     </div>
   </section>
 
-  <AreaGrid {areas} />
+  <AreaGrid preTitle="WILAYAH" areas={areas} />
 
-  <Workflow />
+  <Workflow preTitle="PROSES" />
 
   <div class="section-spacing container-custom">
     <PricingTable />
   </div>
 
   <FAQ 
+    preTitle="F.A.Q"
     items={[
       { q: "Apa perbedaan domain .my.id dan .com?", a: "Domain .my.id sangat ekonomis dan cocok untuk identitas personal/bisnis mikro. Domain .com atau .id memberikan kesan yang lebih profesional dan kredibilitas tinggi bagi bisnis skala menengah." },
       { q: "Apa yang dimaksud dengan Tanpa Biaya Hosting?", a: "Website kami dibangun dengan arsitektur statis yang di-host secara gratis di CDN global. Anda selamanya tidak perlu membayar tagihan bulanan atau tahunan untuk sewa hosting." },

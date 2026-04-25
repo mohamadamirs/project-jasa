@@ -12,6 +12,7 @@ interface Area {
 interface Props {
   areas: Area[];
   title?: string;
+  preTitle?: string;
   subtitle?: string;
   class?: string;
 }
@@ -19,6 +20,7 @@ interface Props {
 const { 
   areas, 
   title = "Kami Hadir di Dekat Anda", 
+  preTitle,
   subtitle = "Klik wilayah Anda untuk melihat penawaran khusus dan konsultasi personal.",
   class: className 
 } = Astro.props;
@@ -27,7 +29,7 @@ const {
 <section class:list={["section-spacing bg-white overflow-hidden", className]}>
   <div class="container-custom">
     <div class="text-center max-w-2xl mx-auto">
-      <SectionHeader {title} {subtitle} align="center" />
+      <SectionHeader {title} {preTitle} {subtitle} align="center" />
     </div>
 
     <!-- Mobile Island: React Marquee with Focus-Zoom -->

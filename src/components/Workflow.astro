@@ -7,11 +7,17 @@ const steps = [
   { step: "03", t: "Development", d: "Proses pengkodean dan optimasi SEO.", i: "code-2" },
   { step: "04", t: "Launch", d: "Website online dan siap menerima pelanggan.", i: "rocket" }
 ];
+interface Props {
+  preTitle?: string;
+}
+
+const { preTitle } = Astro.props;
 ---
 
 <section id="proses" class="section-spacing bg-slate-50/50 border-y border-blue-600/10 overflow-hidden">
   <div class="container-custom text-center">
     <SectionHeader 
+      preTitle={preTitle}
       title={`Alur Kerja <span class="text-blue-600">Mudah</span>`} 
       subtitle="Proses transparan untuk memastikan hasil terbaik bagi bisnis Anda." 
     />

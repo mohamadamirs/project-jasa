@@ -8,12 +8,14 @@ interface FAQItem {
 
 interface Props {
   title?: string;
+  preTitle?: string;
   items: FAQItem[];
   class?: string;
 }
 
 const { 
   title = "Tanya Jawab <span class='text-blue-600'>Umum</span>", 
+  preTitle,
   items,
   class: className 
 } = Astro.props;
@@ -21,7 +23,7 @@ const {
 
 <section class:list={["section-spacing bg-slate-50/50", className]}>
   <div class="max-w-4xl mx-auto container-custom">
-    <SectionHeader {title} />
+    <SectionHeader {title} {preTitle} />
     <div class="space-y-4">
       {items.map((faq) => (
         <div class="card-standard card-padding-fluid text-left border-blue-600/10 hover:shadow-xl hover:shadow-blue-600/5 transition-all group">
