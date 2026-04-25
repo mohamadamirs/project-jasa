@@ -13,6 +13,7 @@ const steps = [
 <section id="proses" class="section-spacing bg-slate-50/50 border-y border-blue-600/10 overflow-hidden">
   <div class="container-custom text-center">
     <SectionHeader 
+      preTitle="Workflow"
       title={`Alur Kerja <span class="text-blue-600">Mudah</span>`} 
       subtitle="Proses transparan untuk memastikan hasil terbaik bagi bisnis Anda." 
     />
@@ -32,11 +33,6 @@ const steps = [
           
           <h3 class="mb-3 md:mb-4 text-xl md:text-2xl font-bold tracking-tight">{step.t}</h3>
           <p class="text-slate-500 px-4 md:px-0 text-balance text-sm md:text-base leading-relaxed">{step.d}</p>
-          
-          <!-- Large Background Step Counter -->
-          <div class="mt-6 text-[4rem] font-black text-blue-600/5 leading-none select-none">
-            {step.step}
-          </div>
         </div>
       ))}
     </div>
