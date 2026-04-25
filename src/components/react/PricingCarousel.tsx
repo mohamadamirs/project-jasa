@@ -209,7 +209,7 @@ export default function PricingCarousel() {
 
                 <div className="transition-all duration-500 filter-none">
                   <div className={`text-center pb-8 border-b ${plan.theme === "light" ? "border-slate-200" : plan.theme === "blue" ? "border-white/30" : "border-slate-700/50"}`}>
-                    <span className={`text-caption block mb-3 ${plan.theme === "light" ? "text-blue-600" : plan.theme === "blue" ? "text-white/90" : "text-slate-400"}`}>
+                    <span className={`text-caption block mb-3 ${plan.theme === "light" ? "text-blue-600" : plan.theme === "blue" ? "text-white/90" : "text-slate-500"}`}>
                       {plan.subtitle}
                     </span>
                     <h3 className="mb-4 tracking-tight">{plan.name}</h3>
@@ -233,7 +233,7 @@ export default function PricingCarousel() {
                             </div>
                             <div>
                               <span className={`block text-caption font-bold mb-1
-                                ${plan.theme === "light" ? "text-slate-600" : plan.theme === "blue" ? "text-white/80" : "text-slate-400"}
+                                ${plan.theme === "light" ? "text-slate-600" : plan.theme === "blue" ? "text-white/80" : "text-slate-500"}
                               `}>
                                 {feature.label}
                               </span>

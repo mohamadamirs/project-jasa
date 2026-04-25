@@ -82,7 +82,7 @@ const AreaMarquee: React.FC<Props> = ({ areas }) => {
               <h4 className="text-slate-900 leading-tight block w-full font-bold">
                 {area.data.cityName}
               </h4>
-              <span className="text-caption text-slate-400 mt-3">
+              <span className="text-caption text-slate-500 mt-3">
                 Detail
               </span>
             </a>
