@@ -18,10 +18,10 @@ const {
 const waLink = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
 
 const variants = {
-  primary: "bg-blue-600 text-white hover:bg-blue-700 shadow-lg shadow-blue-200",
-  secondary: "bg-slate-900 text-white hover:bg-slate-800 shadow-lg shadow-slate-200",
-  outline: "bg-white text-slate-700 border-2 border-slate-100 hover:border-blue-200",
-  white: "bg-white text-blue-600 hover:bg-blue-50 shadow-none"
+  primary: "bg-blue-600 text-white hover:bg-blue-700 shadow-xl shadow-blue-600/20",
+  secondary: "bg-slate-900 text-white hover:bg-slate-800 shadow-xl shadow-slate-900/20",
+  outline: "bg-white text-slate-700 border-2 border-slate-100 hover:border-blue-600/20 hover:shadow-lg hover:shadow-blue-600/5",
+  white: "bg-white text-blue-600 hover:bg-blue-50 shadow-none border border-transparent"
 };
 ---
 
@@ -30,7 +30,7 @@ const variants = {
   target="_blank" 
   rel="noopener noreferrer"
   class:list={[
-    "inline-flex justify-center items-center px-6 md:px-8 py-4 text-sm md:text-base font-bold rounded-xl transition-all active:scale-95",
+    "inline-flex justify-center items-center px-6 md:px-10 py-4 text-base font-bold rounded-xl transition-all active:scale-95 min-h-[44px]",
     variants[variant],
     className
   ]}

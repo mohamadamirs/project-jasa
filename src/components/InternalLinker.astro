@@ -21,9 +21,9 @@ const relatedAreas = allAreas
     <div class="flex flex-col md:flex-row justify-between items-center mb-10 gap-4 text-center md:text-left">
       <div>
         <h3>Wilayah Layanan Lainnya</h3>
-        <p class="text-slate-500 mt-1">Kami juga melayani area sekitar {cityName} dengan standar kualitas yang sama.</p>
+        <p class="text-slate-600 mt-2">Kami juga melayani area sekitar {cityName} dengan standar kualitas yang sama.</p>
       </div>
-      <a href="/" class="text-blue-600 font-bold text-sm hover:underline flex items-center active:scale-95">
+      <a href="/" class="text-blue-600 font-bold text-caption hover:underline flex items-center active:scale-95 min-h-[44px]">
         Lihat Semua Wilayah <span data-lucide="arrow-right" class="ml-1 w-4 h-4"></span>
       </a>
     </div>
@@ -32,10 +32,10 @@ const relatedAreas = allAreas
       {relatedAreas.map(area => (
         <a 
           href={`/${area.id}/`} 
-          class="p-4 bg-slate-50 rounded-2xl border border-transparent hover:border-blue-200 hover:bg-white transition-all text-center group active:scale-95"
+          class="p-4 md:p-6 card-standard border-slate-100 hover:border-blue-600/20 hover:shadow-xl hover:shadow-blue-600/5 transition-all text-center group active:scale-95 flex flex-col justify-center min-h-[80px]"
         >
-          <span class="block text-slate-700 font-bold text-sm group-hover:text-blue-600 transition-colors">{area.data.cityName}</span>
-          <span class="text-[10px] text-slate-400 uppercase tracking-widest mt-1 block">Jasa Website</span>
+          <span class="block text-slate-900 font-bold group-hover:text-blue-600 transition-colors">{area.data.cityName}</span>
+          <span class="text-caption mt-1 block text-slate-400 group-hover:text-blue-400">Jasa Website</span>
         </a>
       ))}
     </div>

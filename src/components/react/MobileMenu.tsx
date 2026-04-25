@@ -42,41 +42,41 @@ export default function MobileMenu({ whatsappNumber, siteName }: Props) {
       />
 
       {/* Sidebar */}
-      <div className={`fixed top-0 right-0 w-[75%] max-w-[280px] h-full bg-white z-[120] shadow-2xl transition-all duration-300 ease-in-out p-6 flex flex-col ${isOpen ? 'translate-x-0 visible' : 'translate-x-full invisible'}`}>
-        <div className="flex justify-between items-center mb-8">
-          <span className="text-[10px] font-black uppercase tracking-[0.2em] text-blue-600">Navigasi</span>
+      <div className={`fixed top-0 right-0 w-[85%] max-w-[300px] h-full bg-white z-[120] shadow-2xl transition-all duration-300 ease-in-out p-6 flex flex-col ${isOpen ? 'translate-x-0 visible' : 'translate-x-full invisible'}`}>
+        <div className="flex justify-between items-center mb-10">
+          <span className="text-caption text-blue-600">Navigasi</span>
           <button 
             onClick={toggleMenu}
-            className="text-slate-900 p-1.5 hover:bg-slate-50 rounded-full transition-colors" 
+            className="text-slate-900 p-2 hover:bg-slate-50 rounded-full transition-colors active:scale-95" 
             aria-label="Close Menu"
           >
-            <X size={24} strokeWidth={2.5} />
+            <X size={28} strokeWidth={2.5} />
           </button>
         </div>
         
-        <nav className="flex flex-col space-y-3">
-          <a href="/" className="flex items-center justify-between text-base font-bold text-slate-900 bg-slate-50/50 p-4 rounded-xl border border-transparent hover:border-blue-100 transition-all active:scale-[0.98]">
+        <nav className="flex flex-col space-y-4">
+          <a href="/" className="flex items-center justify-between text-base font-bold text-slate-900 bg-slate-50/50 p-5 rounded-2xl border border-transparent hover:border-blue-600/10 transition-all active:scale-[0.98] min-h-[60px]">
             <span>Beranda</span>
             <Home className="text-blue-600" size={20} strokeWidth={2.2} />
           </a>
-          <a href="/portofolio/" className="flex items-center justify-between text-base font-bold text-slate-900 bg-slate-50/50 p-4 rounded-xl border border-transparent hover:border-blue-100 transition-all active:scale-[0.98]">
+          <a href="/portofolio/" className="flex items-center justify-between text-base font-bold text-slate-900 bg-slate-50/50 p-5 rounded-2xl border border-transparent hover:border-blue-600/10 transition-all active:scale-[0.98] min-h-[60px]">
             <span>Portofolio</span>
             <Briefcase className="text-blue-600" size={20} strokeWidth={2.2} />
           </a>
-          <a href="/#layanan" className="flex items-center justify-between text-base font-bold text-slate-900 bg-slate-50/50 p-4 rounded-xl border border-transparent hover:border-blue-100 transition-all active:scale-[0.98]">
+          <a href="/#layanan" className="flex items-center justify-between text-base font-bold text-slate-900 bg-slate-50/50 p-5 rounded-2xl border border-transparent hover:border-blue-600/10 transition-all active:scale-[0.98] min-h-[60px]">
             <span>Layanan</span>
             <Zap className="text-blue-600" size={20} strokeWidth={2.2} />
           </a>
           
-          <div className="pt-6">
-            <a href={`https://wa.me/${whatsappNumber}`} className="flex items-center justify-center w-full bg-blue-600 text-white py-4 rounded-xl font-bold shadow-xl shadow-blue-200 active:scale-95 transition-all text-base">
+          <div className="pt-8">
+            <a href={`https://wa.me/${whatsappNumber}`} className="flex items-center justify-center w-full bg-blue-600 text-white py-5 rounded-2xl font-bold shadow-xl shadow-blue-600/20 active:scale-95 transition-all text-base min-h-[60px]">
                <MessageSquare className="mr-2" size={20} strokeWidth={2.5} /> Chat WhatsApp
             </a>
           </div>
         </nav>
 
         <div className="mt-auto pt-8 text-center border-t border-slate-50">
-          <p className="text-[9px] text-slate-400 font-bold uppercase tracking-widest leading-relaxed">
+          <p className="text-caption text-slate-400 opacity-60">
             {siteName}<br />Partner Digital Brebes & Tegal
           </p>
         </div>

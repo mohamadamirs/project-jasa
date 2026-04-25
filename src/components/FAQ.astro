@@ -19,16 +19,16 @@ const {
 } = Astro.props;
 ---
 
-<section class:list={["section-spacing bg-sky-50", className]}>
+<section class:list={["section-spacing bg-slate-50/50", className]}>
   <div class="max-w-4xl mx-auto container-custom">
     <SectionHeader {title} />
-    <div class="space-y-3 md:space-y-4">
+    <div class="space-y-4">
       {items.map((faq) => (
-        <div class="bg-white p-5 md:p-6 rounded-2xl border border-blue-100 text-left hover:shadow-md transition-shadow group">
-          <h4 class="font-bold text-slate-900 mb-2 flex items-start md:items-center text-sm md:text-base group-hover:text-blue-600 transition-colors">
+        <div class="card-standard card-padding-fluid text-left border-blue-600/10 hover:shadow-xl hover:shadow-blue-600/5 transition-all group">
+          <h4 class="font-bold text-slate-900 mb-4 flex items-start md:items-center group-hover:text-blue-600 transition-colors">
             <span data-lucide="help-circle" class="text-blue-600 mr-3 w-6 h-6 flex-shrink-0"></span> {faq.q}
           </h4>
-          <p class="text-slate-600 text-xs md:text-sm pl-8 leading-relaxed">{faq.a}</p>
+          <p class="text-slate-600 pl-9 leading-relaxed">{faq.a}</p>
         </div>
       ))}
     </div>

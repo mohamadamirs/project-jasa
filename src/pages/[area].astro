@@ -27,27 +27,27 @@ const { cityName, title, description, localContext, nearbyAreas, whatsappMessage
   <section class="relative pt-[clamp(5rem,15vh,10rem)] pb-[clamp(4rem,10vh,8rem)] overflow-hidden bg-white px-[clamp(1rem,5vw,2.5rem)]">
     <div class="absolute inset-0 z-0">
       <div class="absolute top-0 right-0 w-full h-full bg-[radial-gradient(circle_at_80%_20%,rgba(37,99,235,0.05),rgba(255,255,255,0))]"></div>
-      <div class="absolute top-[-10%] right-[-10%] w-[40%] aspect-square bg-blue-50 rounded-full blur-[100px] opacity-40 animate-float"></div>
+      <div class="absolute top-[-10%] right-[-10%] w-[40%] aspect-square bg-blue-600/5 rounded-full blur-[100px] opacity-40 animate-float"></div>
     </div>
 
     <div class="container-custom relative z-10">
       <div class="max-w-3xl text-center md:text-left">
-        <div class="inline-flex items-center px-4 py-1.5 rounded-full text-caption bg-blue-50/80 backdrop-blur-sm text-blue-700 border border-blue-100 mb-8 animate-reveal not-italic">
+        <div class="inline-flex items-center px-4 py-2 rounded-full text-caption bg-blue-600/10 backdrop-blur-sm text-blue-700 border border-blue-600/10 mb-8 animate-reveal not-italic">
           <span data-lucide="map-pin" class="w-5 h-5 mr-2"></span> Layanan {seededSpin("{Terbaik|Terpercaya|Profesional}", cityName)} Wilayah {cityName}
         </div>
-        <h1 class="mb-8 animate-reveal-delayed">
+        <h1 class="mb-8 animate-reveal-delayed cursor-default">
           Jasa Pembuatan Website {seededSpin("{Modern|Kustom|Berkualitas}", cityName)} di <span class="text-blue-600">{cityName}</span>
         </h1>
         <p class="mb-10 opacity-0 animate-reveal-delayed-2">
           {description} Kami hadir membantu bisnis di {cityName} memiliki identitas digital premium yang cepat, aman, dan teroptimasi penuh untuk dominasi pasar lokal.
         </p>
         <div class="flex flex-col sm:flex-row gap-4 opacity-0 animate-reveal-delayed-3">
-          <WhatsAppCTA message={whatsappMessage} label="Konsultasi Gratis Sekarang" class="shadow-xl shadow-blue-200 w-full sm:w-auto" />
-          <a href="#insight" class="inline-flex justify-center items-center px-8 py-4 border border-slate-200 text-base font-bold rounded-xl text-slate-700 bg-white/50 backdrop-blur-sm hover:bg-white hover:border-blue-300 transition-all active:scale-95 w-full sm:w-auto">
+          <WhatsAppCTA message={whatsappMessage} label="Konsultasi Gratis Sekarang" class="shadow-2xl shadow-blue-600/20 w-full sm:w-auto" />
+          <a href="#insight" class="inline-flex justify-center items-center px-8 py-4 border border-slate-200 text-base font-bold rounded-xl text-slate-700 bg-white/50 backdrop-blur-sm hover:bg-white hover:border-blue-600/30 transition-all active:scale-95 w-full sm:w-auto min-h-[44px]">
             Analisa Peluang Lokal
           </a>
         </div>
-        <div class="mt-10 flex justify-center md:justify-start opacity-0 animate-reveal-delayed-3">
+        <div class="mt-12 flex justify-center md:justify-start opacity-0 animate-reveal-delayed-3">
           <PerformanceBadge />
         </div>
       </div>
@@ -55,7 +55,7 @@ const { cityName, title, description, localContext, nearbyAreas, whatsappMessage
   </section>
 
   <!-- 2. USP Lokal Section -->
-  <section class="section-spacing bg-sky-50 border-y border-blue-100">
+  <section class="section-spacing bg-slate-50/50 border-y border-blue-600/10">
     <div class="container-custom">
       <SectionHeader 
         title={`Mengapa Memilih Kutabaru di ${cityName}?`}
@@ -67,10 +67,10 @@ const { cityName, title, description, localContext, nearbyAreas, whatsappMessage
           { t: "Optimasi Google Maps", d: "Integrasi penuh agar lokasi bisnis Anda di " + cityName + " mudah ditemukan.", i: "map" },
           { t: "Support Personal", d: "Layanan purna jual yang ramah dan siap membantu kapanpun Anda butuhkan.", i: "message-square" }
         ].map(usp => (
-          <div class="p-8 card-standard text-left hover-lift hover:shadow-xl group not-italic">
-            <span data-lucide={usp.i} class="w-10 h-10 text-blue-600 mb-4 block group-hover:scale-110 transition-transform"></span>
-            <h4 class="mb-2">{usp.t}</h4>
-            <p class="text-slate-600 text-[15px] leading-relaxed">{usp.d}</p>
+          <div class="p-8 md:p-10 card-standard text-left hover-lift hover:shadow-xl hover:shadow-blue-600/5 group not-italic">
+            <span data-lucide={usp.i} class="w-10 h-10 text-blue-600 mb-6 block group-hover:scale-110 transition-transform"></span>
+            <h4 class="mb-4">{usp.t}</h4>
+            <p class="text-slate-600 leading-relaxed">{usp.d}</p>
           </div>
         ))}
       </div>

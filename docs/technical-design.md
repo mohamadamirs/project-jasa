@@ -65,13 +65,15 @@ Batasan kaku untuk menjaga integritas layout pada layar ultra-kecil s/d ultra-le
 #### C. Grid & Layout Constraints (Tentukan)
 - **Max Width:** Kontainer utama tidak boleh melebihi `1280px` (`max-w-7xl`).
 - **Section Vertical Spacing:** Jarak antar seksi vertikal **WAJIB** menggunakan `py-[clamp(4rem,10vh,8rem)]`.
-- **Section Header Bottom Margin:** `mb-[clamp(2.5rem,8vh,4.5rem)]`.
-- **Card Rounding:** Standar rounding untuk komponen card adalah `rounded-[2rem]` (32px).
-- **Button Rounding:** Standar rounding untuk tombol adalah `rounded-xl` (12px).
+- Section Header Bottom Margin: `mb-[clamp(2.5rem,8vh,4.5rem)]`.
+- **Card Rounding (Adaptive):** `rounded-[clamp(1.25rem,5vw,2rem)]`.
+- **Card Padding (Fluid):** `p-[clamp(1.25rem,6vw,2.5rem)]`.
+- **Button Rounding:** `rounded-xl` (12px).
 - **Gap Scale:**
     - Small: `gap-4` (16px).
     - Medium: `gap-8` (32px).
     - Large: `gap-12 md:gap-20`.
+- **Card Title Policy:** Seluruh judul di dalam kartu (Card Titles) **WAJIB** menggunakan `h4` (atau `h3` dengan penyesuaian skala).
 - **No-Scroll Policy:** Dilarang keras adanya scroll horizontal pada level body. Gunakan `overflow-x-hidden` pada elemen pembungkus tertinggi.
 - **Text Balance:** Tag Heading (H1, H2) **WAJIB** menggunakan class `text-balance` untuk distribusi baris teks yang estetis di mobile.
 
