@@ -16,22 +16,199 @@ const steps = [
       subtitle="Proses transparan untuk memastikan hasil terbaik bagi bisnis Anda." 
     />
     
-    <div class="flex flex-row md:grid md:grid-cols-4 gap-4 md:gap-8 relative mt-12 overflow-x-auto pb-4 md:pb-0 scroll-smooth snap-x snap-mandatory no-scrollbar">
-      <!-- Connector Line (Desktop Only) -->
-      <div class="hidden md:block absolute top-8 left-0 w-full h-0.5 bg-blue-600/20 -z-0"></div>
+    <!-- Visual Swipe Hint (Mobile Only) -->
+    <div class="flex md:hidden items-center justify-center gap-2 mb-6 text-blue-600/40 animate-pulse">
+      <span data-lucide="chevrons-left" class="w-4 h-4"></span>
+      <span class="text-[10px] font-bold uppercase tracking-[0.2em]">Geser untuk Lihat Proses</span>
+      <span data-lucide="chevrons-right" class="w-4 h-4"></span>
+    </div>
 
-      {steps.map(step => (
-        <div class="flex-none w-[140px] md:w-auto relative group z-10 snap-center">
-          <div class="w-12 h-12 md:w-16 md:h-16 bg-blue-600 text-white rounded-2xl flex items-center justify-center mx-auto mb-4 md:mb-6 shadow-lg shadow-blue-600/20 group-hover:rotate-6 transition-transform hover-lift active:scale-95">
-            <span data-lucide={step.i} class="w-6 h-6 md:w-8 md:h-8"></span>
+    <div id="workflow-container" class="flex flex-row md:grid md:grid-cols-4 gap-6 md:gap-8 relative mt-4 md:mt-12 overflow-x-auto pb-10 md:pb-0 scroll-smooth snap-x snap-mandatory no-scrollbar px-[calc(50%-140px)] md:px-0 cursor-grab active:cursor-grabbing">
+      <!-- Connector Line (Desktop Only) -->
+      <div class="hidden md:block absolute top-12 left-0 w-full h-0.5 bg-blue-600/10 -z-0"></div>
+
+      {steps.map((step, i) => (
+        <div data-index={i} class="workflow-card flex-none w-[280px] md:w-auto relative group z-10 snap-center transition-all duration-500 opacity-40 scale-90 md:opacity-100 md:scale-100">
+          <div class="relative">
+            {/* Step Number Badge */}
+            <div class="absolute -top-3 -right-3 w-8 h-8 bg-slate-100 text-slate-400 rounded-full flex items-center justify-center text-[10px] font-black border-4 border-white z-20 md:hidden">
+              {step.step}
+            </div>
+            
+            <div class="w-20 h-20 md:w-24 md:h-24 bg-white border-2 border-blue-600/5 text-blue-600 rounded-[2rem] flex items-center justify-center mx-auto mb-6 md:mb-8 shadow-xl shadow-blue-600/5 group-hover:bg-blue-600 group-hover:text-white group-hover:rotate-6 transition-all duration-500 hover-lift active:scale-95">
+              <span data-lucide={step.i} class="w-10 h-10 md:w-12 md:h-12"></span>
+            </div>
           </div>
-          <h4 class="mb-2">{step.t}</h4>
-          <p class="text-slate-600 px-2 md:px-0 text-balance">{step.d}</p>
+          
+          <h3 class="mb-3 md:mb-4 text-xl md:text-2xl font-bold tracking-tight">{step.t}</h3>
+          <p class="text-slate-500 px-4 md:px-0 text-balance text-sm md:text-base leading-relaxed">{step.d}</p>
+          
+          {/* Desktop Step Counter */}
+          <div class="hidden md:block mt-6 text-[4rem] font-black text-blue-600/5 leading-none select-none">
+            {step.step}
+          </div>
         </div>
+      ))}
+    </div>
+
+    <!-- Navigation Dots (Mobile Only) -->
+    <div class="flex md:hidden justify-center gap-3 mt-4" id="workflow-dots">
+      {steps.map((_, i) => (
+        <button 
+          aria-label={`Go to step ${i + 1}`}
+          data-dot={i} 
+          class="w-2 h-2 rounded-full bg-blue-600/10 transition-all duration-300"
+        ></button>
       ))}
     </div>
   </div>
 </section>
+
+<script>
+  function initWorkflowScroll() {
+    const container = document.getElementById('workflow-container');
+    const dots = document.querySelectorAll('#workflow-dots [data-dot]');
+    const cards = document.querySelectorAll('.workflow-card');
+    
+    if (!container || cards.length === 0) return;
+
+    if (window.innerWidth < 768) {
+      let scrollInterval: ReturnType<typeof setInterval>;
+      let interactionTimeout: ReturnType<typeof setTimeout>;
+      let isInteracting = false;
+      let currentIndex = 0;
+      
+      const updateActiveState = (index: number) => {
+        cards.forEach((card, i) => {
+          if (i === index) {
+            card.classList.remove('opacity-40', 'scale-90');
+            card.classList.add('opacity-100', 'scale-100');
+          } else {
+            card.classList.add('opacity-40', 'scale-90');
+            card.classList.remove('opacity-100', 'scale-100');
+          }
+        });
+
+        dots.forEach((dot, i) => {
+          if (i === index) {
+            dot.classList.remove('bg-blue-600/10', 'w-2');
+            dot.classList.add('bg-blue-600', 'w-6');
+          } else {
+            dot.classList.add('bg-blue-600/10', 'w-2');
+            dot.classList.remove('bg-blue-600', 'w-6');
+          }
+        });
+      };
+
+      const snapToCenter = (index: number) => {
+        if (cards[index]) {
+          const targetCard = cards[index] as HTMLElement;
+          const containerCenter = container.offsetWidth / 2;
+          const cardCenter = targetCard.offsetLeft + (targetCard.offsetWidth / 2);
+          
+          container.scrollTo({
+            left: cardCenter - containerCenter,
+            behavior: 'smooth'
+          });
+          updateActiveState(index);
+        }
+      };
+
+      const startAutoScroll = () => {
+        if (scrollInterval) clearInterval(scrollInterval);
+        scrollInterval = setInterval(() => {
+          if (!isInteracting) {
+            currentIndex = (currentIndex + 1) % cards.length;
+            snapToCenter(currentIndex);
+          }
+        }, 3500);
+      };
+
+      const handleInteraction = () => {
+        isInteracting = true;
+        if (scrollInterval) clearInterval(scrollInterval);
+        if (interactionTimeout) clearTimeout(interactionTimeout);
+        
+        // Resume auto-scroll after 8 seconds of no interaction
+        interactionTimeout = setTimeout(() => {
+          isInteracting = false;
+          startAutoScroll();
+        }, 8000);
+      };
+
+      // Dot Clicks
+      dots.forEach((dot, i) => {
+        dot.addEventListener('click', () => {
+          handleInteraction();
+          currentIndex = i;
+          snapToCenter(i);
+        });
+      });
+
+      // Intersection Observer for scroll tracking
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const index = parseInt((entry.target as HTMLElement).dataset.index || '0');
+            currentIndex = index;
+            updateActiveState(index);
+          }
+        });
+      }, {
+        root: container,
+        threshold: 0.6
+      });
+
+      cards.forEach(card => observer.observe(card));
+
+      // Drag logic
+      let isDown = false;
+      let startX: number;
+      let scrollLeft: number;
+
+      container.addEventListener('mousedown', (e) => {
+        isDown = true;
+        handleInteraction();
+        container.classList.remove('scroll-smooth', 'snap-x', 'snap-mandatory');
+        startX = e.pageX - container.offsetLeft;
+        scrollLeft = container.scrollLeft;
+      });
+
+      const handleEnd = () => {
+        if (!isDown) return;
+        isDown = false;
+        container.classList.add('scroll-smooth', 'snap-x', 'snap-mandatory');
+      };
+
+      container.addEventListener('mouseleave', handleEnd);
+      container.addEventListener('mouseup', handleEnd);
+      container.addEventListener('mousemove', (e) => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - container.offsetLeft;
+        const walk = (x - startX) * 1.5;
+        container.scrollLeft = scrollLeft - walk;
+      });
+
+      // Touch events
+      container.addEventListener('touchstart', handleInteraction, { passive: true });
+      container.addEventListener('touchend', () => {
+        // Ensure snapping is back after touch ends
+        container.classList.add('scroll-smooth', 'snap-x', 'snap-mandatory');
+        handleInteraction();
+      }, { passive: true });
+
+      // Init
+      setTimeout(() => {
+        snapToCenter(0);
+        startAutoScroll();
+      }, 100);
+    }
+  }
+
+  initWorkflowScroll();
+  document.addEventListener('astro:page-load', initWorkflowScroll);
+</script>
 
 <style>
   .no-scrollbar::-webkit-scrollbar { display: none; }
