@@ -164,7 +164,7 @@ export default function PricingCarousel() {
         <ChevronsRight className="w-4 h-4 opacity-50" />
       </div>
 
-      <div className="relative max-w-7xl mx-auto -mx-4 sm:mx-auto px-4 md:px-0">
+      <div className="relative max-w-7xl mx-auto -mx-4 md:mx-auto">
         <div 
           id="pricing-slider" 
           ref={sliderRef}
@@ -175,7 +175,7 @@ export default function PricingCarousel() {
           className={`flex md:grid md:grid-cols-3 overflow-x-auto md:overflow-visible snap-x md:snap-none snap-mandatory no-scrollbar pb-12 md:pb-8 pt-4 gap-4 md:gap-8 items-center ${isMobile ? (isDragging ? 'active:cursor-grabbing cursor-grab' : 'cursor-grab') : ''}`}
         >
           {/* Spacer for centering first and last cards on mobile */}
-          <div className="md:hidden shrink-0 w-[10vw]" />
+          <div className="md:hidden shrink-0 w-4" />
           
           {plans.map((plan, i) => {
             const isCenterMobile = isMobile && activeIndex === i;
@@ -191,7 +191,7 @@ export default function PricingCarousel() {
                 key={i}
                 ref={el => cardsRef.current[i] = el}
                 data-index={i}
-                className={`pricing-card shrink-0 w-[75vw] sm:w-[340px] md:w-full snap-center rounded-[clamp(1.25rem,5vw,2rem)] p-[clamp(1.25rem,6vw,2.5rem)] transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] relative origin-center
+                className={`pricing-card shrink-0 w-[85vw] sm:w-[340px] md:w-full snap-center rounded-[clamp(1.25rem,5vw,2rem)] p-[clamp(1.25rem,6vw,2.5rem)] transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] relative origin-center
                   ${plan.theme === "light" ? "bg-white border-2 border-slate-200 text-slate-900" : 
                     plan.theme === "blue" ? "bg-blue-600 border-2 border-blue-600/40 text-white shadow-2xl shadow-blue-600/20" : 
                     "bg-slate-900 border-2 border-slate-700 text-white"}
