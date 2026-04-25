@@ -24,7 +24,7 @@ const { cityName, title, description, localContext, nearbyAreas, whatsappMessage
 
 <MainLayout {title} {description} {cityName} {localContext} {localLandmark} {businessTrends} {lat} {lng}>
   <!-- 1. Local Hero Section (Revamped) -->
-  <section class="relative pt-[clamp(5rem,15vh,10rem)] pb-[clamp(4rem,10vh,8rem)] overflow-hidden bg-white px-[clamp(1rem,5vw,2.5rem)]">
+  <section class="relative pt-[clamp(5rem,15vh,10rem)] pb-[clamp(4rem,10vh,8rem)] overflow-hidden bg-linear-to-b from-white to-slate-50 px-[clamp(1rem,5vw,2.5rem)]">
     <div class="absolute inset-0 z-0">
       <div class="absolute top-0 right-0 w-full h-full bg-[radial-gradient(circle_at_80%_20%,rgba(37,99,235,0.05),rgba(255,255,255,0))]"></div>
       <div class="absolute top-[-10%] right-[-10%] w-[40%] aspect-square bg-blue-600/5 rounded-full blur-[100px] opacity-40 animate-float"></div>
@@ -91,7 +91,7 @@ const { cityName, title, description, localContext, nearbyAreas, whatsappMessage
       { q: "Apa perbedaan paket Starter 250rb dan Business 1.8jt?", a: "Paket Starter menggunakan domain .my.id dan cocok untuk profil dasar. Paket Business menggunakan domain profesional (.com/.id), email bisnis, dan mendapatkan prioritas SEO Lokal di Google Maps." },
       { q: "Berapa biaya perpanjangan tahun berikutnya?", a: "Sangat terjangkau! Karena biaya hosting Rp 0, Anda hanya cukup membayar biaya perpanjangan domain saja mulai Rp 15rb (my.id) atau Rp 150rb (com/id) per tahun." }
     ]} 
-    class="bg-white optimize-render"
+    class="optimize-render"
   />
 
   <InternalLinker currentAreaId={entry.id} {cityName} />

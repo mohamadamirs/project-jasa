@@ -13,7 +13,7 @@ const portfolios = await getCollection('portfolios');
 
 <MainLayout {title} {description}>
   <!-- Header Portofolio -->
-  <section class="bg-white pt-[clamp(5rem,15vh,10rem)] pb-[clamp(3rem,8vh,6rem)] border-b border-slate-100">
+  <section class="bg-linear-to-b from-white to-slate-50 pt-[clamp(5rem,15vh,10rem)] pb-[clamp(3rem,8vh,6rem)] border-b border-slate-100">
     <div class="container-custom px-[clamp(1rem,5vw,2.5rem)] text-center">
       <h1 class="mb-6">
         Karya <span class="text-blue-600">Terbaik</span> Kami
@@ -25,7 +25,7 @@ const portfolios = await getCollection('portfolios');
   </section>
 
   <!-- Gallery Grid -->
-  <section class="section-spacing bg-slate-50/50">
+  <section class="section-spacing">
     <div class="container-custom">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {portfolios.map((project) => (
@@ -73,7 +73,7 @@ const portfolios = await getCollection('portfolios');
   </section>
 
   <!-- Final CTA -->
-  <section class="section-spacing bg-white">
+  <section class="section-spacing">
     <div class="container-custom text-center">
       <div class="max-w-3xl mx-auto">
         <h2 class="mb-8">Ingin Proyek Anda Ada di Sini?</h2>
