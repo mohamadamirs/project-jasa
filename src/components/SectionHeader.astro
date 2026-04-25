@@ -1,19 +1,37 @@
 ---
 interface Props {
+  pretitle?: string;
   title: string;
   subtitle?: string;
   align?: 'center' | 'left';
   class?: string;
 }
 
-const { title, subtitle, align = 'center', class: className } = Astro.props;
+const { pretitle, title, subtitle, align = 'center', class: className } = Astro.props;
 ---
 
 <div class:list={[
   "mb-[clamp(2.5rem,8vh,4.5rem)]",
-  align === 'center' ? "text-center" : "text-left",
+  align === 'center' ? "text-center flex flex-col items-center" : "text-left",
   className
 ]}>
-  <h2 class:list={["mb-4 px-1", align === 'center' ? "mx-auto" : ""]} set:html={title} />
-  {subtitle && <p class:list={["text-slate-600 max-w-2xl", align === 'center' ? "mx-auto" : ""]}>{subtitle}</p>}
+  {pretitle && (
+    <div class:list={[
+      "flex items-center gap-3 mb-6",
+      align === 'center' ? "justify-center" : "justify-start"
+    ]}>
+      <span class="w-8 h-px bg-blue-600/30"></span>
+      <span class="badge-caption !bg-blue-600/5 !text-blue-600 !border-blue-600/10 !tracking-[0.2em] !text-[10px]">{pretitle}</span>
+      <span class="w-8 h-px bg-blue-600/30"></span>
+    </div>
+  )}
+  
+  <div class="relative inline-block">
+    <h2 class:list={["mb-4 px-1", align === 'center' ? "mx-auto" : ""]} set:html={title} />
+    {align === 'center' && (
+      <div class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-10 h-1 bg-linear-to-r from-blue-600 to-indigo-700 rounded-full"></div>
+    )}
+  </div>
+
+  {subtitle && <p class:list={["text-slate-600 max-w-2xl mt-4", align === 'center' ? "mx-auto" : ""]}>{subtitle}</p>}
 </div>
