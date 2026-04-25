@@ -68,4 +68,39 @@ const { Content } = await render(entry);
       </div>
     </footer>
   </article>
+
+  <!-- Sticky Bottom CTA (Mobile Only) -->
+  <div class="md:hidden fixed bottom-0 left-0 w-full p-4 bg-white/80 backdrop-blur-xl border-t border-slate-100 z-[40] transition-transform duration-300 translate-y-full shadow-[0_-10px_30px_-10px_rgba(0,0,0,0.1)]" id="sticky-cta">
+    <WhatsAppCTA 
+      label="Konsultasi Proyek Ini" 
+      message={`Halo, saya melihat proyek ${title} dan ingin bertanya lebih lanjut.`}
+      class="w-full shadow-2xl shadow-blue-600/20"
+    />
+  </div>
+
+  <script is:inline>
+    (function() {
+      function setupStickyCTA() {
+        const cta = document.getElementById('sticky-cta');
+        const header = document.querySelector('header');
+        
+        if (!cta || !header) return;
+
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (!entry.isIntersecting) {
+              cta.classList.remove('translate-y-full');
+            } else {
+              cta.classList.add('translate-y-full');
+            }
+          });
+        }, { threshold: 0 });
+
+        observer.observe(header);
+      }
+
+      setupStickyCTA();
+      document.addEventListener('astro:after-swap', setupStickyCTA);
+    })();
+  </script>
 </MainLayout>
