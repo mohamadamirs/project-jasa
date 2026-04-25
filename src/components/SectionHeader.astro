@@ -1,12 +1,15 @@
 ---
+import Badge from './Badge.astro';
+
 interface Props {
+  preTitle?: string;
   title: string;
   subtitle?: string;
   align?: 'center' | 'left';
   class?: string;
 }
 
-const { title, subtitle, align = 'center', class: className } = Astro.props;
+const { preTitle, title, subtitle, align = 'center', class: className } = Astro.props;
 ---
 
 <div class:list={[
@@ -14,6 +17,22 @@ const { title, subtitle, align = 'center', class: className } = Astro.props;
   align === 'center' ? "text-center" : "text-left",
   className
 ]}>
-  <h2 class:list={["mb-4 px-1", align === 'center' ? "mx-auto" : ""]} set:html={title} />
+  {preTitle && (
+    <div class:list={["flex items-center gap-3 mb-4", align === 'center' ? "justify-center" : "justify-start"]}>
+      {/* Garis kiri hanya muncul jika rata tengah */}
+      {align === 'center' && <div class="h-px w-8 bg-blue-600/20"></div>}
+      
+      <Badge text={preTitle} variant="blue" class="py-1" />
+      
+      {/* Garis kanan selalu muncul sebagai aksen */}
+      <div class="h-px w-8 bg-blue-600/20"></div>
+    </div>
+  )}
+  
+  <div class:list={["inline-block", align === 'center' ? "mx-auto" : ""]}>
+    <h2 class:list={["mb-4", align === 'center' ? "mx-auto" : ""]} set:html={title} />
+    {align === 'center' && <div class="h-1.5 w-10 bg-linear-to-r from-blue-600 to-indigo-600 mx-auto rounded-full -mt-2 mb-6"></div>}
+  </div>
+
   {subtitle && <p class:list={["text-slate-600 max-w-2xl", align === 'center' ? "mx-auto" : ""]}>{subtitle}</p>}
 </div>

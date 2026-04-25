@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Minus, Search, Layers, Zap, Code, Mail, ChevronsLeft, ChevronsRight, MoveHorizontal } from 'lucide-react';
+import { Minus, Search, Layers, Zap, Code, Mail, ChevronsLeft, ChevronsRight, MoveHorizontal, MessageCircle } from 'lucide-react';
+import { WHATSAPP_NUMBER } from '../../consts';
 
 interface Feature {
   label: string;
@@ -15,6 +16,7 @@ interface Plan {
   recommended?: boolean;
   features: Feature[];
   theme: 'light' | 'blue' | 'dark';
+  waMessage: string;
 }
 
 const plans: Plan[] = [
@@ -27,9 +29,10 @@ const plans: Plan[] = [
       { label: "Visibilitas Google", value: "SEO Standar", icon: "search", active: true },
       { label: "Kapasitas Web", value: "1 Halaman Landing", icon: "layers", active: true },
       { label: "Sistem Cerdas", value: "Tidak Tersedia", icon: "minus", active: false },
-      { label: "Biaya Bulanan", value: "Gratis Selamanya", icon: "zap", active: true }
+      { label: "Biaya Bulanan", value: "Hanya Bayar Domain", icon: "zap", active: true }
     ],
-    theme: "light"
+    theme: "light",
+    waMessage: "Halo, saya tertarik dengan Paket Starter."
   },
   {
     name: "Business",
@@ -39,11 +42,12 @@ const plans: Plan[] = [
     features: [
       { label: "Email Bisnis", value: "Email Resmi Bisnis", icon: "mail", active: true },
       { label: "Visibilitas Google", value: "Prioritas Google Maps", icon: "search", active: true },
-      { label: "Kapasitas Web", value: "Hingga 5 Halaman", icon: "layers", active: true },
+      { label: "Kapasitas Web", value: "Hingga 5 Halaman Lebih", icon: "layers", active: true },
       { label: "Sistem Cerdas", value: "Tidak Tersedia", icon: "minus", active: false },
-      { label: "Biaya Bulanan", value: "Gratis Selamanya", icon: "zap", active: true }
+      { label: "Biaya Bulanan", value: "Bayar Domain + Maintenance", icon: "zap", active: true }
     ],
-    theme: "blue"
+    theme: "blue",
+    waMessage: "Halo, saya tertarik dengan Paket Business."
   },
   {
     name: "Enterprise",
@@ -56,7 +60,8 @@ const plans: Plan[] = [
       { label: "Sistem Cerdas", value: "Aplikasi Kustom & IoT", icon: "code", active: true },
       { label: "Biaya Bulanan", value: "Sesuai Infrastruktur", icon: "zap", active: true }
     ],
-    theme: "dark"
+    theme: "dark",
+    waMessage: "Halo, saya tertarik dengan Paket Enterprise."
   }
 ];
 
@@ -75,7 +80,6 @@ export default function PricingCarousel() {
   
   const [activeIndex, setActiveIndex] = useState<number>(0);
   const [isMobile, setIsMobile] = useState(true);
-  
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
@@ -102,9 +106,9 @@ export default function PricingCarousel() {
 
   useEffect(() => {
     const checkMobile = () => {
-      const mobileView = window.innerWidth < 768;
+      const mobileView = window.innerWidth < 1024;
       setIsMobile(mobileView);
-      if (!mobileView) setActiveIndex(1); // Default center in desktop
+      if (!mobileView) setActiveIndex(1);
     };
     
     checkMobile();
@@ -115,10 +119,8 @@ export default function PricingCarousel() {
 
     const handleScrollFocus = () => {
       if (!isMobile || !slider) return;
-      
       const containerRect = slider.getBoundingClientRect();
-      const focusPoint = containerRect.left + containerRect.width / 2;
-
+      const center = containerRect.left + containerRect.width / 2;
       let closestIdx = 0;
       let minDistance = Infinity;
 
@@ -126,8 +128,7 @@ export default function PricingCarousel() {
         if (!card) return;
         const rect = card.getBoundingClientRect();
         const cardCenter = rect.left + rect.width / 2;
-        const distance = Math.abs(focusPoint - cardCenter);
-
+        const distance = Math.abs(center - cardCenter);
         if (distance < minDistance) {
           minDistance = distance;
           closestIdx = idx;
@@ -137,17 +138,6 @@ export default function PricingCarousel() {
     };
 
     slider.addEventListener('scroll', handleScrollFocus, { passive: true });
-    
-    // Initial Load: Scroll to Starter (First Card)
-    if (isMobile) {
-      setTimeout(() => {
-        if (slider) {
-          slider.scrollTo({ left: 0, behavior: 'smooth' });
-          setActiveIndex(0);
-        }
-      }, 100);
-    }
-
     return () => {
       window.removeEventListener('resize', checkMobile);
       slider.removeEventListener('scroll', handleScrollFocus);
@@ -155,127 +145,135 @@ export default function PricingCarousel() {
   }, [isMobile]);
 
   return (
-    <>
-      <div className="md:hidden flex items-center justify-center gap-3 mb-8 text-blue-600 animate-pulse">
-        <ChevronsLeft className="w-4 h-4 opacity-50" />
-        <span className="text-caption bg-blue-600/10 px-4 py-2 rounded-full border border-blue-600/10 flex items-center gap-2">
-          <MoveHorizontal className="w-3 h-3" /> Tarik & Geser
+    <div className="w-full">
+      {/* Mobile Hint */}
+      <div className="lg:hidden flex items-center justify-center gap-3 mb-8 text-blue-600/40 animate-pulse">
+        <ChevronsLeft className="w-4 h-4" />
+        <span className="text-[10px] font-bold tracking-[0.2em] bg-blue-50 px-4 py-1.5 rounded-full border border-blue-100 flex items-center gap-2 text-blue-600">
+          <MoveHorizontal className="w-3 h-3" /> Geser Paket
         </span>
-        <ChevronsRight className="w-4 h-4 opacity-50" />
+        <ChevronsRight className="w-4 h-4" />
       </div>
 
-      <div className="relative max-w-7xl mx-auto -mx-4 md:mx-auto">
+      <div className="relative -mx-4 sm:-mx-6 lg:mx-auto">
         <div 
-          id="pricing-slider" 
           ref={sliderRef}
           onMouseDown={handleMouseDown}
           onMouseLeave={handleMouseLeave}
           onMouseUp={handleMouseUp}
           onMouseMove={handleMouseMove}
-          className={`flex md:grid md:grid-cols-3 overflow-x-auto md:overflow-visible snap-x md:snap-none snap-mandatory no-scrollbar pb-12 md:pb-8 pt-4 gap-4 md:gap-8 items-center ${isMobile ? (isDragging ? 'active:cursor-grabbing cursor-grab' : 'cursor-grab') : ''}`}
+          className={`flex lg:grid lg:grid-cols-3 overflow-x-auto lg:overflow-visible snap-x snap-mandatory no-scrollbar pb-16 pt-4 gap-6 lg:gap-8 items-stretch px-4 sm:px-6 lg:px-0 ${isMobile ? (isDragging ? 'active:cursor-grabbing cursor-grab' : 'cursor-grab') : ''}`}
         >
-          {/* Spacer for centering first and last cards on mobile */}
-          <div className="md:hidden shrink-0 w-4" />
+          {/* Peek spacer */}
+          <div className="lg:hidden shrink-0 w-[12vw] min-[400px]:w-[5vw]" />
           
           {plans.map((plan, i) => {
-            const isCenterMobile = isMobile && activeIndex === i;
+            const isActive = activeIndex === i;
             
-            const scaleClass = isMobile 
-              ? (isCenterMobile ? 'scale-100' : 'scale-[0.9] opacity-50') 
-              : (plan.recommended ? 'scale-105' : 'scale-100');
-              
-            const zIndexClass = isCenterMobile || (!isMobile && plan.recommended) ? 'z-10' : 'z-0';
-
             return (
               <div 
                 key={i}
                 ref={el => cardsRef.current[i] = el}
-                data-index={i}
-                className={`pricing-card shrink-0 w-[85vw] sm:w-[340px] md:w-full snap-center rounded-[clamp(1.25rem,5vw,2rem)] p-[clamp(1.25rem,6vw,2.5rem)] transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] relative origin-center
-                  ${plan.theme === "light" ? "bg-white border-2 border-slate-200 text-slate-900" : 
-                    plan.theme === "blue" ? "bg-blue-600 border-2 border-blue-600/40 text-white shadow-2xl shadow-blue-600/20" : 
-                    "bg-slate-900 border-2 border-slate-700 text-white"}
-                  ${scaleClass} ${zIndexClass}
+                className={`pricing-card shrink-0 w-[265px] min-[360px]:w-[310px] sm:w-[360px] lg:w-full snap-center rounded-[2.5rem] p-8 min-[360px]:p-[clamp(1.25rem,6vw,2.5rem)] transition-all duration-400 lg:duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] relative flex flex-col border
+                  ${plan.theme === "light" ? "bg-white border-slate-100 text-slate-900 shadow-sm" : 
+                    plan.theme === "blue" ? "bg-blue-600 border-blue-500 text-white shadow-2xl shadow-blue-600/20" : 
+                    "bg-slate-900 border-slate-800 text-white shadow-xl"}
+                  ${isMobile 
+                    ? (isActive ? 'scale-100 z-10 shadow-2xl shadow-blue-600/10 border-blue-200' : 'scale-[0.92] opacity-60 z-0') 
+                    : (plan.recommended ? 'scale-105 z-10 shadow-2xl shadow-blue-600/20' : 'scale-100 z-0 opacity-100')}
+                  lg:hover:-translate-y-4 lg:hover:scale-[1.02] lg:hover:shadow-2xl lg:hover:shadow-blue-600/15 lg:hover:border-blue-400/30 lg:hover:z-20
                 `}
               >
                 
                 {plan.recommended && (
                   <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-30">
-                    <div className="bg-gradient-to-r from-amber-400 to-orange-500 text-white text-caption px-5 py-2 rounded-full shadow-lg whitespace-nowrap border border-amber-300">
-                      Paling Diminati
+                    <div className="bg-linear-to-r from-amber-400 to-orange-500 text-white text-[9px] font-black px-5 py-2 rounded-full shadow-lg border border-amber-300 whitespace-nowrap">
+                      Paling Populer
                     </div>
                   </div>
                 )}
 
-                <div className="transition-all duration-500 filter-none">
-                  <div className={`text-center pb-8 border-b ${plan.theme === "light" ? "border-slate-200" : plan.theme === "blue" ? "border-white/30" : "border-slate-700/50"}`}>
-                    <span className={`text-caption block mb-3 ${plan.theme === "light" ? "text-blue-600" : plan.theme === "blue" ? "text-white/90" : "text-slate-500"}`}>
-                      {plan.subtitle}
-                    </span>
-                    <h3 className="mb-4 tracking-tight">{plan.name}</h3>
-                    <div className={`inline-block px-5 py-3 rounded-xl text-lg md:text-xl font-black shadow-sm ${plan.theme === "light" ? "bg-slate-100 text-slate-900 border border-slate-200" : plan.theme === "blue" ? "bg-white/20 text-white border border-white/30" : "bg-white/5 text-white border border-white/10"}`}>
-                      {plan.price}
-                    </div>
+                <div className="text-center pb-8 border-b border-current/10">
+                  <span className={`text-[9px] font-black tracking-widest block mb-3 ${plan.theme === "light" ? "text-blue-600" : "text-white/70"}`}>
+                    {plan.subtitle}
+                  </span>
+                  <h3 className="mb-4 text-xl font-black tracking-tight">{plan.name}</h3>
+                  <div className={`inline-block px-5 py-2 rounded-2xl text-lg font-black shadow-sm ${plan.theme === "light" ? "bg-slate-50 text-slate-900 border border-slate-200" : "bg-white/10 text-white border border-white/20"}`}>
+                    {plan.price}
                   </div>
+                </div>
 
-                  <div className="pt-8">
-                    <ul className="space-y-5">
-                      {plan.features.map((feature, j) => {
-                        const Icon = IconMap[feature.icon];
-                        return (
-                          <li key={j} className="flex items-center gap-4">
-                            <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 transition-colors
-                              ${feature.active 
-                                ? (plan.theme === "light" ? "bg-blue-600/10 text-blue-600" : plan.theme === "blue" ? "bg-white/20 text-white" : "bg-blue-600/30 text-blue-300")
-                                : (plan.theme === "light" ? "bg-slate-50 text-slate-300" : plan.theme === "blue" ? "bg-white/10 text-white/30" : "bg-slate-800/50 text-slate-600")}
+                <div className="pt-8 flex-grow">
+                  <ul className="space-y-4">
+                    {plan.features.map((feature, j) => {
+                      const Icon = IconMap[feature.icon];
+                      return (
+                        <li key={j} className="flex items-center gap-4 group/item">
+                          <div className={`w-8 h-8 rounded-xl flex items-center justify-center shrink-0 transition-all duration-300
+                            ${feature.active 
+                              ? (plan.theme === "light" ? "bg-blue-50 text-blue-600 shadow-blue-600/5" : "bg-white/20 text-white shadow-white/5")
+                              : (plan.theme === "light" ? "bg-slate-50 text-slate-300" : "bg-white/10 text-white/30")}
+                            lg:group-hover/item:scale-110
+                          `}>
+                            {Icon && <Icon className="w-3.5 h-3.5" />}
+                          </div>
+                          <div>
+                            <span className={`block text-[9px] font-bold tracking-wider mb-0.5
+                              ${plan.theme === "light" ? "text-slate-500" : "text-white/60"}
                             `}>
-                              {Icon && <Icon className="w-5 h-5" />}
-                            </div>
-                            <div>
-                              <span className={`block text-caption font-bold mb-1
-                                ${plan.theme === "light" ? "text-slate-600" : plan.theme === "blue" ? "text-white/80" : "text-slate-500"}
-                              `}>
-                                {feature.label}
-                              </span>
-                              <span className={`block font-bold leading-tight
-                                ${plan.theme === "light" ? "text-slate-900" : "text-white"}
-                                ${!feature.active ? "opacity-30" : ""}
-                              `}>
-                                {feature.value}
-                              </span>
-                            </div>
-                          </li>
-                        );
-                      })}
-                    </ul>
-                  </div>
+                              {feature.label}
+                            </span>
+                            <span className={`block text-[clamp(0.75rem,1vw,0.85rem)] font-bold leading-tight
+                              ${plan.theme === "light" ? "text-slate-900" : "text-white"}
+                              ${!feature.active ? "opacity-30" : ""}
+                            `}>
+                              {feature.value}
+                            </span>
+                          </div>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
 
-                  {isMobile && (
-                    <div className={`mt-8 text-center transition-opacity duration-300 ${isCenterMobile ? 'opacity-100' : 'opacity-0'}`}>
-                      <span className={`text-caption ${plan.theme === "light" ? "text-blue-600" : "text-white/90"}`}>
-                        Pilihan Saat Ini
-                      </span>
-                    </div>
-                  )}
+                <div className="mt-10">
+                  <a 
+                    href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(plan.waMessage)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`w-full py-4 rounded-2xl font-black text-[10px] tracking-[0.1em] flex items-center justify-center gap-3 transition-all active:scale-95 shadow-lg
+                      ${plan.theme === "light" ? "bg-blue-600 text-white hover:bg-blue-700 shadow-blue-600/20" : 
+                        plan.theme === "blue" ? "bg-white text-blue-600 hover:bg-slate-50 shadow-white/10" : 
+                        "bg-blue-600 text-white hover:bg-blue-700 shadow-blue-600/20"}
+                    `}
+                  >
+                    <MessageCircle className="w-4 h-4" />
+                    Pilih Paket
+                  </a>
                 </div>
 
               </div>
             );
           })}
-          
-          {/* Spacer for centering last card on mobile */}
-          <div className="md:hidden shrink-0 w-[10vw]" />
+          {/* Peek spacer */}
+          <div className="lg:hidden shrink-0 w-[12vw] min-[400px]:w-[5vw]" />
         </div>
       </div>
+
+      {/* Pagination Dots for Mobile */}
+      <div className="lg:hidden flex justify-center gap-2 -mt-4 mb-8">
+        {plans.map((_, i) => (
+          <div 
+            key={i}
+            className={`h-1.5 transition-all duration-300 rounded-full ${activeIndex === i ? "w-8 bg-blue-600" : "w-2 bg-slate-200"}`}
+          />
+        ))}
+      </div>
+
       <style>{`
-        .no-scrollbar::-webkit-scrollbar {
-          display: none;
-        }
-        .no-scrollbar {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
-        }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
       `}</style>
-    </>
+    </div>
   );
 }

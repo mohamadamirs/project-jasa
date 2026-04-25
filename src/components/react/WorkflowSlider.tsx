@@ -149,10 +149,6 @@ export const WorkflowSlider = () => {
               <p className={`text-sm leading-relaxed transition-colors duration-500 ${isActive ? 'text-slate-500' : 'text-slate-400'}`}>
                 {item.d}
               </p>
-
-              <div className={`mt-6 text-[4rem] font-black leading-none select-none transition-all duration-700 ${isActive ? 'text-blue-600/5 translate-y-0' : 'text-blue-600/0 translate-y-4'}`}>
-                {item.step}
-              </div>
             </div>
           );
         })}
