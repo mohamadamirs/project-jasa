@@ -18,9 +18,17 @@ const { cityName, localContext, localLandmark, businessTrends, clientCountLocal 
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center text-center lg:text-left">
         <div>
           <h2 class="mb-6">Peluang Bisnis Digital di {cityName}</h2>
-          <p class="text-slate-600 mb-6 leading-relaxed">
-            {localContext} Terutama dengan adanya landmark <span class="font-bold text-slate-900">{localLandmark}</span>, tren <span class="italic text-blue-600">{businessTrends}</span> di {cityName} kini semakin meningkat. Kami telah membantu {clientCountLocal}+ klien di area ini untuk go-digital.
-          </p>
+          <div class="relative mb-6">
+            <p id="insight-text" class="text-slate-600 leading-relaxed line-clamp-3 md:line-clamp-none transition-all duration-500">
+              {localContext} Terutama dengan adanya landmark <span class="font-bold text-slate-900">{localLandmark}</span>, tren <span class="italic text-blue-600">{businessTrends}</span> di {cityName} kini semakin meningkat. Kami telah membantu {clientCountLocal}+ klien di area ini untuk go-digital.
+            </p>
+            <button 
+              id="read-more-btn"
+              class="md:hidden mt-2 text-blue-600 font-bold text-caption flex items-center hover:underline active:scale-95"
+            >
+              Baca Selengkapnya <span data-lucide="chevron-down" class="ml-1 w-4 h-4 transition-transform duration-300"></span>
+            </button>
+          </div>
           <ul class="space-y-4 mb-8 lg:mb-0">
             {["Dominasi hasil pencarian lokal " + cityName, "Meningkatkan Kepercayaan Pelanggan", "Sistem booking atau pemesanan otomatis"].map((item) => (
               <li class="flex items-start md:items-center text-slate-700 font-medium not-italic">
@@ -43,3 +51,31 @@ const { cityName, localContext, localLandmark, businessTrends, clientCountLocal 
     </div>
   </div>
 </section>
+
+<script>
+  function setupReadMore() {
+    const btn = document.getElementById('read-more-btn');
+    const text = document.getElementById('insight-text');
+
+    btn?.addEventListener('click', () => {
+      const isClamped = text?.classList.toggle('line-clamp-3');
+      const icon = btn.querySelector('span');
+      
+      if (isClamped) {
+        btn.innerHTML = 'Baca Selengkapnya <span data-lucide="chevron-down" class="ml-1 w-4 h-4 transition-transform duration-300"></span>';
+      } else {
+        btn.innerHTML = 'Sembunyikan <span data-lucide="chevron-up" class="ml-1 w-4 h-4 transition-transform duration-300"></span>';
+      }
+      
+      // Re-trigger Lucide icons for the new innerHTML
+      if (window.lucide) {
+        window.lucide.createIcons();
+      }
+    });
+  }
+
+  // Run on initial load
+  setupReadMore();
+  // Run on view transitions
+  document.addEventListener('astro:after-swap', setupReadMore);
+</script>
