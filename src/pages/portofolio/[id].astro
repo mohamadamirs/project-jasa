@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import MainLayout from '../../layouts/MainLayout.astro';
+import Badge from '../../components/Badge.astro';
 import WhatsAppCTA from '../../components/WhatsAppCTA.astro';
 import ImageSlider from '../../components/ImageSlider.astro';
 
@@ -22,9 +23,7 @@ const { Content } = await render(entry);
     <!-- Hero Detail -->
     <header class="pt-[clamp(5rem,15vh,10rem)] pb-[clamp(3rem,8vh,6rem)] bg-slate-50/50 border-b border-blue-600/10 px-[clamp(1rem,5vw,2.5rem)]">
       <div class="max-w-4xl mx-auto text-center">
-        <span class="px-4 py-1.5 bg-blue-600 text-white text-caption rounded-full mb-6 inline-block">
-          {category}
-        </span>
+        <Badge text={category} icon="tag" class="mb-6" />
 
         <h1 class="mb-8">
           {title}

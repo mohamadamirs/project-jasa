@@ -1,0 +1,31 @@
+---
+interface Props {
+  text?: string;
+  icon?: string;
+  variant?: 'blue' | 'emerald' | 'slate' | 'white';
+  class?: string;
+}
+
+const { 
+  text, 
+  icon, 
+  variant = 'blue', 
+  class: className 
+} = Astro.props;
+
+const variantClasses = {
+  blue: "bg-blue-600/10 text-blue-700 border-blue-600/10",
+  emerald: "bg-emerald-600/10 text-emerald-700 border-emerald-600/10",
+  slate: "bg-slate-600/10 text-slate-700 border-slate-600/10",
+  white: "bg-white/20 text-white border-white/20 backdrop-blur-md"
+};
+---
+
+<div class:list={[
+  "inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-caption border backdrop-blur-sm transition-all duration-300",
+  variantClasses[variant],
+  className
+]}>
+  {icon && <span data-lucide={icon} class="w-3.5 h-3.5 shrink-0" />}
+  <span class="font-bold uppercase tracking-[0.15em]"><slot>{text}</slot></span>
+</div>
