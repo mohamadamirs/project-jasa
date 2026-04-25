@@ -16,7 +16,7 @@ const steps = [
       subtitle="Proses transparan untuk memastikan hasil terbaik bagi bisnis Anda." 
     />
     
-    <div class="flex flex-row md:grid md:grid-cols-4 gap-4 md:gap-8 relative mt-12 overflow-x-auto pb-4 md:pb-0 scroll-smooth snap-x snap-mandatory no-scrollbar">
+    <div id="workflow-container" class="flex flex-row md:grid md:grid-cols-4 gap-4 md:gap-8 relative mt-12 overflow-x-auto pb-4 md:pb-0 scroll-smooth snap-x snap-mandatory no-scrollbar">
       <!-- Connector Line (Desktop Only) -->
       <div class="hidden md:block absolute top-8 left-0 w-full h-0.5 bg-blue-600/20 -z-0"></div>
 
@@ -32,6 +32,45 @@ const steps = [
     </div>
   </div>
 </section>
+
+<script>
+  function initWorkflowScroll() {
+    const container = document.getElementById('workflow-container');
+    if (container && window.innerWidth < 768) {
+      let scrollInterval: ReturnType<typeof setInterval>;
+      let isHovered = false;
+      let currentIndex = 0;
+      const cards = container.querySelectorAll('.snap-center');
+      
+      const startScroll = () => {
+        scrollInterval = setInterval(() => {
+          if (!isHovered && cards.length > 0) {
+            currentIndex = (currentIndex + 1) % cards.length;
+            cards[currentIndex].scrollIntoView({
+              behavior: 'smooth',
+              block: 'nearest',
+              inline: 'center'
+            });
+          }
+        }, 3000);
+      };
+
+      container.addEventListener('mouseenter', () => isHovered = true);
+      container.addEventListener('mouseleave', () => isHovered = false);
+      container.addEventListener('touchstart', () => isHovered = true, { passive: true });
+      container.addEventListener('touchend', () => {
+        setTimeout(() => isHovered = false, 1000);
+      }, { passive: true });
+
+      startScroll();
+    }
+  }
+
+  // Run on initial load
+  initWorkflowScroll();
+  // Support Astro View Transitions if enabled
+  document.addEventListener('astro:page-load', initWorkflowScroll);
+</script>
 
 <style>
   .no-scrollbar::-webkit-scrollbar { display: none; }
