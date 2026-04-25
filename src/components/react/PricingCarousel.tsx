@@ -208,8 +208,8 @@ export default function PricingCarousel() {
                 )}
 
                 <div className="transition-all duration-500 filter-none">
-                  <div className={`text-center pb-8 border-b ${plan.theme === "light" ? "border-slate-200" : plan.theme === "blue" ? "border-blue-400/30" : "border-slate-700/50"}`}>
-                    <span className={`text-caption block mb-3 ${plan.theme === "light" ? "text-blue-600" : plan.theme === "blue" ? "text-blue-100" : "text-slate-400"}`}>
+                  <div className={`text-center pb-8 border-b ${plan.theme === "light" ? "border-slate-200" : plan.theme === "blue" ? "border-white/30" : "border-slate-700/50"}`}>
+                    <span className={`text-caption block mb-3 ${plan.theme === "light" ? "text-blue-600" : plan.theme === "blue" ? "text-white/90" : "text-slate-400"}`}>
                       {plan.subtitle}
                     </span>
                     <h3 className="mb-4 tracking-tight">{plan.name}</h3>
@@ -227,13 +227,13 @@ export default function PricingCarousel() {
                             <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 transition-colors
                               ${feature.active 
                                 ? (plan.theme === "light" ? "bg-blue-600/10 text-blue-600" : plan.theme === "blue" ? "bg-white/20 text-white" : "bg-blue-600/30 text-blue-300")
-                                : (plan.theme === "light" ? "bg-slate-50 text-slate-300" : plan.theme === "blue" ? "bg-blue-600/20 text-blue-100/30" : "bg-slate-800/50 text-slate-600")}
+                                : (plan.theme === "light" ? "bg-slate-50 text-slate-300" : plan.theme === "blue" ? "bg-white/10 text-white/30" : "bg-slate-800/50 text-slate-600")}
                             `}>
                               {Icon && <Icon className="w-5 h-5" />}
                             </div>
                             <div>
                               <span className={`block text-caption font-bold mb-1
-                                ${plan.theme === "light" ? "text-slate-600" : plan.theme === "blue" ? "text-blue-100/80" : "text-slate-400"}
+                                ${plan.theme === "light" ? "text-slate-600" : plan.theme === "blue" ? "text-white/80" : "text-slate-400"}
                               `}>
                                 {feature.label}
                               </span>
@@ -252,7 +252,7 @@ export default function PricingCarousel() {
 
                   {isMobile && (
                     <div className={`mt-8 text-center transition-opacity duration-300 ${isCenterMobile ? 'opacity-100' : 'opacity-0'}`}>
-                      <span className={`text-caption ${plan.theme === "light" ? "text-blue-600" : "text-blue-100"}`}>
+                      <span className={`text-caption ${plan.theme === "light" ? "text-blue-600" : "text-white/90"}`}>
                         Pilihan Saat Ini
                       </span>
                     </div>

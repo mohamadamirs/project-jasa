@@ -80,7 +80,7 @@ Batasan kaku untuk menjaga integritas layout pada layar ultra-kecil s/d ultra-le
 ### 3. Feedback Interaksi (Tentukan)
 Menciptakan sensasi "App-like" melalui feedback visual:
 - **Scale Feedback:** Seluruh elemen yang dapat diklik wajib memiliki `transition-transform active:scale-95 duration-200`.
-- **Glassmorphism:** Ketentuan efek kaca: `bg-white/90 backdrop-blur-xl border border-white/20 shadow-xl shadow-blue-100/50`.
+- **Glassmorphism:** Ketentuan efek kaca: `bg-white/90 backdrop-blur-xl border border-white/20 shadow-xl shadow-blue-600/5`.
 
 ---
 
